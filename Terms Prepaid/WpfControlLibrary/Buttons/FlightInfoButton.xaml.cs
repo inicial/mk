@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NLog;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -90,7 +91,8 @@ namespace WpfControlLibrary.Buttons
             }
             catch (Exception e)
             {
-                
+                Logger logger = LogManager.GetCurrentClassLogger();
+                logger.Trace(e);
             }
         }
 
