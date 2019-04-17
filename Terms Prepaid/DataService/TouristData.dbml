@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="lanta" Class="TouristDataDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=192.168.10.4;Initial Catalog=lanta;User ID=sa" SettingsObjectName="DataService.Properties.Settings" SettingsPropertyName="lantaConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.TuristService" Member="TuristServices">
+    <Type Name="TuristService">
+      <Column Name="TU_TUKEY" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="TU_DLKEY" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="TU_NUMDOC" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="TU_NUMROOM" Type="System.Int16" DbType="SmallInt" CanBeNull="true" />
+      <Column Name="TU_SEAT" Type="System.String" DbType="VarChar(4)" CanBeNull="true" />
+      <Column Name="TU_AREA" Type="System.Int16" DbType="SmallInt" CanBeNull="true" />
+      <Column Name="TU_DOCDATE" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ROWID" Type="System.Data.Linq.Binary" DbType="rowversion NOT NULL" CanBeNull="false" IsVersion="true" />
+      <Column Name="TU_IDKEY" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Association Name="Turist_TuristService" Member="Turist" ThisKey="TU_TUKEY" OtherKey="TU_KEY" Type="Turist" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.tbl_Turist" Member="Turists">
+    <Type Name="Turist">
+      <Column Name="TU_DGCOD" Type="System.String" DbType="VarChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="TU_KEY" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="TU_TURDATE" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="TU_NAMERUS" Type="System.String" DbType="VarChar(35)" CanBeNull="true" />
+      <Column Name="TU_NAMELAT" Type="System.String" DbType="VarChar(35)" CanBeNull="true" />
+      <Column Name="TU_SHORTNAME" Type="System.String" DbType="VarChar(4) NOT NULL" CanBeNull="false" />
+      <Column Name="TU_SEX" Type="System.Int16" DbType="SmallInt" CanBeNull="true" />
+      <Column Name="TU_FNAMERUS" Type="System.String" DbType="VarChar(15) NOT NULL" CanBeNull="false" />
+      <Column Name="TU_FNAMELAT" Type="System.String" DbType="VarChar(15) NOT NULL" CanBeNull="false" />
+      <Column Name="TU_SNAMERUS" Type="System.String" DbType="VarChar(15)" CanBeNull="true" />
+      <Column Name="TU_SNAMELAT" Type="System.String" DbType="VarChar(15)" CanBeNull="true" />
+      <Column Name="TU_BIRTHDAY" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="TU_BIRTHCOUNTRY" Type="System.String" DbType="VarChar(25)" CanBeNull="true" />
+      <Column Name="TU_BIRTHCITY" Type="System.String" DbType="VarChar(60)" CanBeNull="true" />
+      <Column Name="TU_CITIZEN" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="TU_POSTINDEX" Type="System.String" DbType="VarChar(8)" CanBeNull="true" />
+      <Column Name="TU_POSTCITY" Type="System.String" DbType="VarChar(60)" CanBeNull="true" />
+      <Column Name="TU_POSTSTREET" Type="System.String" DbType="VarChar(25)" CanBeNull="true" />
+      <Column Name="TU_POSTBILD" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="TU_POSTFLAT" Type="System.String" DbType="VarChar(4)" CanBeNull="true" />
+      <Column Name="TU_PHONE" Type="System.String" DbType="VarChar(60)" CanBeNull="true" />
+      <Column Name="TU_PHONECODE" Type="System.String" DbType="VarChar(5)" CanBeNull="true" />
+      <Column Name="TU_PASPORTTYPE" Type="System.String" DbType="VarChar(5)" CanBeNull="true" />
+      <Column Name="TU_PASPORTNUM" Type="System.String" DbType="VarChar(13)" CanBeNull="true" />
+      <Column Name="TU_PASPORTDATE" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="TU_PASPORTDATEEND" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="TU_PASPORTBYWHOM" Type="System.String" DbType="VarChar(15)" CanBeNull="true" />
+      <Column Name="TU_PLACE" Type="System.Int16" DbType="SmallInt" CanBeNull="true" />
+      <Column Name="TU_ISANKETA" Type="System.Int16" DbType="SmallInt" CanBeNull="true" />
+      <Column Name="TU_CREATOR" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="TU_OWNER" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="TU_PASPRUSER" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="TU_PASPRUNUM" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="TU_PASPRUDATE" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="TU_PASPRUBYWHOM" Type="System.String" DbType="VarChar(45)" CanBeNull="true" />
+      <Column Name="TU_INSURPOLIS" Type="System.String" DbType="VarChar(15)" CanBeNull="true" />
+      <Column Name="TU_INSURSUM" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="TU_DISCOUNT" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="TU_TYPEDISCOUNT" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="TU_ID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="TU_ISMAIN" Type="System.Int16" DbType="SmallInt" CanBeNull="true" />
+      <Column Name="ROWID" Type="System.Data.Linq.Binary" DbType="rowversion" CanBeNull="true" IsVersion="true" />
+      <Column Name="TU_AgentID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="TL_ADVDESC" Type="System.String" DbType="Text" CanBeNull="true" />
+      <Column Name="TL_ATTDESC" Type="System.String" DbType="Text" CanBeNull="true" />
+      <Column Name="TL_DOPDESC" Type="System.String" DbType="Text" CanBeNull="true" />
+      <Column Name="TL_FULLDESC" Type="System.String" DbType="Text" CanBeNull="true" />
+      <Column Name="TL_SMALLDESC" Type="System.String" DbType="Text" CanBeNull="true" />
+      <Column Name="TU_DGKEY" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="TU_RealSex" Type="System.Int16" DbType="SmallInt" CanBeNull="true" />
+      <Column Name="TU_EMAIL" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Association Name="Turist_TuristService" Member="TuristServices" ThisKey="TU_KEY" OtherKey="TU_TUKEY" Type="TuristService" />
+    </Type>
+  </Table>
+  <Function Name="dbo.mk_hotels_by_dlKey" Method="mk_hotels_by_dlKey" IsComposable="true">
+    <Parameter Name="dlKey" Type="System.Int32" DbType="Int" />
+    <ElementType Name="mk_hotels_by_dlKeyResult">
+      <Column Name="type_of" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="country" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="city" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="name" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="category" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="namber" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="TURDATE" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="ndays" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="night" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="pansion" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="stars" Type="System.String" DbType="VarChar(12)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+</Database>

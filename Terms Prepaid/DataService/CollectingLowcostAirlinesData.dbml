@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="total_services" Class="CollectingLowcostAirlinesDataDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=192.168.10.4;Initial Catalog=total_services;User ID=sa" SettingsObjectName="DataService.Properties.Settings" SettingsPropertyName="total_servicesConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.CollectingLowcostAirlines" Member="CollectingLowcostAirlines">
+    <Type Name="CollectingLowcostAirline">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Airline" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="Check_in" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+      <Column Name="SeatSelection" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+      <Column Name="FreeCarryOnBaggage" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+      <Column Name="Baggage" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+      <Column Name="Food" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.CollectingLowcostAirlinesNotes" Member="CollectingLowcostAirlinesNotes">
+    <Type Name="CollectingLowcostAirlinesNote">
+      <Column Name="Note" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="Text" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+    </Type>
+  </Table>
+</Database>

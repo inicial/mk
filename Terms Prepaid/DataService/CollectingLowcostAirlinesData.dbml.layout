@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 8.5" name="CollectingLowcostAirlinesData">
+  <DataContextMoniker Name="/CollectingLowcostAirlinesDataDataContext" />
+  <nestedChildShapes>
+    <classShape Id="e3598f0a-0162-463f-8720-c6d28747762f" absoluteBounds="3.375, 1.25, 2, 2.1554996744791666">
+      <DataClassMoniker Name="/CollectingLowcostAirlinesDataDataContext/CollectingLowcostAirline" />
+      <nestedChildShapes>
+        <elementListCompartment Id="1738aa42-6003-4c49-bdbc-8655861fe273" absoluteBounds="3.3899999999999997, 1.71, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="3b2eeba1-b5f9-438d-9c11-11a47538f6a8" absoluteBounds="0.75, 1.375, 2, 1.1939925130208333">
+      <DataClassMoniker Name="/CollectingLowcostAirlinesDataDataContext/CollectingLowcostAirlinesNote" />
+      <nestedChildShapes>
+        <elementListCompartment Id="d369c9ed-77ea-4cda-bc49-d1e9b879d461" absoluteBounds="0.76500000000000012, 1.835, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+  </nestedChildShapes>
+</ordesignerObjectsDiagram>

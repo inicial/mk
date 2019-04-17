@@ -1,0 +1,191 @@
+﻿<UserControl x:Class="WpfControlLibrary.View.TransferControl_static"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:wpfTool="clr-namespace:Xceed.Wpf.Toolkit;assembly=Xceed.Wpf.Toolkit"
+             mc:Ignorable="d" 
+             d:DesignHeight="600" d:DesignWidth="300">
+    <UserControl.Resources>
+        <ResourceDictionary>
+
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/WpfControlLibrary;component/Resources/Resources.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+            <Style TargetType="TextBox" BasedOn="{StaticResource TbNoEdit}">
+                <Setter Property="VerticalAlignment" Value="Center"/>
+            </Style>
+
+            <Style x:Key="TbxNormal" TargetType="TextBox">
+                <Setter Property="VerticalAlignment" Value="Center"/>
+            </Style>
+
+            <Style TargetType="TextBlock" BasedOn="{StaticResource TblNoEdit}">
+            </Style>
+
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid Background="{StaticResource ActiveServiceBackground}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Control Template="{StaticResource ServiceTabHeader}"/>
+
+        <Border Grid.Row="1" Style="{StaticResource ActiveServiceBorder}">
+            <ScrollViewer Grid.Row="1" VerticalAlignment="Stretch" VerticalScrollBarVisibility="Auto">
+                <Grid>
+                    <Grid.Resources>
+                        <Style TargetType="TextBlock" BasedOn="{StaticResource TblockHeader2}">
+                            <Setter Property="Margin" Value="5,5,0,0"/>
+                        </Style>
+                    </Grid.Resources>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="2*" />
+                    </Grid.ColumnDefinitions>
+                    <Border Grid.Row="0" Grid.ColumnSpan="2" Style="{StaticResource BorderHeader}">
+                        <TextBlock Style="{StaticResource TblCenter}" Text="Данные по услуге"/>
+                    </Border>
+
+                    <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Top" Text="Маршрут: "/>
+
+                    <TextBlock Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" TextWrapping="Wrap" Style="{StaticResource TblNoEdit}" Margin="10,3,0,0" Text="Аэропорт, Барселона, Испания - Порт, Барселона, Испания"/>
+                    <TextBlock Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" TextWrapping="Wrap" Style="{StaticResource TblNoEdit}" Margin="10,3,0,0" Text="Порт, Барселона, Испания - Аэропорт, Барселона, Испания"/>
+
+                    <TextBlock Grid.Row="4" Grid.Column="0" Text="№ брони у партнера: "/>
+                    <TextBox Grid.Row="4" Grid.Column="1" Text="4YPPID" Margin="0,5,0,0" Width="100" HorizontalAlignment="Left" Style="{StaticResource TbxNormal}"/>
+
+                    <TextBlock Grid.Row="5" Grid.Column="0" Text="Статус: " VerticalAlignment="Top" />
+                    <TextBox Grid.Row="5" Grid.Column="1" TextWrapping="Wrap" Text="Создано в 14:30 / 01.03.17" Margin="0,1,0,0"/>
+                    <StackPanel Grid.Row="6" Grid.Column="1" Orientation="Horizontal">
+                        <TextBox TextWrapping="Wrap" Text="Time limit до" Margin="0,1,0,0"/>
+                        <wpfTool:TimePicker Value="12:00" Format="Custom" FormatString="HH:mm" Width="75" />
+                        <DatePicker SelectedDate="{Binding date, StringFormat=dd.MM.yy, Mode=TwoWay}"/>
+                    </StackPanel>
+                    
+
+                </Grid>
+            </ScrollViewer>
+        </Border>
+
+        <Border Grid.Row="2" Style="{StaticResource BorderHeader}">
+            <TextBlock Style="{StaticResource TblCenter}" Text="Кол-во туристов: 1 турист"/>
+        </Border>
+
+        <TextBlock Grid.Row="3" Text="1. Volochkov Evgeny" Margin="10,3,0,0"/>
+        <!--<ListView Grid.Row="3" x:Name="LbFligthsTo" ItemsSource="{Binding Service.TuristList, Mode=OneWay}" ItemContainerStyle="{StaticResource LvItemStyle}" 
+                  ItemTemplate="{StaticResource TouristData}" ItemsPanel="{StaticResource IpTemplate}"/>-->
+
+        <Grid Grid.Row="4"  Margin="0,5,0,0">
+            <Grid.Resources>
+                <Style TargetType="TextBlock" BasedOn="{StaticResource TblockHeader2}">
+                    <Setter Property="Margin" Value="5,5,0,0"/>
+                </Style>
+            </Grid.Resources>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="4*" />
+                <ColumnDefinition Width="21*"/>
+                <ColumnDefinition Width="25*" />
+                <ColumnDefinition Width="25*" />
+                <ColumnDefinition Width="25*" />
+            </Grid.ColumnDefinitions>
+            <Border Grid.Row="0" Grid.ColumnSpan="5" Style="{StaticResource BorderHeader}">
+                <TextBlock Style="{StaticResource TblCenter}" Text="Трансфер туда"/>
+            </Border>
+
+            <TextBlock Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="5" TextWrapping="Wrap" Style="{StaticResource TblNoEdit}" Margin="5,3,0,0" Text="Аэропорт, Барселона, Испания - Порт, Барселона, Испания"/>
+            <TextBlock Grid.Row="2" Grid.Column="0" Text="Дата начала: " Grid.ColumnSpan="2" Margin="5,6,0,1"/>
+            <TextBox Grid.Row="2" Grid.Column="2" Text="01.04.17" Margin="0,3,0,0"/>
+
+            <TextBlock Grid.Row="2" Grid.Column="3" Text="Время начала: " Margin="5,6,0,1"/>
+            <TextBox Grid.Row="2" Grid.Column="4" Text="14:30" Margin="0,3,0,0"/>
+
+            <TextBlock Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Text="Время в пути: " Margin="5,6,0,1"/>
+            <TextBox Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="3" Text="3 часа 30 мин" Margin="0,3,0,0"/>
+
+            <TextBlock Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Text="Наличие гида: " Margin="5,6,0,1"/>
+            <ComboBox Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="1" SelectedValue="заказан" Margin="0,3,0,0"/>
+            <TextBox Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="2" Text="заказан" Margin="5,1,0,0"/>
+
+            <TextBlock Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Text="Телефон гида: " Margin="5,6,0,1"/>
+            <TextBox Style="{StaticResource TbxNormal}" Grid.Row="5" Grid.Column="2" Grid.ColumnSpan="1" Text="+34932726490" Margin="0,3,0,0"/>
+        </Grid>
+
+        <Grid Grid.Row="5" Margin="0,5,0,0">
+            <Grid.Resources>
+                <Style TargetType="TextBlock" BasedOn="{StaticResource TblockHeader2}">
+                    <Setter Property="Margin" Value="5,5,0,0"/>
+                </Style>
+            </Grid.Resources>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1.0*" />
+                <ColumnDefinition Width="1.0*" />
+                <ColumnDefinition Width="1.0*" />
+                <ColumnDefinition Width="1.0*" />
+            </Grid.ColumnDefinitions>
+            <Border Grid.Row="0" Grid.ColumnSpan="4" Style="{StaticResource BorderHeader}">
+                <TextBlock Style="{StaticResource TblCenter}" Text="Трансфер обратно"/>
+            </Border>
+
+            <TextBlock Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4" TextWrapping="Wrap" Style="{StaticResource TblNoEdit}" Margin="5,3,0,0" Text="Порт, Барселона, Испания - Аэропорт, Барселона, Испания"/>
+
+            <TextBlock Grid.Row="2" Grid.Column="0" Text="Дата начала: "/>
+            <TextBox Grid.Row="2" Grid.Column="1" Text="08.04.17" Margin="0,3,0,0"/>
+
+            <TextBlock Grid.Row="2" Grid.Column="2" Text="Время начала: "/>
+            <TextBox Grid.Row="2" Grid.Column="3" Text="10:30" Margin="0,3,0,0"/>
+
+            <TextBlock Grid.Row="3" Grid.Column="0" Text="Время в пути: "/>
+            <TextBox Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3" Text="3 часа 20 мин" Margin="0,3,0,0"/>
+
+            <TextBlock Grid.Row="4" Grid.Column="0" Text="Наличие гида: "/>
+            <ComboBox Grid.Row="4" Grid.Column="1" SelectedValue="не определен" Margin="0,3,0,0"/>
+            <TextBox Grid.Row="4" Grid.Column="1" Text="не определен" Margin="5,1,0,0"/>
+        </Grid>
+
+        <Border Grid.Row="6" Style="{StaticResource BorderHeader}"  Margin="0,5,0,0">
+            <TextBlock Style="{StaticResource TblCenter}" Text="Кол-во багажа: 1"/>
+        </Border>
+        
+        <StackPanel Margin="0,5,0,5" Grid.Row="7" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Command="{Binding ClearBonusesAndServicesCommand}" Width="140" Height="25" Content="Отменить изменения"/>
+            <Button Command="{Binding BonusOkCommand}" Margin="5,0,5,0" Width="100" Height="25" Content="ОК"/>
+        </StackPanel>
+    </Grid>
+</UserControl>

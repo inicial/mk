@@ -1,0 +1,210 @@
+﻿<common:SimpleWindow x:Class="WpfControlLibrary.View.CallRecordsMkView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:helpers="clr-namespace:WpfControlLibrary.Helpers"
+             xmlns:dataService="clr-namespace:DataService;assembly=DataService"
+             xmlns:common="clr-namespace:WpfControlLibrary.Common"
+             mc:Ignorable="d" 
+             d:DesignHeight="600" d:DesignWidth="1200" Title="Журнал звонков">
+    <common:SimpleWindow.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/WpfControlLibrary;component/Resources/Resources.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/WPF.Bootstrap;component/Themes/Default.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <ControlTemplate x:Key="DateFilter">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <StackPanel Orientation="Horizontal">
+                        <CheckBox IsChecked="{Binding Enabled}"/>
+                        <TextBlock HorizontalAlignment="Center" Text="{Binding Name}"/>
+                    </StackPanel>
+                    <StackPanel HorizontalAlignment="Center" Margin="0,3,0,0"  Grid.Row="1" Orientation="Horizontal">
+                        <TextBlock VerticalAlignment="Center" Text="от"/>
+                        <DatePicker SelectedDate="{Binding DateBegin, Mode=TwoWay}" Margin="3,0,0,0"/>
+                        <TextBlock VerticalAlignment="Center" Text="до" Margin="5,0,0,0"/>
+                        <DatePicker SelectedDate="{Binding DateEnd, Mode=TwoWay}" Margin="3,0,0,0"/>
+                    </StackPanel>
+                </Grid>
+            </ControlTemplate>
+
+            <ControlTemplate x:Key="StatusFilter">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock HorizontalAlignment="Center" Text="{Binding Name}"/>
+                    <ComboBox HorizontalAlignment="Stretch" Margin="0,5,0,0" Grid.Row="1" SelectedItem="{Binding Value}" ItemsSource="{Binding Values}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate DataType="dataService:mk_CallRecordsStatusFilter">
+                                <TextBlock Text="{Binding Name}"/>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                </Grid>
+            </ControlTemplate>
+
+        </ResourceDictionary>
+    </common:SimpleWindow.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Margin="5,0,5,5" Orientation="Horizontal">
+            <StackPanel.Resources>
+                <Style TargetType="{x:Type Control}">
+                    <Setter Property="Margin" Value="0,0,10,0"/>
+                    <Setter Property="VerticalAlignment" Value="Bottom"/>
+                </Style>
+            </StackPanel.Resources>
+            <Control Template="{StaticResource DateFilter}" DataContext="{Binding DateFilter}"/>
+            <Control Template="{StaticResource StatusFilter}" DataContext="{Binding StatusFilter}"/>
+        </StackPanel>
+        <DataGrid Grid.Row="1" Name="DataGrid" VerticalScrollBarVisibility="Auto" helpers:DataGridBehavior2.DataGridDoubleClickCommand="{Binding ShowCorrespondenceCommand}" 
+            AutoGenerateColumns="False" Unloaded="FrameworkElement_OnUnloaded" CanUserAddRows="False" CanUserDeleteRows="False" CanUserSortColumns="False" 
+            CanUserReorderColumns="False" SelectionMode="Single"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+            ItemsSource="{Binding CallRecords}" SelectedItem="{Binding SelectedItem}">
+            
+            <DataGrid.Resources>
+                <Style TargetType="{x:Type Button}">
+                    <Setter Property="Margin" Value="0,0"/>
+                </Style>
+                <Style TargetType="{x:Type DataGridCell}" BasedOn="{StaticResource DataGridCellNoLostFocus}">
+                    <Setter Property="FontSize" Value="13"/>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type DataGridCell}">
+                                <Grid Background="{TemplateBinding Background}">
+                                    <ContentPresenter VerticalAlignment="Center" />
+                                </Grid>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                    <Style.Triggers>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Foreground" Value="White"/>
+                            <Setter Property="Background" Value="#3399FF"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+                <Style TargetType="DataGrid">
+                    <Setter Property="HorizontalAlignment" Value="Center"/>
+                    <Style.Resources>
+                        <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="DeepSkyBlue"/>
+                    </Style.Resources>
+                </Style>
+                <Style TargetType="DataGridColumnHeader">
+                    <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                    <Setter Property="FontWeight" Value="Bold"/>
+                    <Setter Property="FontSize" Value="15"/>
+                </Style>
+            </DataGrid.Resources>
+            <DataGrid.Columns>
+                
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.HeaderTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Vertical">
+                                <TextBlock Text="Телефон клиента"/>
+                                <TextBlock HorizontalAlignment="Center" Text="Имя"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.HeaderTemplate>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate DataType="dataService:mk_CallRecord">
+                            <StackPanel Orientation="Vertical" Margin="5,0,5,0" HorizontalAlignment="Center">
+                                <TextBlock TextAlignment="Center" Text="{Binding Phone, StringFormat={}+{0}}"/>
+                                <!--<TextBlock TextAlignment="Center" Text="{Binding Name}"/>-->
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.HeaderTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Vertical">
+                                <TextBlock Text="Время и дата"/>
+                                <TextBlock HorizontalAlignment="Center" Text="звонка"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.HeaderTemplate>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate DataType="dataService:mk_CallRecord">
+                            <TextBlock Text="{Binding Date, StringFormat={}{0:HH:mm} / {0:dd.MM.yy}}" Margin="5,0,5,0"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTemplateColumn Width="500">
+                    <DataGridTemplateColumn.HeaderTemplate>
+                        <DataTemplate>
+                            <StackPanel Width="500" HorizontalAlignment="Center" Orientation="Vertical">
+                                <TextBlock HorizontalAlignment="Center" Text="Место клиента"/>
+                                    <TextBlock HorizontalAlignment="Center" Text="на сайте"/>
+                                </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.HeaderTemplate>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate DataType="dataService:mk_CallRecord">
+                            <Button FontSize="12" Foreground="Blue" Style="{StaticResource InlineButton}" Content="{Binding PlaceOnline}" Margin="5,0,5,0"
+                                    Command="{Binding DataContext.GoToUrlCmd, RelativeSource={RelativeSource FindAncestor, AncestorType=common:SimpleWindow}}"
+                                    CommandParameter="{Binding .}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTemplateColumn >
+                    <DataGridTemplateColumn.HeaderTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="Статус"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.HeaderTemplate>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate DataType="dataService:mk_CallRecord">
+                            <TextBlock Text="{Binding Status.Name}" Margin="5,0,5,0"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.HeaderTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="Прослушать"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.HeaderTemplate>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Background="Transparent" BorderBrush="Transparent" Width="32" Height="32" Command="{Binding ListenCmd}">
+                                <Image Source="..\img\play_img.png"/>
+                            </Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.HeaderTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="Записать"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.HeaderTemplate>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Background="Transparent" BorderBrush="Transparent" Width="32" Height="32" Command="{Binding RecordCmd}">
+                                <Image Source="..\img\rec_img.png"/>
+                            </Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</common:SimpleWindow>

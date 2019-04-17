@@ -1,0 +1,146 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 14.375, 25.625" name="Master">
+  <DataContextMoniker Name="/MasterDataContext" />
+  <nestedChildShapes>
+    <classShape Id="3eaca94f-ed24-4253-bad0-49b5febedce9" absoluteBounds="0.625, 4, 2, 13.885887044270834">
+      <DataClassMoniker Name="/MasterDataContext/tbl_Dogovor" />
+      <nestedChildShapes>
+        <elementListCompartment Id="b670c6f1-bb11-4301-b212-6f4c4794daec" absoluteBounds="0.64, 4.46, 1.9700000000000002, 13.325887044270832" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="a7a11b5e-ac3c-4a26-90ac-629575825f49" absoluteBounds="3.625, 3.125, 2, 10.232159830729163">
+      <DataClassMoniker Name="/MasterDataContext/tbl_DogovorList" />
+      <nestedChildShapes>
+        <elementListCompartment Id="033aacf4-afa0-4c8e-bb62-4f867fb28f5c" absoluteBounds="3.64, 3.585, 1.9700000000000002, 9.6721598307291661" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="133bdb5c-344a-4cc8-a008-bb25c856b501" absoluteBounds="3.375, 0.5, 2, 2.3478011067708335">
+      <DataClassMoniker Name="/MasterDataContext/Lanta_PersonalArea" />
+      <nestedChildShapes>
+        <elementListCompartment Id="40b0790d-6ac7-4046-8798-077289673be4" absoluteBounds="3.3899999999999997, 0.96, 1.9700000000000002, 1.7878011067708335" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(2.625 : 8.67857991536458); (3.38541666666667 : 8.67857991536458 : JumpStart); (3.55208333333333 : 8.67857991536458 : JumpEnd); (3.625 : 8.67857991536458)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/MasterDataContext/tbl_Dogovor/tbl_Dogovor_tbl_DogovorList" />
+      <nodes>
+        <classShapeMoniker Id="3eaca94f-ed24-4253-bad0-49b5febedce9" />
+        <classShapeMoniker Id="a7a11b5e-ac3c-4a26-90ac-629575825f49" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="b3cff4bb-aedd-4d37-834a-aad95a2adb62" absoluteBounds="6, 0.625, 2, 4.6554182942708326">
+      <DataClassMoniker Name="/MasterDataContext/Tours" />
+      <nestedChildShapes>
+        <elementListCompartment Id="16f79e22-3424-4164-a964-ea2adc51ea71" absoluteBounds="6.015, 1.085, 1.9700000000000002, 4.095418294270833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="1908b12e-a888-432b-9a9d-836c68abeffd" absoluteBounds="4, 14.5, 2, 2.3478011067708335">
+      <DataClassMoniker Name="/MasterDataContext/LT_V_Service" />
+      <nestedChildShapes>
+        <elementListCompartment Id="a3692a17-482c-4608-9e12-f14c6f6dad44" absoluteBounds="4.0150000000000006, 14.96, 1.9700000000000002, 1.7878011067708335" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="40834ed7-e4ee-41d4-ace9-f66cca731ff1" absoluteBounds="7.25, 13.375, 2, 6.7707340494791657">
+      <DataClassMoniker Name="/MasterDataContext/LT_V_Voucher" />
+      <nestedChildShapes>
+        <elementListCompartment Id="21ec8674-374a-4f53-96ae-46c0d61dcd21" absoluteBounds="7.265, 13.835, 1.9700000000000002, 6.2107340494791661" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(7.25 : 13.9062475); (5.4375025 : 13.9062475); (5.4375025 : 14.5)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/MasterDataContext/LT_V_Voucher/LT_V_Voucher_LT_V_Service" />
+      <nodes>
+        <classShapeMoniker Id="40834ed7-e4ee-41d4-ace9-f66cca731ff1" />
+        <classShapeMoniker Id="1908b12e-a888-432b-9a9d-836c68abeffd" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(4.8125 : 13.3571598307292); (4.8125 : 14.5)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/MasterDataContext/tbl_DogovorList/tbl_DogovorList_LT_V_Service" />
+      <nodes>
+        <classShapeMoniker Id="a7a11b5e-ac3c-4a26-90ac-629575825f49" />
+        <classShapeMoniker Id="1908b12e-a888-432b-9a9d-836c68abeffd" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="8e6fb0ba-9247-4955-8011-aa700b52f336" absoluteBounds="6.875, 8.875, 2, 1.5785953776041666">
+      <DataClassMoniker Name="/MasterDataContext/mk_DocumentService" />
+      <nestedChildShapes>
+        <elementListCompartment Id="6cb45d12-8ce7-4885-9eb1-6a92483b0634" absoluteBounds="6.8900000000000006, 9.335, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(5.625 : 11.7429049893291); (7.875 : 11.7429049893291); (7.875 : 10.4535953776042)]" manuallyRouted="true" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/MasterDataContext/tbl_DogovorList/tbl_DogovorList_mk_DocumentService" />
+      <nodes>
+        <classShapeMoniker Id="a7a11b5e-ac3c-4a26-90ac-629575825f49" />
+        <classShapeMoniker Id="8e6fb0ba-9247-4955-8011-aa700b52f336" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(2.625 : 13.9285799153646); (3.46875 : 13.9285799153646); (3.46875 : 2.84780110677083)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/MasterDataContext/tbl_Dogovor/tbl_Dogovor_Lanta_PersonalArea" />
+      <nodes>
+        <classShapeMoniker Id="3eaca94f-ed24-4253-bad0-49b5febedce9" />
+        <classShapeMoniker Id="133bdb5c-344a-4cc8-a008-bb25c856b501" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="37bf742d-e725-4a64-8213-1a93a1258832" absoluteBounds="0.5, 0.5, 2, 3.1170068359375">
+      <DataClassMoniker Name="/MasterDataContext/Lanta_DictDocSpr" />
+      <nestedChildShapes>
+        <elementListCompartment Id="7b8c8f90-2a9d-476a-b1af-a22f093c0197" absoluteBounds="0.51500000000000012, 0.96, 1.9700000000000002, 2.5570068359375" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(2.5 : 1.67390055338542); (3.375 : 1.67390055338542)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/MasterDataContext/Lanta_DictDocSpr/Lanta_DictDocSpr_Lanta_PersonalArea" />
+      <nodes>
+        <classShapeMoniker Id="37bf742d-e725-4a64-8213-1a93a1258832" />
+        <classShapeMoniker Id="133bdb5c-344a-4cc8-a008-bb25c856b501" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="5f13d2d7-9c62-4f6f-9d18-536f5b933042" absoluteBounds="10.125, 5.625, 2, 10.6167626953125">
+      <DataClassMoniker Name="/MasterDataContext/tbl_Turist" />
+      <nestedChildShapes>
+        <elementListCompartment Id="aa1762a1-755d-4910-8c59-c132eccc4ff4" absoluteBounds="10.14, 6.0850000000000009, 1.9700000000000002, 10.0567626953125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="19f44340-e1f6-486a-ae04-c831b185bf72" absoluteBounds="8.75, 2.625, 2, 2.5401025390625">
+      <DataClassMoniker Name="/MasterDataContext/TuristService" />
+      <nestedChildShapes>
+        <elementListCompartment Id="eab6961b-ef53-4229-9644-3cd6881173f6" absoluteBounds="8.765, 3.085, 1.9700000000000002, 1.9801025390625" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(5.625 : 5.45270914713542); (9.5 : 5.45270914713542); (9.5 : 5.1651025390625)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/MasterDataContext/tbl_DogovorList/tbl_DogovorList_TuristService" />
+      <nodes>
+        <classShapeMoniker Id="a7a11b5e-ac3c-4a26-90ac-629575825f49" />
+        <classShapeMoniker Id="19f44340-e1f6-486a-ae04-c831b185bf72" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(10.4375 : 5.625); (10.4375 : 5.1651025390625)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/MasterDataContext/tbl_Turist/tbl_Turist_TuristService" />
+      <nodes>
+        <classShapeMoniker Id="5f13d2d7-9c62-4f6f-9d18-536f5b933042" />
+        <classShapeMoniker Id="19f44340-e1f6-486a-ae04-c831b185bf72" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="dac3984c-5271-4259-b330-fe6322f889ea" absoluteBounds="3.75, 18, 2, 7.3476383463541657">
+      <DataClassMoniker Name="/MasterDataContext/UserList" />
+      <nestedChildShapes>
+        <elementListCompartment Id="b881191f-7733-448b-94e8-b8a3ca3d3fe8" absoluteBounds="3.765, 18.46, 1.9700000000000002, 6.7876383463541661" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="b27a2956-449a-4441-8be0-54804083eafa" absoluteBounds="12.125, 1.5, 2, 5.8092268880208326">
+      <DataClassMoniker Name="/MasterDataContext/URS_Insurance" />
+      <nestedChildShapes>
+        <elementListCompartment Id="0f720120-4b9d-40de-9141-52de011a2098" absoluteBounds="12.14, 1.96, 1.9700000000000002, 5.249226888020833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="708c9156-87a4-4a81-a8f8-486fa37b81f9" absoluteBounds="8.75, 0.5, 2, 1.9631982421875">
+      <DataClassMoniker Name="/MasterDataContext/mk_DogovorAdd" />
+      <nestedChildShapes>
+        <elementListCompartment Id="16680896-deb3-4f5f-a82e-1730219495ee" absoluteBounds="8.765, 0.96, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="4ec38b34-1939-45f2-a22e-5ac6289764d5" absoluteBounds="0.625, 18.125, 2, 5.8092268880208326">
+      <DataClassMoniker Name="/MasterDataContext/History" />
+      <nestedChildShapes>
+        <elementListCompartment Id="aa1b2c8d-a770-41b5-98db-5d2e98e7ebd9" absoluteBounds="0.64000000000000057, 18.585, 1.9700000000000002, 5.249226888020833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+  </nestedChildShapes>
+</ordesignerObjectsDiagram>

@@ -1,0 +1,52 @@
+﻿<common:PopupWindow x:Class="WpfControlLibrary.Buttons.ShowRulesButton"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:system="clr-namespace:System;assembly=mscorlib"
+             xmlns:common="clr-namespace:WpfControlLibrary.Common"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/WPF.Bootstrap;component/Themes/Default.xaml"/>
+                <ResourceDictionary Source="/WpfControlLibrary;component/Resources/Resources.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <StackPanel HorizontalAlignment="Left" VerticalAlignment="Top">
+        <ToggleButton FontSize="12" FontFamily="Arial" Foreground="DodgerBlue"
+                      Style="{StaticResource InlineToggleButton}" Content="Правила тарифа" Name="btnOption" 
+                      Unchecked="btnOption_Unchecked" Checked="btnOption_Checked"></ToggleButton>
+        
+        <Popup HorizontalOffset="-285" AllowsTransparency="True" PopupAnimation="Slide" StaysOpen="False" x:Name="popupOption" PlacementTarget="{Binding ElementName=btnOption}">
+            <Border CornerRadius="5" BorderThickness="1" BorderBrush="DarkGray" Background="White">
+                <StackPanel Orientation="Vertical">
+                    <StackPanel HorizontalAlignment="Left" Orientation="Vertical">
+                        <Control Template="{StaticResource WindowHead}" Tag="Правила применения тарифа авиабилета" 
+                            DataContext="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}"/>
+                        <!--<Border Background="LightBlue">
+                            <Grid>
+                                <TextBlock Margin="5,0,0,0" FontFamily="{StaticResource DefaultFont}" FontWeight="Normal" FontSize="14" TextAlignment="Left" Text="Правила применения тарифа авиабилета" />
+                                <Button Name="CloseButton" Click="CloseButton_OnClick" Margin="0,0,2,3" Style="{StaticResource CloseButton}"  HorizontalAlignment="Right"/>
+                            </Grid>
+                        </Border>-->
+                        <TextBox Name="TbRulers" Padding="2" IsReadOnly="True" VerticalScrollBarVisibility="Auto" Width="405" 
+                                 Height="345" FontSize="11" Text="{Binding Rulers}"></TextBox>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="2*"/>
+                                <ColumnDefinition Width="1*"/>
+                            </Grid.ColumnDefinitions>
+                            <!--<Button Name="CloseButton" Click="CloseButton_OnClick" Grid.Column="0">Закрыть</Button>-->
+                            <Button Name="CopyButton" Click="CopyButton_OnClick" Grid.Column="1">Копировать</Button>
+                        </Grid>
+                    </StackPanel>
+                </StackPanel>    
+            </Border>
+        </Popup>
+    </StackPanel>
+</common:PopupWindow>

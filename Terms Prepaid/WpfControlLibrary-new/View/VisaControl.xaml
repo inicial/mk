@@ -1,0 +1,65 @@
+﻿<UserControl x:Class="WpfControlLibrary.View.VisaControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="600" d:DesignWidth="380">
+    <UserControl.Resources>
+        <ResourceDictionary>
+
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/WpfControlLibrary;component/Resources/Resources.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            
+            <Style TargetType="TextBox" BasedOn="{StaticResource TbNoEdit}">
+                <Setter Property="VerticalAlignment" Value="Center"></Setter>
+            </Style>
+
+            <Style TargetType="TextBlock" BasedOn="{StaticResource TblockHeader2}">
+            </Style>
+
+        </ResourceDictionary>
+    </UserControl.Resources>
+    
+    <Grid Background="{StaticResource ActiveServiceBackground}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        
+        <Control Template="{StaticResource ServiceTabHeader}"></Control>
+
+        <Border Grid.Row="1" Style="{StaticResource ActiveServiceBorder}">
+            <ScrollViewer Grid.Row="1" VerticalAlignment="Stretch" VerticalScrollBarVisibility="Auto">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Border Grid.Row="0" Style="{StaticResource BorderHeader}">
+                        <TextBlock Style="{StaticResource TblCenter}" Text="Данные по услуге"/>
+                    </Border>
+                    <StackPanel Margin="5,0,0,0" Grid.Row="1" Orientation="Horizontal">
+                        <TextBlock Text="Тип услуги: "/>
+                        <TextBox Text="{Binding Service.SlName}"/>
+                    </StackPanel>
+                    <StackPanel Margin="5,0,0,0" Grid.Row="2" Orientation="Horizontal">
+                        <TextBlock Text="Страна: "/>
+                        <TextBox Text="{Binding Service.Country}"/>
+                    </StackPanel>
+                    <StackPanel Margin="5,0,0,0" Grid.Row="3" Orientation="Horizontal">
+                        <TextBlock Text="Длительность: "/>
+                        <TextBox Text="{Binding Service.Days, StringFormat={}{0} дней}"/>
+                    </StackPanel>
+                    <Border Grid.Row="4" Style="{StaticResource BorderHeader}">
+                        <TextBlock Style="{StaticResource TblCenter}" Text="Данные по бронированию"/>
+                    </Border>
+                </Grid>  
+            </ScrollViewer>
+        </Border>
+    </Grid>
+</UserControl>

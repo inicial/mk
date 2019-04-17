@@ -1,0 +1,60 @@
+﻿<UserControl x:Class="WpfControlLibrary.View.CorresponednceRequestView3"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:behaviors="clr-namespace:WpfControlLibrary.Behaviors"
+             xmlns:helpers="clr-namespace:WpfControlLibrary.Helpers"
+             xmlns:converters="clr-namespace:WpfControlLibrary.View.Converters"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             xmlns:fastColoredTextBoxNs="clr-namespace:FastColoredTextBoxNS;assembly=FastColoredTextBox"
+             xmlns:view="clr-namespace:WpfControlLibrary.View"
+             xmlns:htmlEditor="clr-namespace:Smith.WPF.HtmlEditor;assembly=Smith.WPF.HtmlEditor"
+             mc:Ignorable="d" 
+             d:DesignHeight="400" d:DesignWidth="600" Loaded="UserControl_Loaded">
+    <UserControl.Resources>
+		<ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/WpfControlLibrary;component/Resources/ButtonResources.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+            <converters:BooleanToVisibilityConverter  x:Key="BooleanToVisibilityConverterInvert" True="Visible" False="Collapsed" />
+
+            <DataTemplate x:Key="ListViewItemTemplate" DataType="ListViewItem">
+                <!--<Border BorderBrush="Brown" BorderThickness="1">
+                    <TextBlock Text="{Binding .}"/>
+                </Border>-->
+                <htmlEditor:HtmlEditor CommandBarEnabled="False"/>
+                <!--<view:HtmlControlView DataContext="{Binding .}"/>-->
+            </DataTemplate>
+            
+        </ResourceDictionary>
+
+    </UserControl.Resources>
+    
+    <Grid Background="{Binding Brush}">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Border Margin="5" Background="White" BorderBrush="Gray" BorderThickness="1" CornerRadius="2">
+            <ListView ItemsSource="{Binding Corresp.Messages}" ItemTemplate="{StaticResource ListViewItemTemplate}"/>
+        </Border>
+        <Grid Margin="5" Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="120"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Border BorderBrush="Gray" BorderThickness="1" Margin="0,0,5,0" CornerRadius="2">
+                <htmlEditor:HtmlEditor CommandBarEnabled="True" Name="Editor"/>
+            </Border>
+            <Button Margin="5,0,0,0" VerticalAlignment="Bottom" x:Name="Button" Height="26" Style="{StaticResource BurlyWoodButton}" FontWeight="SemiBold" 
+                Content="Отправить" Grid.Column="1" Click="Button_OnClick" IsEnabled="{Binding NewMessageEnabled}"/>
+            <Button Command="{Binding CloseButtonCommand}" Visibility="{Binding CloseButtonVisible, Converter={StaticResource BooleanToVisibilityConverterInvert}}" Grid.Column="2" VerticalAlignment="Top" Margin="5,-5,-5,0" Name="CloseButton" HorizontalAlignment="Right" Style="{StaticResource CloseButton}"/>
+        </Grid>
+        <GridSplitter ShowsPreview="True" Background="Black" ResizeDirection="Rows" Grid.Row="1" Width="5" VerticalAlignment="Center" HorizontalAlignment="Stretch"></GridSplitter>
+    </Grid>
+</UserControl>

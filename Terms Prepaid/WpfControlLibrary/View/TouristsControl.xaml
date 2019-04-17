@@ -1,0 +1,104 @@
+﻿<UserControl x:Class="WpfControlLibrary.View.TouristsControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:util="clr-namespace:WpfControlLibrary.Util"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             mc:Ignorable="d" 
+             d:DesignHeight="200" d:DesignWidth="300">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/WpfControlLibrary;component/Resources/Resources.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+            <Style x:Key="ContactItem"  TargetType="{x:Type ListViewItem}">
+                <Setter Property="Focusable" Value="false"/>
+                <Setter Property="BorderThickness" Value="0"/>
+                <Setter Property="Background" Value="White"/>
+                <Setter Property="Margin" Value="0,0,0,0"/>
+            </Style>
+
+            <Style x:Key="ContactBox" TargetType="{x:Type TextBox}">
+                <Setter Property="VerticalAlignment" Value="Bottom"/>
+                <Setter Property="Background" Value="White"/>
+                <Setter Property="BorderThickness" Value="0"/>
+                <Setter Property="IsReadOnly" Value="True"/>
+                <Setter Property="FontFamily" Value="{StaticResource DefaultFont}"/>
+            </Style>
+
+            <Style x:Key="ContactBorder" TargetType="{x:Type Border}">
+                <Setter Property="BorderThickness" Value="1"/>
+                <Setter Property="BorderBrush" Value="Black"/>
+            </Style>
+
+            <Style x:Key="TblockContact" TargetType="{x:Type TextBlock}">
+                <Setter Property="VerticalAlignment" Value="Bottom"/>
+                <Setter Property="Background" Value="Transparent"/>
+                <Setter Property="FontFamily" Value="{StaticResource DefaultFont}"/>
+            </Style>
+
+            <Style x:Key="TboxContact" TargetType="{x:Type TextBox}">
+                <Setter Property="VerticalAlignment" Value="Bottom"/>
+                <Setter Property="Background" Value="Transparent"/>
+                <Setter Property="BorderThickness" Value="0"/>
+                <Setter Property="IsReadOnly" Value="True"/>
+                <Setter Property="FontFamily" Value="{StaticResource DefaultFont}"/>
+                <Setter Property="FontWeight" Value="Bold"/>
+            </Style>
+
+            <DataTemplate x:Key="ContactValue_">
+                <!--
+                <Border Style="{StaticResource BonusBorder}">
+                <Border BorderThickness="1" BorderBrush="Gray">
+
+                </Border>
+-->
+                <TextBox Style="{StaticResource ContactBox}" VerticalAlignment="Center" Text="{Binding Value}"/>
+            </DataTemplate>
+
+            <DataTemplate x:Key="ContactValue">
+                <Grid x:Name="Grid">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1.1*"></ColumnDefinition>
+                        <ColumnDefinition Width="1.9*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Margin="0" Style="{StaticResource TblockContact}" VerticalAlignment="Center" Grid.Column="0" Text="{Binding Name, StringFormat={}{0}:}"/>
+                    <TextBox Margin="0" Style="{StaticResource TboxContact}" Grid.Column="1" VerticalAlignment="Center" Text="{Binding Value}"/>
+                </Grid>
+            </DataTemplate>
+
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <!--    
+    <Grid Background="{StaticResource ActiveServiceBackground}">
+    <Grid Background="White">
+-->
+    <!--
+    <Grid Background="{StaticResource ActiveServiceBackground}">
+-->
+    <Grid Background="White">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <ScrollViewer VerticalAlignment="Stretch" VerticalScrollBarVisibility="Auto">
+
+            <ListView Name="TouristsListControl" Grid.Row="0" Grid.Column="0" 
+                  ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
+                  HorizontalContentAlignment="Stretch" 
+                  ItemContainerStyle="{StaticResource ContactItem}" 
+                  ItemTemplate="{StaticResource ContactValue}"/>
+
+        </ScrollViewer>
+
+    </Grid>
+</UserControl>

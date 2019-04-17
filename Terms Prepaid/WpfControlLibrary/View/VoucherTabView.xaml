@@ -1,0 +1,476 @@
+﻿<UserControl x:Class="WpfControlLibrary.View.VoucherTabView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:util="clr-namespace:WpfControlLibrary.Util"
+             xmlns:view="clr-namespace:WpfControlLibrary.View"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <ResourceDictionary>
+
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/WpfControlLibrary;component/Resources/Resources.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+            <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource TbNoEdit}">
+                <Setter Property="Margin" Value="5,0,0,0" />
+            </Style>
+
+            <util:BronNumberConverter x:Key="BronNumberConverter"/>
+            <util:TwoValueEqualsConverter x:Key="TwoValueEqualsConverter"/>
+
+            <Style x:Key="CostEqualHide" TargetType="FrameworkElement">
+                <Style.Triggers>
+                    <DataTrigger Value="True">
+                        <DataTrigger.Binding>
+                            <MultiBinding Converter="{StaticResource TwoValueEqualsConverter}">
+                                <Binding Path="Voucher.Cost"/>
+                                <Binding Path="Voucher.PpaymentSum"/>
+                            </MultiBinding>
+                        </DataTrigger.Binding>
+                        <Setter Property="Visibility" Value="Collapsed"/>
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+
+            <Style x:Key="DataEqualHide" TargetType="FrameworkElement">
+                <Style.Triggers>
+                    <DataTrigger Value="True">
+                        <DataTrigger.Binding>
+                            <MultiBinding Converter="{StaticResource TwoValueEqualsConverter}">
+                                <Binding Path="Voucher.PaymentDate"/>
+                                <Binding Path="Voucher.PpaymentDate"/>
+                            </MultiBinding>
+                        </DataTrigger.Binding>
+                        <Setter Property="Visibility" Value="Collapsed"/>
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+
+            <Style x:Key="DiscountIsNullHide" TargetType="FrameworkElement">
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding Path=Voucher.DiscountSum}" Value="0">
+                        <Setter Property="Visibility" Value="Collapsed"/>
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+
+            <Style x:Key="BorderInList" TargetType="{x:Type Border}">
+                <Setter Property="Margin" Value="1,5,1,5"/>
+                <Setter Property="Padding" Value="1,1,1,1"/>
+                <Setter Property="Width" Value="370"/>
+                <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                <Setter Property="BorderBrush" Value="DimGray"/>
+                <Setter Property="BorderThickness" Value="0"/>
+                <Setter Property="Background" Value="Beige"/>
+                <Setter Property="CornerRadius" Value="0"/>
+            </Style>
+
+            <ControlTemplate x:Key="Head" TargetType="{x:Type Control}">
+                <StackPanel Background="{StaticResource DarkYellowHeaderBrush}" Orientation="Vertical">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="1"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="3*"/>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="2*"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0" Grid.Row="0" Orientation="Horizontal">
+                            <TextBox Style="{StaticResource TboxHeader2}"  HorizontalAlignment="Left" Text="{Binding ServiceNumber, Mode=OneWay, StringFormat=\{0\}.}"/>
+                            <TextBox Foreground="ForestGreen" Style="{StaticResource TboxHeader2}"  HorizontalAlignment="Left" Text="{Binding ServiceType, Mode=OneWay}"/>
+                        </StackPanel>
+                        <TextBox Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" Text="{Binding Number, Mode=OneWay, StringFormat='\{0\} pax'}"/>
+                        <TextBox Grid.Column="2" Grid.Row="0" HorizontalAlignment="Right" Style="{StaticResource TbNoEdit}" Text="{Binding Duration, Mode=OneWay}"/>
+                        <Rectangle Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Fill="LightGray"/>
+                    </Grid>
+                    
+                </StackPanel>
+		    </ControlTemplate>
+
+            <!-- ЗАГОЛОВОК ДЛЯ АВИАПЕРЕЛЕТОВ -->
+            <ControlTemplate x:Key="HeadForAvia" TargetType="{x:Type Control}">
+                <StackPanel Background="{StaticResource DarkYellowHeaderBrush}" Orientation="Vertical">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="1"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="3*"/>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="2*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Grid.Column="0" Grid.Row="0" Orientation="Horizontal">
+                            <TextBlock Style="{StaticResource TblockHeader2}"  HorizontalAlignment="Left" Text="{Binding ServiceNumber, Mode=OneWay, StringFormat=\{0\}.}"/>
+                            <TextBox Foreground="ForestGreen" Style="{StaticResource TboxHeader2}" HorizontalAlignment="Left" Text="{Binding ServiceType, Mode=OneWay}"/>
+                        </StackPanel>
+                        <TextBox Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" Text="{Binding Number, Mode=OneWay, StringFormat='\{0\} pax'}"/>
+                        <TextBox Grid.Column="2" Grid.Row="0" Style="{StaticResource TbNoEdit}" HorizontalAlignment="Right" Text="{Binding BookingAvia.Duration, Mode=OneWay}"/>
+                        <Rectangle Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Fill="LightGray"/>
+                    </Grid>
+                </StackPanel>
+            </ControlTemplate>
+
+            <!-- ЗАГОЛОВОК ДЛЯ СТРАХОВОК -->
+            <ControlTemplate x:Key="HeadForInshur" TargetType="{x:Type Control}">
+                <StackPanel Background="{StaticResource DarkYellowHeaderBrush}" Orientation="Vertical">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="1"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="5*"/>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="0*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Grid.Column="0" Grid.Row="0" Orientation="Horizontal">
+                            <!--
+                            <TextBlock Style="{StaticResource TblockHeader2}"  HorizontalAlignment="Left" Text="{Binding ServiceNumber, Mode=OneWay, StringFormat=\{0\}.}"/>
+                            -->
+                            <TextBlock Style="{StaticResource TblockHeader2}"  HorizontalAlignment="Left" Text="  "/>
+                            <TextBox Foreground="ForestGreen" Style="{StaticResource TboxHeader2}" HorizontalAlignment="Left" Text="{Binding ServiceType, Mode=OneWay}"/>
+                        </StackPanel>
+                        <TextBox Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" Text="{Binding Number, Mode=OneWay, StringFormat='\{0\} pax'}"/>
+                        <TextBox Grid.Column="2" Grid.Row="0" Style="{StaticResource TbNoEdit}" HorizontalAlignment="Right" Text="{Binding BookingAvia.Duration, Mode=OneWay}"/>
+                        <Rectangle Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Fill="LightGray"/>
+                    </Grid>
+                </StackPanel>
+            </ControlTemplate>
+
+            <!-- ЗАГОЛОВОК ДЛЯ ТРАНСФЕРОВ -->
+            <ControlTemplate x:Key="HeadForTransfer" TargetType="{x:Type Control}">
+                <StackPanel Background="{StaticResource DarkYellowHeaderBrush}" Orientation="Vertical">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="1"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="3*"/>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="2*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Grid.Column="0" Grid.Row="0" Orientation="Horizontal">
+                            <!--
+                            <TextBlock Style="{StaticResource TblockHeader2}"  HorizontalAlignment="Left" Text="{Binding ServiceNumber, Mode=OneWay, StringFormat=\{0\}.}"/>
+                            -->
+                            <TextBlock Style="{StaticResource TblockHeader2}"  HorizontalAlignment="Left" Text="  "/>
+                            <TextBox Foreground="ForestGreen" Style="{StaticResource TboxHeader2}" HorizontalAlignment="Left" Text="{Binding ServiceType, Mode=OneWay}"/>
+                        </StackPanel>
+                        <TextBox Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" Text="{Binding Number, Mode=OneWay, StringFormat='\{0\} pax'}"/>
+                        <TextBox Grid.Column="2" Grid.Row="0" Style="{StaticResource TbNoEdit}" HorizontalAlignment="Right" Text="{Binding BookingAvia.Duration, Mode=OneWay}"/>
+                        <Rectangle Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Fill="LightGray"/>
+                    </Grid>
+                </StackPanel>
+            </ControlTemplate>
+
+            <!-- ЗАГОЛОВОК ДЛЯ ВИЗ, ОТ КОТОРЫХ ОТКАЗАЛИСЬ -->
+            <ControlTemplate x:Key="HeadForVisaCanceled" TargetType="{x:Type Control}">
+                <StackPanel Background="{StaticResource DarkYellowHeaderBrush}" Orientation="Vertical">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="1"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Grid.Column="0" Grid.Row="0" Orientation="Horizontal">
+                            <TextBlock Style="{StaticResource TblockHeader2}"  HorizontalAlignment="Left" Text="  "/>
+                            <TextBox Foreground="ForestGreen" Style="{StaticResource TboxHeader2}" HorizontalAlignment="Left" Text="{Binding ServiceType, Mode=OneWay}"/>
+                        </StackPanel>
+                        <Rectangle Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Fill="LightGray"/>
+                    </Grid>
+                </StackPanel>
+            </ControlTemplate>
+
+            <ControlTemplate x:Key="StatusAndDateControl">
+                <ControlTemplate.Resources>
+                    <Style TargetType="TextBlock" BasedOn="{StaticResource TblockHeader2}">
+                        <Setter Property="FontSize" Value="13"></Setter>
+                    </Style>
+                    <Style TargetType="TextBox" BasedOn="{StaticResource TboxHeader2}">
+                        <Setter Property="FontSize" Value="13"></Setter>
+                    </Style>
+                </ControlTemplate.Resources>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Статус:"/>
+                    <Border BorderBrush="{StaticResource DarkYellowHeaderBrush}" BorderThickness="1" Grid.Column="1">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBox Grid.Column="0" Foreground="Green" Text="{Binding Status, Mode=OneWay}"/>
+                            <TextBox Grid.Column="1" Foreground="Green" Text="{Binding ServiceSetting.Setting.DateChange, Mode=OneWay}"/>
+                        </Grid>
+                    </Border>
+                </Grid>
+            </ControlTemplate>
+            
+            <DataTemplate x:Key="VoucherInfoRow">
+                <Grid x:Name="Grid">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="150"></ColumnDefinition>
+                        <ColumnDefinition Width="100"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Margin="0,0,0,0" VerticalAlignment="Center" Text="{Binding Name, StringFormat={}{0}:}"/>
+                    <TextBox Grid.Column="1" Margin="0,0,0,0" VerticalAlignment="Center" FontSize="12" Text="{Binding Value}"/>
+                </Grid>
+            </DataTemplate>
+
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid x:Name="Grid">
+        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+
+        <Border VerticalAlignment="Top" Margin="4,0,0,0" BorderBrush="Gray" BorderThickness="0">
+        	<StackPanel Orientation="Horizontal">
+                <TextBox VerticalAlignment="Center" Text="Услуги:" FontFamily="Times New Roman" FontWeight="Bold"/>
+                <TextBox VerticalAlignment="Center" Style="{StaticResource TbNoEdit}" Text="{Binding Voucher.SeviceCount, StringFormat={}({0})}"/>
+        	</StackPanel>
+        </Border>
+
+        <view:VoucherInfoView Grid.Row="0" Grid.Column="1" DataContext="{Binding Voucher.VoucherSettingInfo}"/>
+        
+        <!--<ListView Grid.Row="0" Grid.Column="1" ItemsSource="{Binding Voucher.VoucherSettingInfo.Info}" ItemTemplate="{StaticResource VoucherInfoRow}"
+            ItemContainerStyle="{StaticResource LvItemStyle}" ItemsPanel="{StaticResource IpTemplate}"/>-->
+
+        <ScrollViewer PreviewMouseWheel="UIElement_OnPreviewMouseWheel" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,-5,0,0" VerticalScrollBarVisibility="Auto">
+            <StackPanel Orientation="Vertical">
+
+                <!-- КРУИЗЫ -->
+                <ListView x:Name="ListBoxCruises" ItemsSource="{Binding Voucher.CruiseServiceList, Mode=OneWay}" 
+        			ItemContainerStyle="{StaticResource LvItemStyle}" ItemsPanel="{StaticResource IpTemplate}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <DataTemplate.Resources>
+                                <Style TargetType="TextBlock" BasedOn="{StaticResource TblockHeader2}"/>
+                            </DataTemplate.Resources>
+                            <Border Style="{StaticResource BorderInList}">
+                                <StackPanel Orientation="Vertical">
+                                    <Control Template="{DynamicResource Head}"/>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Маршрут:"/>
+                                        <TextBox Text="{Binding Route, Mode=OneWay}"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Компания:"/>
+                                        <TextBox Text="{Binding BrandName, Mode=OneWay}"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Корабль:"/>
+                                        <TextBox Text="{Binding ShipName, Mode=OneWay}"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Категория:"/>
+                                        <TextBox Text="{Binding Category, Mode=OneWay}"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="№ Каюты:"/>
+                                        <TextBox Style="{StaticResource TbNoEdit}" Text="{Binding CabinNumber, Mode=OneWay}"/>
+                                    </StackPanel>
+                                    <Control Template="{StaticResource StatusAndDateControl}"/>
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+                
+                <!-- АВИАПЕРЕЛЕТЫ -->
+                <ListView x:Name="ListBoxAvia" ItemsSource="{Binding Voucher.AviaServiceList, Mode=OneWay}" 
+        			ItemContainerStyle="{StaticResource LvItemStyle}" ItemsPanel="{StaticResource IpTemplate}" Margin="0,-5,0,0" >
+        			<ListView.ItemTemplate >
+        				<DataTemplate>
+                            <DataTemplate.Resources>
+                                <Style TargetType="TextBlock" BasedOn="{StaticResource TblockHeader2}"/>
+                            </DataTemplate.Resources>
+                            <Border Style="{StaticResource BorderInList}">
+        						<StackPanel Orientation="Vertical">
+                                    <Control Template="{DynamicResource HeadForAvia}"/>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Маршрут:"/>
+                                        <TextBox Width="300" Text="{Binding BookingAvia.Route, Mode=OneWay}"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Номер брони партнера:"/>
+                                        <TextBox Text="{Binding BookingAvia.Number, Mode=OneWay, Converter={StaticResource BronNumberConverter}}"/>
+                                    </StackPanel>
+                                    <Control Template="{StaticResource StatusAndDateControl}"/>
+                                </StackPanel>
+        					</Border>    
+        				</DataTemplate>
+        			</ListView.ItemTemplate>
+        		</ListView>
+
+                <!-- СТРАХОВКИ -->
+                <ListView x:Name="ListBoxInshur" ItemsSource="{Binding Voucher.InshurServiceList, Mode=OneWay}" 
+        			ItemContainerStyle="{StaticResource LvItemStyle}" ItemsPanel="{StaticResource IpTemplate}" Margin="0,-5,0,0" >
+                    <ListView.ItemTemplate >
+                        <DataTemplate>
+                            <DataTemplate.Resources>
+                                <Style TargetType="TextBlock" BasedOn="{StaticResource TblockHeader2}"/>
+                            </DataTemplate.Resources>
+                            <Border Style="{StaticResource BorderInList}">
+                                <StackPanel Orientation="Vertical">
+                                    <Control Template="{DynamicResource HeadForInshur}"/>
+                                    <!--
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Маршрут:"/>
+                                        <TextBox Width="300" Text="{Binding BookingAvia.Route, Mode=OneWay}"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Номер брони партнера:"/>
+                                        <TextBox Text="{Binding BookingAvia.Number, Mode=OneWay, Converter={StaticResource BronNumberConverter}}"/>
+                                    </StackPanel>
+                                    <Control Template="{StaticResource StatusAndDateControl}"/>
+                                    -->
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+
+                <!-- ОТЕЛИ -->
+                <ListView x:Name="ListBoxHotel" ItemsSource="{Binding Voucher.HotelServiceList, Mode=OneWay}" 
+        			ItemContainerStyle="{StaticResource LvItemStyle}" ItemsPanel="{StaticResource IpTemplate}" Margin="0,-5,0,0" >
+                    <ListView.ItemTemplate >
+                        <DataTemplate>
+                            <DataTemplate.Resources>
+                                <Style TargetType="TextBlock" BasedOn="{StaticResource TblockHeader2}"/>
+                            </DataTemplate.Resources>
+                            <Border Style="{StaticResource BorderInList}">
+                                <StackPanel Orientation="Vertical">
+                                    <Control Template="{DynamicResource HeadForInshur}"/>
+                                    <!--
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Маршрут:"/>
+                                        <TextBox Width="300" Text="{Binding BookingAvia.Route, Mode=OneWay}"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Номер брони партнера:"/>
+                                        <TextBox Text="{Binding BookingAvia.Number, Mode=OneWay, Converter={StaticResource BronNumberConverter}}"/>
+                                    </StackPanel>
+                                    <Control Template="{StaticResource StatusAndDateControl}"/>
+                                    -->
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+
+                <!-- ТРАНСФЕРЫ -->
+                <ListView x:Name="ListBoxTransfer" ItemsSource="{Binding Voucher.TransferServiceList, Mode=OneWay}" 
+        			ItemContainerStyle="{StaticResource LvItemStyle}" ItemsPanel="{StaticResource IpTemplate}" Margin="0,-5,0,0" >
+                    <ListView.ItemTemplate >
+                        <DataTemplate>
+                            <DataTemplate.Resources>
+                                <Style TargetType="TextBlock" BasedOn="{StaticResource TblockHeader2}"/>
+                            </DataTemplate.Resources>
+                            <Border Style="{StaticResource BorderInList}">
+                                <StackPanel Orientation="Vertical">
+                                    <Control Template="{DynamicResource HeadForInshur}"/>
+                                    <!--
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Маршрут:"/>
+                                        <TextBox Width="300" Text="{Binding BookingAvia.Route, Mode=OneWay}"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Номер брони партнера:"/>
+                                        <TextBox Text="{Binding BookingAvia.Number, Mode=OneWay, Converter={StaticResource BronNumberConverter}}"/>
+                                    </StackPanel>
+                                    <Control Template="{StaticResource StatusAndDateControl}"/>
+                                    -->
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+
+                <!-- ВИЗЫ -->
+                <ListView x:Name="ListBoxVisa" ItemsSource="{Binding Voucher.VisaServiceList, Mode=OneWay}" 
+        			ItemContainerStyle="{StaticResource LvItemStyle}" ItemsPanel="{StaticResource IpTemplate}" Margin="0,-5,0,0" >
+                    <ListView.ItemTemplate >
+                        <DataTemplate>
+                            <DataTemplate.Resources>
+                                <Style TargetType="TextBlock" BasedOn="{StaticResource TblockHeader2}"/>
+                            </DataTemplate.Resources>
+                            <Border Style="{StaticResource BorderInList}">
+                                <StackPanel Orientation="Vertical">
+                                    <Control Template="{DynamicResource HeadForInshur}"/>                                    
+                                    <!--
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Маршрут:"/>
+                                        <TextBox Width="300" Text="{Binding BookingAvia.Route, Mode=OneWay}"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Номер брони партнера:"/>
+                                        <TextBox Text="{Binding BookingAvia.Number, Mode=OneWay, Converter={StaticResource BronNumberConverter}}"/>
+                                    </StackPanel>
+                                    <Control Template="{StaticResource StatusAndDateControl}"/>
+                                    -->
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+
+                <!-- ВИЗЫ, ОТ КОТОРЫХ ОТКАЗАЛИСЬ -->
+                <ListView x:Name="ListBoxVisaCanceled" ItemsSource="{Binding Voucher.VisaCanceledServiceList, Mode=OneWay}" 
+        			ItemContainerStyle="{StaticResource LvItemStyle}" ItemsPanel="{StaticResource IpTemplate}" Margin="0,-5,0,0" >
+                    <ListView.ItemTemplate >
+                        <DataTemplate>
+                            <DataTemplate.Resources>
+                                <Style TargetType="TextBlock" BasedOn="{StaticResource TblockHeader2}"/>
+                            </DataTemplate.Resources>
+                            <Border Style="{StaticResource BorderInList}">
+                                <StackPanel Orientation="Vertical">
+                                    <Control Template="{DynamicResource HeadForVisaCanceled}"/>
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+
+                <!-- ПРОЧИЕ УСЛУГИ: ШТРАФЫ и т.д. ... -->
+                <ListView x:Name="ListBoxOther" ItemsSource="{Binding Voucher.OtherServiceList, Mode=OneWay}" 
+        			ItemContainerStyle="{StaticResource LvItemStyle}" ItemsPanel="{StaticResource IpTemplate}" Margin="0,-5,0,0" >
+        			<ListView.ItemTemplate>
+        				<DataTemplate>
+                            <DataTemplate.Resources>
+                                <Style TargetType="TextBlock" BasedOn="{StaticResource TblockHeader2}"/>
+                            </DataTemplate.Resources>
+                            <Border Style="{StaticResource BorderInList}">
+        						<StackPanel Orientation="Vertical">
+                                    <Control Template="{DynamicResource Head}"/>
+        						</StackPanel>
+        					</Border>
+        				</DataTemplate>
+        			</ListView.ItemTemplate>
+        		</ListView>
+        	</StackPanel>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

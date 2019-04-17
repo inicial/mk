@@ -1,0 +1,123 @@
+﻿<UserControl x:Class="WpfControlLibrary.View.VaucherViewGroup"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:util="clr-namespace:WpfControlLibrary.Util"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="900">
+    <UserControl.Resources>
+        <ResourceDictionary>
+
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/WpfControlLibrary;component/Resources/Resources.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+            <util:EmptyStringIfNullConverter x:Key="EmptyStringIfNullConverter" />
+
+            <Style x:Key="DataGridBaseCellStyle" TargetType="DataGridCell">
+                <Setter Property="VerticalAlignment" Value="Center" />
+                <Setter Property="BorderThickness" Value="0"/>
+                <Setter Property="BorderBrush" Value="Gray"/>
+                <Setter Property="Height" Value="20"/>
+                <Setter Property="FontFamily" Value="{StaticResource DefaultFont}"></Setter>
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding Path=ColorIndex, Mode=OneWay}" Value="0">
+                        <Setter Property="Background" Value="White"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding Path=ColorIndex, Mode=OneWay}" Value="1">
+                        <Setter Property="Background" Value="LightGray"/>
+                    </DataTrigger>
+                    <Trigger Property="IsSelected" Value="True">
+                        <Setter Property="Background" Value="DeepSkyBlue" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+
+            <Style x:Key="DataGridCellStyle" TargetType="DataGridCell" BasedOn="{StaticResource DataGridBaseCellStyle}">
+                <Setter Property="BorderThickness" Value="0,0,0,1"/>
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding Path=BeginClass, Mode=OneWay}" Value="true">
+                        <Setter Property="BorderThickness" Value="0,0.5,0,1"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding Path=MidClass, Mode=OneWay}" Value="true">
+                        <Setter Property="BorderThickness" Value="0,0,0,1"/>
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+
+            <Style x:Key="DataGridGroupCellStyle" TargetType="DataGridCell" BasedOn="{StaticResource DataGridBaseCellStyle}">
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding Path=BeginClass, Mode=OneWay}" Value="true">
+                        <Setter Property="BorderThickness" Value="0,0,0,0"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding Path=EndClass, Mode=OneWay}" Value="true">
+                        <Setter Property="BorderThickness" Value="0,0,0,1"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding Path=MidClass, Mode=OneWay}" Value="true">
+                        <Setter Property="BorderThickness" Value="0,0,0,1"/>
+                    </DataTrigger>
+
+                </Style.Triggers>
+            </Style>
+
+            <Style x:Key="HeaderStyle" BasedOn="{StaticResource HeaderStyleBase}" TargetType="DataGridColumnHeader">
+                <Setter Property="ToolTip" Value="День начала предоставления услуги"/>
+            </Style>
+
+            <Style x:Key="HeaderStyle2" BasedOn="{StaticResource HeaderStyleBase}" TargetType="DataGridColumnHeader">
+                <Setter Property="Margin" Value="8,0,0,0"/>
+            </Style>
+
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto" PreviewMouseWheel="UIElement_OnPreviewMouseWheel">
+        <StackPanel Orientation="Vertical">
+            <DataGrid x:Name="Grid" SelectionChanged="Selector_OnSelectionChanged" SelectionMode="Single" ColumnHeaderStyle="{StaticResource HeaderStyleBase}" 
+                      RowHeaderWidth="0" CanUserSortColumns="False" SelectedItem="{Binding SelectedService, Mode=TwoWay}" 
+                      GridLinesVisibility="Vertical" VerticalGridLinesBrush="Gray" Width="Auto" 
+                      ItemsSource="{Binding Path=Voucher.ServiceList}" AutoGenerateColumns="false">
+
+                <DataGrid.Columns>
+                    <DataGridTextColumn  HeaderStyle="{StaticResource HeaderStyle}"  CellStyle="{StaticResource DataGridCellStyle}" Header="День" Binding="{Binding Path=Day, Mode=OneWay}"/>
+                    <DataGridTextColumn HeaderStyle="{StaticResource HeaderStyle2}"  CellStyle="{StaticResource DataGridCellStyle}" Header="Дата заезда" Width="55" Binding="{Binding Path=Date, StringFormat=dd.MM.yy, Mode=OneWay}"/>
+                    <DataGridTextColumn CellStyle="{StaticResource DataGridCellStyle}" Header="Д/Н" Binding="{Binding Path=Days, Mode=OneWay, Converter={StaticResource EmptyStringIfNullConverter}}"/>
+                    <DataGridTextColumn CellStyle="{StaticResource DataGridCellStyle}" MaxWidth="567" Header="Услуга" Binding="{Binding Path=ServiceName, Mode=OneWay}"/>
+                    <DataGridTextColumn CellStyle="{StaticResource DataGridGroupCellStyle}" MaxWidth="50"  Header="Pах" Binding="{Binding Path=NumberString, Mode=OneWay}"/>
+                    <DataGridTextColumn CellStyle="{StaticResource DataGridGroupCellStyle}" Header="Нетто" Binding="{Binding Path=NettoString, StringFormat={}{0:F0}, Mode=OneWay, 
+                        Converter={StaticResource EmptyStringIfNullConverter}}"/>
+                    <DataGridTextColumn CellStyle="{StaticResource DataGridGroupCellStyle}" Header="Брутто" Binding="{Binding Path=BruttoString, StringFormat={}{0:F0}, Mode=OneWay, 
+                        Converter={StaticResource EmptyStringIfNullConverter}}"/>
+                    <DataGridTextColumn CellStyle="{StaticResource DataGridGroupCellStyle}" Header="Состояние" Binding="{Binding Path=Status, StringFormat={}{0:F0}, Mode=OneWay}"/>
+                    
+                    <!--
+                    <DataGridTextColumn CellStyle="{StaticResource DataGridGroupCellStyle}" Header="Состояние" >
+                        <DataGridTextColumn.Binding>
+                            <MultiBinding Converter="{StaticResource VoucherViewGroupStatusConverter}">
+                                <Binding Path="StatusSetting.StatusValue" Mode="OneWay"/>
+                                <Binding Path="StatusSetting.DateChange" Mode="OneWay"/>
+                            </MultiBinding>
+                        </DataGridTextColumn.Binding>
+                    </DataGridTextColumn>-->
+                    <!--
+                    <DataGridTemplateColumn CellStyle="{StaticResource DataGridGroupCellStyle}" Header="Состояние">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Vertical">
+                                    <TextBlock Text="{Binding Path=StatusSetting.StatusValue, Mode=OneWay}"/>
+                                    <TextBlock Text="{Binding Path=StatusSetting.DateChange, Mode=OneWay, StringFormat={}dd.MM.yy HH.mm}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>-->
+
+                </DataGrid.Columns>
+                <DataGrid.InputBindings>
+                    <KeyBinding Key="Select" Command="{Binding SelectServiceCommand}" />
+                </DataGrid.InputBindings>
+            </DataGrid>
+        </StackPanel>
+    </ScrollViewer>
+
+</UserControl>

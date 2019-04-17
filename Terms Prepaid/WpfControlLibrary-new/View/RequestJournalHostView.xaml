@@ -1,0 +1,15 @@
+﻿<Window x:Class="WpfControlLibrary.View.RequestsJournalHostView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:wpfControlLibrary="clr-namespace:WpfControlLibrary"
+        xmlns:view="clr-namespace:WpfControlLibrary.View"
+        Title="Журнал заявок" WindowState="Maximized">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <!--<ContentPresenter VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Content="{Binding View}"/>-->
+        <wpfControlLibrary:RequestsJournalView2 VerticalAlignment="Stretch" DataContext="{Binding Vm}"/>
+        <!--<view:RequestMessagesView></view:RequestMessagesView>-->
+    </Grid>
+</Window>

@@ -1,0 +1,43 @@
+﻿<UserControl x:Class="WpfControlLibrary.AddingServiceControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="100" d:DesignWidth="300">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/WPF.Bootstrap;component/Themes/Default.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <StackPanel HorizontalAlignment="Left" VerticalAlignment="Top">
+        <Border Margin="0,0,0,0"  Name="border" Background="#00000000" BorderBrush="#00000000"   BorderThickness="1" Height="5"  Width="200"></Border>
+        <Popup HorizontalOffset="59" AllowsTransparency="True" PopupAnimation="None" StaysOpen="true" x:Name="popupOption" PlacementTarget="{Binding ElementName=border}">
+            <StackPanel HorizontalAlignment="Left" Orientation="Vertical">
+                <ToggleButton Name="btnOption" Margin="5,0,0,0" Height="45" Width="250" Style="{StaticResource DangerToggleButton}" 
+                              Checked="btnOption_Checked" Unchecked="btnOption_Unchecked">
+                    <StackPanel Orientation="Horizontal">
+                        <!--<Image Source="img/plane_white.png" />-->
+                        <TextBlock FontSize="18" FontFamily="Arial" FontWeight="Bold" VerticalAlignment="Center" Margin="5,0,0,0">Добавить услугу</TextBlock>
+                    </StackPanel>
+                </ToggleButton>
+            </StackPanel>
+        </Popup>
+
+        <Popup HorizontalOffset="-50" AllowsTransparency="True" PopupAnimation="Slide" StaysOpen="False" x:Name="popupOption2" PlacementTarget="{Binding ElementName=btnOption}">
+            <StackPanel HorizontalAlignment="Left" Orientation="Vertical">
+                <Button Height="50" Width="300" Style="{StaticResource PrimaryButton}" Click="Button_Click">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="img/plane_white.png" />
+                        <TextBlock FontSize="20" FontFamily="Arial" FontWeight="Bold" VerticalAlignment="Center" Margin="5,0,0,0">Авиаперелет</TextBlock>
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+        </Popup>
+    </StackPanel>
+
+</UserControl>

@@ -1,0 +1,77 @@
+﻿<UserControl x:Class="WpfControlLibrary.PostponeOrderButton"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="100" d:DesignWidth="175">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/WPF.Bootstrap;component/Themes/Default.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <Style TargetType="Button" BasedOn="{StaticResource PrimaryButton2}">
+                <Setter Property="Width" Value="165"></Setter>
+                <Setter Property="Height" Value="26"></Setter>
+            </Style>
+
+            <ControlTemplate x:Key="MenuElement1">
+                <Button Click="Button1_Click">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Width="16" Height="16" Source="img/warning_1.ico"/>
+                        <TextBlock Width="120" FontSize="14" FontFamily="Arial" Foreground="DarkBlue"
+                               VerticalAlignment="Center" Margin="5,1,0,0"><Run Text="Приоритет 1"/></TextBlock>
+                    </StackPanel>
+                </Button>
+
+            </ControlTemplate>
+
+            <ControlTemplate x:Key="MenuElement2">
+                <Button Click="Button2_Click">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Width="16" Height="16" Source="img/warning_2.ico"/>
+                        <TextBlock Width="120" FontSize="14" FontFamily="Arial" Foreground="DarkBlue"
+                               VerticalAlignment="Center" Margin="5,1,0,0"><Run Text="Приоритет 2"/></TextBlock>
+                    </StackPanel>
+                </Button>
+            </ControlTemplate>
+
+            <ControlTemplate x:Key="MenuElement3">
+                <Button Click="Button3_Click">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Width="16" Height="16" />
+                        <TextBlock Width="120" FontSize="14" FontFamily="Arial" Foreground="DarkBlue"
+                               VerticalAlignment="Center" Margin="5,1,0,0"><Run Text="Текущая"/></TextBlock>
+                    </StackPanel>
+                </Button>
+            </ControlTemplate>
+
+        </ResourceDictionary>
+    </UserControl.Resources>
+    
+    
+    <StackPanel x:Name="MainStackPanel" HorizontalAlignment="Left" VerticalAlignment="Top">
+        <ToggleButton Name="btnOption" 
+                      Height="38" Width="165" Margin="5,0,0,0" 
+                      FontSize="16" FontFamily="Arial" FontWeight="Bold"  
+                      Style="{StaticResource DangerToggleButton}" 
+                      Unchecked="btnOption_Unchecked" Checked="btnOption_Checked">
+            <TextBlock x:Name="TitleTextBlock" HorizontalAlignment="Center" VerticalAlignment="Center" 
+                       FontSize="14" FontWeight="Normal"
+                       Text="{Binding TitleText}"/>
+        </ToggleButton>
+        
+        <Popup AllowsTransparency="True" PopupAnimation="Slide" StaysOpen="False" x:Name="popupOption" PlacementTarget="{Binding ElementName=btnOption}">
+            <StackPanel HorizontalAlignment="Left" Orientation="Vertical">
+                <!--
+                <Control Template="{StaticResource MenuElement1}" x:Name="MenuItem1" />
+                <Control Template="{StaticResource MenuElement2}" x:Name="MenuItem2" />
+                <Control Template="{StaticResource MenuElement3}" x:Name="MenuItem3" />
+                -->
+            </StackPanel>
+        </Popup>
+    </StackPanel>
+
+</UserControl>

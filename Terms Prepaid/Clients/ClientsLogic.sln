@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClientsLogic", "ClientsLogic.csproj", "{FF8C6FE0-26AF-4D1B-A5E8-32F12B0D033B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "lanta.DirectClientDogovorAdv", "..\DirectClientDogovor\lanta.DirectClientDogovorAdv.csproj", "{830A471F-BCBB-4AC7-9394-E8F5EBDE2101}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FF8C6FE0-26AF-4D1B-A5E8-32F12B0D033B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FF8C6FE0-26AF-4D1B-A5E8-32F12B0D033B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FF8C6FE0-26AF-4D1B-A5E8-32F12B0D033B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FF8C6FE0-26AF-4D1B-A5E8-32F12B0D033B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{830A471F-BCBB-4AC7-9394-E8F5EBDE2101}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{830A471F-BCBB-4AC7-9394-E8F5EBDE2101}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{830A471F-BCBB-4AC7-9394-E8F5EBDE2101}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{830A471F-BCBB-4AC7-9394-E8F5EBDE2101}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

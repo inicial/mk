@@ -1,0 +1,1635 @@
+﻿<UserControl x:Class="WpfControlLibrary.View.CruiseControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:util="clr-namespace:WpfControlLibrary.Util"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             xmlns:i="clr-namespace:WpfControlLibrary.View"
+             mc:Ignorable="d" 
+             d:DesignHeight="900" d:DesignWidth="450">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/WpfControlLibrary;component/Resources/Resources.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+            <Style x:Key="tbBase" TargetType="TextBox" BasedOn="{StaticResource TbSimple}">
+                <Setter Property="IsReadOnly" Value="False"/>
+            </Style>
+
+            <Style x:Key="tbDefault" TargetType="TextBox" BasedOn="{StaticResource tbBase}">
+                <Setter Property="Foreground" Value="Black"/>
+            </Style>
+
+            <Style x:Key="tbDefault2" TargetType="TextBox" BasedOn="{StaticResource tbBase}">
+                <Setter Property="Foreground" Value="Black"/>
+                <Setter Property="Background" Value="#CEEAFD"></Setter>
+            </Style>
+
+            <Style x:Key="tbChanged" TargetType="TextBox"  BasedOn="{StaticResource tbBase}">
+                <Setter Property="Foreground" Value="Crimson"></Setter>
+            </Style>
+
+            <Style x:Key="tbChanged2" TargetType="TextBox"  BasedOn="{StaticResource tbBase}">
+                <Setter Property="Background" Value="LightCyan"></Setter>
+            </Style>
+
+            <util:TextStyleSelector x:Key="TextBoxStyleSelector" DefaultStyle="{StaticResource tbDefault}" ChangedStyle="{StaticResource tbChanged}"/>
+            <util:TextStyleSelector x:Key="TextBoxStyleSelector2" DefaultStyle="{StaticResource tbDefault2}" ChangedStyle="{StaticResource tbChanged2}"/>
+            <util:Inverter x:Key="Inverter"/>
+
+            <util:NullValueConverter x:Key="NullValueConverter"/>
+            <util:NullOnlyValueConverter x:Key="NullOnlyValueConverter"/>
+            <util:GridLengthConverter2 x:Key="GridLengthConverter2"/>
+
+            <Style TargetType="TextBlock" BasedOn="{StaticResource TblockHeader2}"/>
+
+            <Style x:Key="Header2" TargetType="TextBlock" BasedOn="{StaticResource TblockHeader2}">
+                <Setter Property="Foreground" Value="ForestGreen"/>
+            </Style>
+
+            <Style x:Key="Header3" TargetType="TextBlock" BasedOn="{StaticResource TblockHeader2}">
+                <Setter Property="FontFamily" Value="Arial"/>
+                <Setter Property="Foreground" Value="Black"/>
+            </Style>
+
+            <Style x:Key="ListItem2"  TargetType="{x:Type ListViewItem}">
+                <Setter Property="Focusable" Value="false"/>
+                <Setter Property="BorderThickness" Value="1"/>
+                <Setter Property="Background" Value="#00000000"/>
+                <Setter Property="Margin" Value="-3,0,0,-3"/>
+            </Style>
+
+            <Style x:Key="LinerItem"  TargetType="{x:Type TextBlock}">
+                <Setter Property="Background" Value="#FFA4DAB5"/>
+            </Style>
+
+            <Style x:Key="LinerValue"  TargetType="{x:Type TextBox}">
+                <Setter Property="Background" Value="#FFA4DAB5"/>
+            </Style>
+
+            <Style x:Key="ItemInput"  TargetType="{x:Type TextBox}">
+<!--               
+                <Setter Property="Background" Value="#FFFFFFFF"/> 
+-->
+                <Setter Property="Margin" Value="0,5,0,0"></Setter>
+            </Style>
+
+            <Style x:Key="TblockTourist" TargetType="{x:Type TextBlock}">
+                <Setter Property="VerticalAlignment" Value="Bottom"/>
+                <Setter Property="Background" Value="Transparent"/>
+                <Setter Property="FontFamily" Value="{StaticResource DefaultFont}"/>
+            </Style>
+
+            <Style x:Key="SwitchableGrid"  TargetType="Grid">
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding Permission}" Value="0">
+                        <Setter Property="IsEnabled" Value="False"></Setter>
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+
+            <DataTemplate x:Key="KeyValue3">
+                <Grid x:Name="Grid">
+                    <Grid.ColumnDefinitions>
+<!--
+                        <ColumnDefinition Width="1.3*"></ColumnDefinition>
+                        <ColumnDefinition Width="1.7*"></ColumnDefinition>
+-->
+                        <ColumnDefinition Width="160px"></ColumnDefinition>
+                        <ColumnDefinition Width="205px"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Name="ServiceName1" Margin="0" Style="{StaticResource TblockHeader2}" VerticalAlignment="Center" Grid.Row="0" Grid.Column="0" Text="{Binding Name, StringFormat={}{0}:}"/>
+                    <TextBox Name="ServiceValue1" Margin="0" Style="{StaticResource TbNoEdit}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" TextWrapping="NoWrap" Text="{Binding Value}">
+                        <TextBox.ToolTip>
+                            <ToolTip Background="#FFFFFFFF">
+                                <StackPanel>
+                                    <TextBlock Margin="3" Foreground="Black"  Text="{Binding Value}"/>
+                                </StackPanel>
+                            </ToolTip>
+                        </TextBox.ToolTip>
+                    </TextBox>
+                </Grid>
+                <DataTemplate.Triggers>
+                    <DataTrigger Binding="{Binding Name}" Value="Вариант питания">
+<!-- -->
+                        <Setter TargetName="ServiceName1" Property="Visibility" Value="Collapsed"/>
+                        <Setter TargetName="ServiceValue1" Property="Visibility" Value="Collapsed"/>
+<!-- -->
+                    </DataTrigger>
+                </DataTemplate.Triggers>
+            </DataTemplate>
+
+            <DataTemplate x:Key="KeyValue4">
+                <Grid x:Name="Grid">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="20"></RowDefinition>
+                        <RowDefinition Height="3"></RowDefinition>
+                        <RowDefinition Height="20"></RowDefinition>
+                        <RowDefinition Height="10"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1.3*"></ColumnDefinition>
+                        <ColumnDefinition Width="1.7*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    
+                    <TextBlock Name="TouristName" Grid.Row="0" Grid.Column="0" Style="{StaticResource TblockTourist}" VerticalAlignment="Center" Text="{Binding Name}"/>
+                    <TextBox Grid.Row="0" Grid.Column="1" Margin="0" Style="{StaticResource TbNoEdit}" VerticalAlignment="Center" Text="{Binding Value}"/>
+                    <Grid x:Name="TouristGrid" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="20px"></ColumnDefinition>
+                            <ColumnDefinition Width="110px"></ColumnDefinition>
+                            <ColumnDefinition Width="10px"></ColumnDefinition>
+                            <ColumnDefinition Width="100px"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Button Name="btnPassport1" Click="btnPassport1_Click" Grid.Column="1" Height="20" Content="загран.паспорт" Tag="{Binding Name}"/>
+                        <Button Name="btnPassport2" Click="btnPassport2_Click" Grid.Column="3" Height="20" Content="общ.паспорт" Tag="{Binding Name}"/>
+                    </Grid>
+                    
+                </Grid>
+            </DataTemplate>
+
+            <DataTemplate x:Key="KeyValue5">
+                <Grid x:Name="Grid">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="160px"></ColumnDefinition>
+                        <ColumnDefinition Width="205px"></ColumnDefinition>
+<!--
+                        <ColumnDefinition Width="1.3*"></ColumnDefinition>
+                        <ColumnDefinition Width="1.7*"></ColumnDefinition>
+-->                        
+                    </Grid.ColumnDefinitions>
+                    <!--
+                    <Line Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" 
+                          Stretch="Fill" Stroke="DarkGray" X2="1" Margin="0,0,5,0"/>
+                    -->
+                    <TextBlock Grid.Row="1" Grid.Column="0" 
+                               Margin="0,3,0,0"
+                               VerticalAlignment="Center" 
+                               Style="{StaticResource TblockHeader2}" 
+                               Text="{Binding Name, StringFormat={}{0}:}"/>
+                    <TextBox Grid.Row="1" Grid.Column="1" 
+                             Margin="0,3,0,0"
+                             VerticalAlignment="Center" 
+                             TextWrapping="Wrap" 
+                             Style="{StaticResource TbNoEdit}" 
+                             Text="{Binding Value}"/>
+
+                </Grid>
+            </DataTemplate>
+
+
+            <ControlTemplate x:Key="Price">
+                <StackPanel Orientation="Horizontal">
+                    <TextBox Text="{Binding ., StringFormat={}# ###.}"/>
+                    <TextBox Text="{Binding DataContext.Service.Rate, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+                </StackPanel>
+            </ControlTemplate>
+
+            <DataTemplate x:Key="BonusAndService">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <WrapPanel Orientation="Horizontal">
+                        <CheckBox VerticalAlignment="Bottom" IsChecked="{Binding IsRight}" Tag="{Binding Id}">
+                            <TextBlock VerticalAlignment="Bottom" Style="{StaticResource TblockHeader2}" MaxWidth="380">
+                                <AccessText TextWrapping="Wrap" Text="{Binding Name}"/>
+                            </TextBlock>
+                        </CheckBox>
+                        <TextBox MinWidth="50" Name="tblName" Text="{Binding Text, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Bottom" MaxWidth="400" 
+                            TextWrapping="Wrap" Margin="5,5,5,0" Style="{Binding TextChanged, Converter={StaticResource TextBoxStyleSelector}, UpdateSourceTrigger=PropertyChanged}"/>
+                        <GridSplitter/>
+                    </WrapPanel>
+                    <Line Grid.Row="1" Stretch="Fill" Stroke="Gainsboro" X2="1" Margin="0,0,5,0"/>
+                </Grid>
+                <DataTemplate.Triggers>
+                    <DataTrigger Binding="{Binding Text, Converter={StaticResource NullOnlyValueConverter}}" Value="True">
+                        <Setter TargetName="tblName" Property="Visibility" Value="Collapsed"/>
+                    </DataTrigger>
+                </DataTemplate.Triggers>
+            </DataTemplate>
+
+            <DataTemplate x:Key="BonusAndServiceItem">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="160px"></ColumnDefinition>
+                        <ColumnDefinition Width="205px"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Row="0" Grid.Column="0" 
+                               Margin="0,3,0,3" 
+                               VerticalAlignment="Top" 
+                               Style="{StaticResource TblockHeader2}" 
+                               MaxWidth="380">
+                                <AccessText TextWrapping="Wrap" Text="{Binding Name}"/>
+                    </TextBlock>
+                    <TextBox Name="tblName" 
+                             Grid.Row="0" Grid.Column="1" 
+                             MinWidth="50" 
+                             MaxWidth="400" 
+                             Margin="0,3,5,3" 
+                             VerticalAlignment="Top" 
+                             Text="{Binding Text, UpdateSourceTrigger=PropertyChanged}" 
+                             TextWrapping="Wrap" 
+                             Style="{Binding TextChanged, Converter={StaticResource TextBoxStyleSelector2}, UpdateSourceTrigger=PropertyChanged}"/>
+                    <GridSplitter/>
+
+                    <!--
+                    <WrapPanel Orientation="Horizontal">
+                        <TextBlock VerticalAlignment="Bottom" Style="{StaticResource TblockHeader2}" MaxWidth="380">
+                                <AccessText TextWrapping="Wrap" Text="{Binding Name}"/>
+                        </TextBlock>
+                        <TextBox MinWidth="50" Name="tblName" Text="{Binding Text, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Bottom" MaxWidth="400" 
+                            TextWrapping="Wrap" Margin="5,5,5,0" Style="{Binding TextChanged, Converter={StaticResource TextBoxStyleSelector}, UpdateSourceTrigger=PropertyChanged}"/>
+                        <GridSplitter/>
+                    </WrapPanel>
+-->
+                    <Line Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" 
+                          Stretch="Fill" Stroke="DarkGray" X2="1" Margin="0,0,5,0"/>
+                </Grid>
+                <DataTemplate.Triggers>
+                    <DataTrigger Binding="{Binding Text, Converter={StaticResource NullOnlyValueConverter}}" Value="True">
+                        <Setter TargetName="tblName" Property="Visibility" Value="Collapsed"/>
+                    </DataTrigger>
+                </DataTemplate.Triggers>
+            </DataTemplate>
+
+            <DataTemplate x:Key="BonusAndServiceComboItem">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="160px"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Row="0" Grid.Column="0" 
+                               Margin="0,3,0,3" 
+                               VerticalAlignment="Top" 
+                               Style="{StaticResource TblockHeader2}" 
+                               MaxWidth="380">
+                                <AccessText TextWrapping="Wrap" Text="{Binding Name}"/>
+                    </TextBlock>
+
+<!--
+Style="{Binding TextChanged, Converter={StaticResource TextBoxStyleSelector2}, UpdateSourceTrigger=PropertyChanged}">
+-->                    
+                    <TextBox Name="tblName" 
+                             Grid.Row="0" Grid.Column="1" 
+                             MinWidth="50" MaxWidth="400" 
+                             Margin="0,3,2,0" 
+                             VerticalAlignment="Top" 
+                             Text="{Binding Text, UpdateSourceTrigger=PropertyChanged}" 
+                             TextWrapping="Wrap" 
+                             Tag="{Binding Name}"
+                             Style="{Binding TextChanged, Converter={StaticResource TextBoxStyleSelector2}, UpdateSourceTrigger=PropertyChanged}">
+                        <!--
+                        <TextBox.Style>
+                            <Style>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding CruiseInfo.ChangeEnableFlag}" Value="False">
+                                        <Setter Property="TextBox.IsEnabled" Value="false"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBox.Style>
+                        -->
+                    </TextBox>
+
+                    <Border Name="btnName"
+                            Grid.Row="0" Grid.Column="2" 
+                            Width="20" Height="19" 
+                            VerticalAlignment="Top">
+                        <Image Width="15" Height="16" Margin="0,3,5,0" Cursor="Hand" 
+                               MouseDown="OnButtonClick_Service" Tag="{Binding Name}"
+                               Source="/WpfControlLibrary;component/img/drop_arrow.png"/>
+                    </Border>
+                    
+                    <GridSplitter/>
+<!--
+                    <WrapPanel Orientation="Horizontal">
+                        <TextBlock VerticalAlignment="Bottom" Style="{StaticResource TblockHeader2}" MaxWidth="380">
+                                <AccessText TextWrapping="Wrap" Text="{Binding Name}"/>
+                        </TextBlock>
+                        <TextBox MinWidth="50" Name="tblName" Text="{Binding Text, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Bottom" MaxWidth="400" 
+                            TextWrapping="Wrap" Margin="5,5,5,0" Style="{Binding TextChanged, Converter={StaticResource TextBoxStyleSelector}, UpdateSourceTrigger=PropertyChanged}"/>
+                        <GridSplitter/>
+                    </WrapPanel>
+-->
+                    <Line Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" 
+                          Stretch="Fill" Stroke="DarkGray" X2="1" Margin="0,0,5,0"/>
+                </Grid>
+<!--                
+                <DataTemplate.Triggers>
+                    <DataTrigger Binding="{Binding Text, Converter={StaticResource NullOnlyValueConverter}}" Value="True">
+                        <Setter TargetName="tblName" Property="Visibility" Value="Collapsed"/>
+                    </DataTrigger>
+                </DataTemplate.Triggers>
+-->
+                <DataTemplate.Triggers>
+                    <DataTrigger Binding="{Binding HasList}" Value="False">
+                        <Setter TargetName="btnName" Property="Visibility" Value="Collapsed"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding IsEditable}" Value="False">
+                        <Setter TargetName="tblName" Property="IsReadOnly" Value="True"/>
+                    </DataTrigger>
+                </DataTemplate.Triggers>
+
+            </DataTemplate>
+            
+            <ControlTemplate x:Key="BronCreation">
+                <Grid Margin="5,0,5,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1.3*" />
+                        <ColumnDefinition Width="1.7*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Border  Grid.Row="2" Grid.RowSpan="2" Grid.ColumnSpan="2" Background="#FFA4DAB5" />
+                    <Border  Grid.Row="4" Grid.RowSpan="3" Grid.ColumnSpan="2" Background="#FFB3DFFC" />
+                    <!--
+                    <Border  Grid.Row="15" Grid.RowSpan="3" Grid.ColumnSpan="2" Background="#FFE0F0FF" />
+                    -->
+                    <Border  Grid.Row="28" Grid.RowSpan="2" Grid.ColumnSpan="2" Background="#FFB3DFFC" />
+                    <Border  Grid.Row="30" Grid.RowSpan="2" Grid.ColumnSpan="2" Background="#FFB3DFFC" />
+                    <Border  Grid.Row="32" Grid.RowSpan="5" Grid.ColumnSpan="2" Background="#FFB3DFFC" />
+                    <Border  Grid.Row="37" Grid.RowSpan="3" Grid.ColumnSpan="2" Background="#FFB3DFFC" /> <!-- FFB4EDFC -->
+
+                    <ListView Name="InfoListView" Padding="0" HorizontalContentAlignment="Stretch" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" 
+                              ItemsSource="{Binding Service.CruiseLineInfo}" ItemContainerStyle="{StaticResource ListItem2}" ItemTemplate="{StaticResource KeyValue2}"/>
+
+                    <TextBlock Grid.Row="2" Grid.Column="0" Text="Лайнер:"/>
+                    <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Service.ShipName}"/>
+
+                    <TextBlock Grid.Row="3" Grid.Column="0" Text="Код лайнера:"/>
+                    <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Service.Shipcode}"/>
+
+                    <TextBlock Grid.Row="4" Grid.Column="0" Text="Дата круиза:"/>
+                    <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Service.Date, StringFormat=dd.MM.yy}"/>
+
+                    <TextBlock Grid.Row="5" Grid.Column="0" Text="Дата окончания:"/>
+                    <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding Service.DateEnd, StringFormat=dd.MM.yy}"/>
+
+                    <TextBlock Grid.Row="6" Grid.Column="0" Text="Длительность:"/>
+                    <!--"
+                    <TextBox Grid.Row="6" Grid.Column="1" Text="{Binding Service.Nights, StringFormat={}{0} ночей}"/>
+                    -->
+                    <TextBox Grid.Row="6" Grid.Column="1" Text="{Binding Service.NightsString}"/>
+
+                    <Border Margin="0" Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2" 
+                            Height="24"
+                            Style="{StaticResource BorderHeader}">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1.3*" />
+                                <ColumnDefinition Width="1.7*" />
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Grid.Row="0" Grid.Column="0" 
+                                       Style="{StaticResource TblCenter}" 
+                                       Text="{Binding Service.Passengers, StringFormat=Кол-во:  {0} }"/>
+
+                            <TextBlock Name="btnPassengers" 
+                                       Grid.Row="30" Grid.Column="1" 
+                                       Margin="0,5,0,5"                             
+                                       TextDecorations="Underline"
+                                       HorizontalAlignment="Left" 
+                                       Style="{StaticResource TblCenter}"
+                                       Foreground="RoyalBlue"
+                                       Cursor="Hand"
+                                       MouseUp="btnPassengers_Click" 
+                                       Text="Показать"/>
+<!--
+                            <Button Name="btnPassengers" 
+                                    Grid.Row="0" Grid.Column="1" 
+                                    Margin="0,2,0,2"                             
+                                    Width="70pt" 
+                                    HorizontalAlignment="Left" 
+                                    Click="btnPassengers_Click" 
+                                    Content="Показать"/>
+-->
+                        </Grid>
+                    </Border>
+
+                    
+                    <TextBlock Name="Tourist_TextBlock" Grid.Row="8" Grid.Column="0" Text=""/>
+                    <TextBox Name="Tourist_TextBox" Grid.Row="8" Grid.Column="1" Text="дата рождения" FontSize="11"/>
+
+                    <ListView Name="TouristListView" Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="2" Padding="0" HorizontalContentAlignment="Stretch"  
+                              ItemsSource="{Binding Service.CruiseTouristInfo}" ItemContainerStyle="{StaticResource ListItem2}" ItemTemplate="{StaticResource KeyValue4}"/>
+
+                    <TextBlock Name="Space3" Grid.Row="10" Grid.Column="0" Height="5" Text=" "/>
+
+                    <Border Name="Tourist_Border" Grid.Row="11" Grid.Column="0" Grid.ColumnSpan="2" Height="1" Background="#ff909090">
+                        <TextBlock Name="Space4" Text=""/>
+                    </Border>
+<!--                    
+                    <TextBlock Name="Space5" Grid.Row="12" Grid.Column="0" Height="5" Text=" "/>
+
+                    <Grid Grid.Row="13" Grid.Column="0" Grid.ColumnSpan="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1.3*" />
+                            <ColumnDefinition Width="0.6*" />
+                            <ColumnDefinition Width="0.75*" />
+                            <ColumnDefinition Width="0.35*" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Column="0" Text="Категория каюты:"/>
+                        <TextBox Grid.Column="1" Text="{Binding Service.Category}"/>
+
+                        <TextBlock Grid.Column="2" Text="с размещением:"/>
+                        <TextBox Grid.Column="3" Text="{Binding Service.Number, StringFormat={}{0} чел}"/>
+                    </Grid>
+
+                    <TextBlock Name="tblCabinClass" Grid.Row="14" Grid.Column="0" Text="Класс каюты:" VerticalAlignment="Bottom"/>
+                    <TextBox Name="tbxCabinClass" Grid.Row="14" Grid.Column="1" Text="{Binding Service.CabinClass}"/>
+
+                    <TextBlock Name="tblCabinNumber" Grid.Row="15" Grid.Column="0" Text="№ каюты:"/>
+                    <TextBox Name="tbxCabinNumber" Grid.Row="15" Grid.Column="1" Text="{Binding Service.CabinNumber}"/>
+
+                    <TextBlock Name="tblOptionNumber" Grid.Row="16" Grid.Column="0" Text="Номер опции:"/>
+                    <TextBox Name="tbxOptionNumber" Grid.Row="16" Grid.Column="1" Text="{Binding Service.OptionNumber}"/>
+-->
+                    <!--
+                    <TextBlock Name="tblOptionNumber" Grid.Row="16" Grid.Column="0" Text="Номер опции:"/>
+                    <TextBox Name="tbxOptionNumber" Grid.Row="16" Grid.Column="1" 
+                             Background="#FFFFFF"
+                             Text="{Binding CruiseInfo.OptionNumber, UpdateSourceTrigger=PropertyChanged}"/>
+                    -->
+
+                    <Grid  Grid.Row="15" Grid.ColumnSpan="2" Background="#E0F0FF">
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                        </Grid.RowDefinitions>
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1.3*"></ColumnDefinition>
+                            <ColumnDefinition Width="1.7*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+
+                        <Border Name="Space_Border_1" Grid.Row="0" Height="5"/>
+
+                        <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1.3*" />
+                                <ColumnDefinition Width="0.50*" />
+                                <ColumnDefinition Width="0.8*" />
+                                <ColumnDefinition Width="0.4*" />
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Grid.Column="0" Text="Категория каюты:" Margin="0,2,0,0" />
+                            <TextBox Name="tbxCabinCategory" Grid.Column="1" 
+                                     Background="#FFFFFF" Margin="0,2,10,0" 
+                                     Text="{Binding CruiseInfo.Category, UpdateSourceTrigger=PropertyChanged}"
+                                     Style="{Binding TextChanged, Converter={StaticResource TextBoxStyleSelector}, UpdateSourceTrigger=PropertyChanged}" />
+
+                            <TextBlock Grid.Column="2" Text="с размещением:" Margin="0,2,0,0" />
+                            <TextBox Grid.Column="3" FontSize="15" Text="{Binding Service.Number, StringFormat={}{0} чел}" VerticalAlignment="Top"/>
+                        </Grid>
+
+                        <Border Name="Space_Border_2" Grid.Row="2" Height="2"/>
+
+                        <TextBlock Name="tblCabinClass" Grid.Row="3" Grid.Column="0"  Margin="0,0,5,0" Text="Класс каюты:" VerticalAlignment="Bottom"/>
+                        <TextBox Name="tbxCabinClass" Grid.Row="3" Grid.Column="1" Text="{Binding Service.CabinClass}"/>
+
+                        <Border Name="Space_Border_3" Grid.Row="4" Height="5"/>
+
+                        <TextBlock Name="tblCabinNumber" Grid.Row="5" Grid.Column="0" Text="№ каюты:"/>
+                        <TextBox Name="tbxCabinNumber" Grid.Row="5" Grid.Column="1" 
+                                 Background="#FFFFFF" Margin="0,0,5,0"
+                                 Style="{Binding TextChanged, Converter={StaticResource TextBoxStyleSelector}, UpdateSourceTrigger=PropertyChanged}" 
+                                 Text="{Binding CruiseInfo.CabinNumber, UpdateSourceTrigger=PropertyChanged}"/>
+
+                        <Border Name="Space_Border_4" Grid.Row="6" Height="5"/>
+                        
+<!--                        
+                        <Grid  Grid.Row="8" Grid.ColumnSpan="2" Background="#E0F0FF">
+
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                            </Grid.RowDefinitions>
+
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1.3*"></ColumnDefinition>
+                                <ColumnDefinition Width="1.7*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+
+                            <Border Name="Space_Border_4" Grid.Row="0" Height="5"/>
+
+                            <Border Name="Line_Border_1" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" 
+                                Height="1" Margin="0,0,5,0" Background="#ffD0D0D0"/>
+
+                            <Border Name="Space_Border_7" Grid.Row="2" Height="5"/>
+
+                            <CheckBox Name="CheckOptionStatus" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2"
+                                      Visibility="Visible"
+                                      IsChecked="True">
+                                <TextBlock>
+                                <AccessText Text="Каюта на опции"/>
+                                </TextBlock>
+                            </CheckBox>
+
+                            <CheckBox Name="CheckOptionStatus_1" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2"
+                                      Visibility="Visible" 
+                                      IsChecked="{Binding CruiseInfo.OptionFlag}">
+                                <TextBlock>
+                                <AccessText Text="Подтвердить опцию в круизной компании"/>
+                                </TextBlock>
+                            </CheckBox>
+
+                            <CheckBox Name="CheckOptionStatus_2" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2"
+                                      Visibility="Collapsed" 
+                                      IsChecked="{Binding CruiseInfo.OptionFlag}">
+                                <TextBlock>
+                                <AccessText Text="Каюта на опции"/>
+                                </TextBlock>
+                            </CheckBox>
+
+                            <Border Name="Space_Border_9" Grid.Row="6" Height="5"/>
+
+                            <CheckBox Name="CheckOption_1" Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2" 
+                                  Visibility="Visible" IsChecked="{Binding CruiseInfo.IsBook}">
+                                <TextBlock>
+                                <AccessText Text="Подтвердить бронь в круизной компании"/>
+                                </TextBlock>
+                            </CheckBox>
+
+                            <CheckBox Name="CheckOption_2" Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="2" 
+                                   Visibility="Collapsed" IsChecked="{Binding CruiseInfo.IsBook}">
+                                <TextBlock>
+                                    <AccessText Text="Бронь подтверждена в круизной компании"/>
+                                </TextBlock>
+                            </CheckBox>
+
+                            <Border Name="Space_Border_8" Grid.Row="9" Height="5"/>
+
+                        </Grid>
+
+
+                        <TextBlock Name="tblOptionNumber_1" Grid.Row="13" Grid.Column="0" 
+                                   Visibility="Visible" Text="№ опции/счета:"/>
+                        <TextBox Name="tbxOptionNumber_1" Grid.Row="13" Grid.Column="1" 
+                                 Background="#FFFFFF" Margin="0,0,5,0" Height="22px" Visibility="Visible"
+                                 Style="{Binding TextChanged, Converter={StaticResource TextBoxStyleSelector}, UpdateSourceTrigger=PropertyChanged}"
+                                 Text="{Binding CruiseInfo.OptionNumber, UpdateSourceTrigger=PropertyChanged}"/>
+
+                        <TextBlock Name="tblOptionNumber_2" Grid.Row="14" Grid.Column="0" 
+                                   Visibility="Collapsed" Text="№ брони/счета:"/>
+                        <TextBox Name="tbxOptionNumber_2" Grid.Row="14" Grid.Column="1" 
+                                 Background="#F8FCFF" Margin="0,0,5,0" Height="22px" Visibility="Collapsed" 
+                                 IsReadOnly="True"
+                                 Style="{Binding TextChanged, Converter={StaticResource TextBoxStyleSelector}, UpdateSourceTrigger=PropertyChanged}"
+                                 Text="{Binding CruiseInfo.OptionNumber, UpdateSourceTrigger=PropertyChanged}"/>
+
+                        <Border Name="Space_Border_5" Grid.Row="15" Height="5"/>
+
+                        <TextBlock Name="tblOptionDate_1" Grid.Row="16" Grid.Column="0" 
+                                   Visibility="Visible" Text="Опция до:"/>
+
+                        <Grid Name="tbxOptionDate_1" Grid.Row="16" Grid.Column="1" Height="22px" Visibility="Visible">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="5*" />
+                                <ColumnDefinition Width="3*" />
+                            </Grid.ColumnDefinitions>
+                            <xctk:DateTimePicker TextAlignment="Left" Format="ShortDate" Margin="0,0,20,0" Value="{Binding CruiseInfo.OptionDate, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding CruiseInfo.IsBook, Converter={StaticResource Inverter}}"/>
+                            <xctk:TimePicker TextAlignment="Right" Margin="0,0,5,0" Grid.Column="1" Value="{Binding CruiseInfo.OptionDate, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding CruiseInfo.IsBook, Converter={StaticResource Inverter}}"/>
+                        </Grid>
+
+                        <TextBlock Name="tblOptionDate_2" Grid.Row="17" Grid.Column="0" 
+                                   Visibility="Collapsed" Text="Дата бронирования:"/>
+                        <TextBox Name="tbxOptionDate_2" Grid.Row="17" Grid.Column="1" 
+                                 Background="#F8FCFF" Margin="0,0,5,0" Visibility="Collapsed" 
+                                 FontSize="14"  Height="22px"
+                                 Text="{Binding Service.OptionDateStr}"/>
+
+                        <Border Name="Space_Border_6" Grid.Row="18" Height="5"/>
+-->                        
+                        
+
+<!--
+                        <Border Name="Line_Border_1" Grid.Row="17" Grid.Column="0" Grid.ColumnSpan="2" 
+                                Height="1" Margin="0,0,5,0" Background="#ffD0D0D0"/>
+
+                        <Border Name="Space_Border_7" Grid.Row="18" Height="5"/>
+
+                        <CheckBox Name="CheckOption_1" Grid.Row="15" Grid.Column="0" Grid.ColumnSpan="2" 
+                                  Visibility="Visible" IsChecked="{Binding CruiseInfo.IsBook}">
+                            <TextBlock>
+                                <AccessText Text="Подтвердить опцию в круизной компании"/>
+                            </TextBlock>
+                        </CheckBox>
+
+                        <CheckBox Name="CheckOption_2" Grid.Row="16" Grid.Column="0" Grid.ColumnSpan="2" 
+                                   Visibility="Collapsed" IsChecked="{Binding CruiseInfo.IsBook}">
+                            <TextBlock>
+                                    <AccessText Text="Бронь подтверждена в круизной компании"/>
+                            </TextBlock>
+                        </CheckBox>
+
+                        <TextBlock Name="tblOptionStatus" Grid.Row="17" Grid.Column="0" Grid.ColumnSpan="2" 
+                                   Foreground="Red"
+                                   Text="Статус: Опция не создана в круизной компании"
+                                   Visibility="Collapsed">
+                        </TextBlock>
+
+                        <Border Name="Space_Border_8" Grid.Row="18" Height="5"/>
+-->
+                    </Grid>
+
+<!--
+                    <TextBlock Name="tblCabinDef" Grid.Row="17" Grid.Column="0" Text="Уровень дефицита кают:"/>
+                    <TextBox Name="tbxCabinDef" Grid.Row="17" Grid.Column="1" Text="{Binding Service.CabinDef}"/>
+-->
+<!--                    
+                    <TextBlock Name="tblOptionDate" Grid.Row="17" Grid.Column="0" Text="Опция до:"/>
+                    <TextBox Name="tbxOptionDate" Grid.Row="17" Grid.Column="1" Text="{Binding Service.OptionDateStr}"/>
+-->
+<!--
+                    <TextBlock Grid.Row="17" Grid.Column="0" Text="Счет на оплату:"/>
+
+                    <TextBlock Name="btnBill" Grid.Row="17" Grid.Column="1" 
+                               Margin="0,5,0,5"                             
+                               TextDecorations="Underline"
+                               HorizontalAlignment="Left" 
+                               Style="{StaticResource TblCenter}"
+                               Foreground="Blue"
+                               Cursor="Hand"
+                               MouseUp="btnBill_Click" 
+                               Text="Обработать счет"/>
+-->
+                    <TextBlock Name="tblDocumentsStatus" Grid.Row="18" Grid.Column="0" Style="{StaticResource TblockHideIfNull}" Text="{Binding Service.DocumentsStatus}"/>
+
+                    <TextBlock Name="tblBrutto" Grid.Row="19" Grid.Column="0" Text="Круизный тариф:"/>
+                    <Control Name="tbxBrutto"  Grid.Row="19" Grid.Column="1" DataContext="{Binding Service.CruiseRate}" Template="{StaticResource Price}"/>
+
+                    <TextBlock Name="tblPortTaxes" Grid.Row="20" Grid.Column="0" Text="Портовый сбор:"/>
+                    <Control Name="tbxPortTaxes"  Grid.Row="20" Grid.Column="1" DataContext="{Binding Service.PortTaxes}" Template="{StaticResource Price}"/>
+
+                    <TextBlock Name="tblTips" Grid.Row="21" Grid.Column="0" Text="Чаевые:"/>
+                    <Control Name="tbxTips"  Grid.Row="21" Grid.Column="1" DataContext="{Binding Service.Tips}" Template="{StaticResource Price}"/>
+
+                    <TextBlock Name="tblOnboardCredit" Grid.Row="22" Grid.Column="0" Text="Бортовой кредит:"/>
+                    <Control Name="tbxOnboardCredit"  Grid.Row="22" Grid.Column="1" DataContext="{Binding Service.OnboardCredit}" Template="{StaticResource Price}"/>
+
+                    <TextBlock Name="tblLocalTaxes" Grid.Row="23" Grid.Column="0" Text="Местные налоги:"/>
+                    <Control Name="tbxLocalTaxes"  Grid.Row="23" Grid.Column="1" DataContext="{Binding Service.LocalTaxes}" Template="{StaticResource Price}"/>
+
+                    <TextBlock Name="tblTotalCost" Grid.Row="24" Grid.Column="0" Text="Общая сумма:"/>
+                    <Control Name="tbxTotalCost"  Grid.Row="24" Grid.Column="1" DataContext="{Binding Service.TotalCost}" Template="{StaticResource Price}"/>
+<!--
+                    <TextBlock Name="tblCruiseTarifName" Grid.Row="25" Grid.Column="0" Text="Круизный тариф:"/>
+                    <TextBox Name="tbxCruiseTarifName"  Grid.Row="25" Grid.Column="1" Text="{Binding Service.CruiseTarifName}"/>
+-->
+<!--
+                    <TextBlock Name="tblCruiseTarifName" Grid.Row="25" Grid.Column="0" Text="{Binding Service.CruiseTarif_Name, StringFormat={}{0}:}"/>
+                    <TextBox Name="tbxCruiseTarifName"  Grid.Row="25" Grid.Column="1" Text="{Binding Service.CruiseTarif_Value}"/>
+-->
+                    <ListView Grid.Row="25" Grid.Column="0" Grid.ColumnSpan="2" 
+                              Margin="0,-3,0,5" 
+                              HorizontalContentAlignment="Stretch" 
+                              ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
+                              ItemsSource="{Binding Service.DopServices}" 
+                              ItemContainerStyle="{StaticResource ListItem2}" 
+                              ItemTemplate="{StaticResource KeyValue5}"/>
+
+                    <Grid  Grid.Row="26" Grid.ColumnSpan="2" Background="#E0F0FF">
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                        </Grid.RowDefinitions>
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1.3*"></ColumnDefinition>
+                            <ColumnDefinition Width="1.7*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <!--
+                        <Border Name="Space_Border_1" Grid.Row="0" Height="5"/>
+
+                        <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1.3*" />
+                                <ColumnDefinition Width="0.6*" />
+                                <ColumnDefinition Width="0.75*" />
+                                <ColumnDefinition Width="0.35*" />
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Grid.Column="0" Text="Категория каюты:"/>
+                            <TextBox Name="tbxCabinCategory" Grid.Column="1" 
+                                     Background="#FFFFFF" Margin="0,0,10,0" 
+                                     Text="{Binding CruiseInfo.Category, UpdateSourceTrigger=PropertyChanged}"
+                                     Style="{Binding TextChanged, Converter={StaticResource TextBoxStyleSelector}, UpdateSourceTrigger=PropertyChanged}" />
+
+                            <TextBlock Grid.Column="2" Text="с размещением:"/>
+                            <TextBox Grid.Column="3" Text="{Binding Service.Number, StringFormat={}{0} чел}"/>
+                        </Grid>
+
+                        <Border Name="Space_Border_2" Grid.Row="2" Height="3"/>
+
+                        <TextBlock Name="tblCabinClass" Grid.Row="3" Grid.Column="0"  Margin="0,0,5,0" Text="Класс каюты:" VerticalAlignment="Bottom"/>
+                        <TextBox Name="tbxCabinClass" Grid.Row="3" Grid.Column="1" Text="{Binding Service.CabinClass}"/>
+
+                        <Border Name="Space_Border_3" Grid.Row="4" Height="5"/>
+
+                        <TextBlock Name="tblCabinNumber" Grid.Row="5" Grid.Column="0" Text="№ каюты:"/>
+                        <TextBox Name="tbxCabinNumber" Grid.Row="5" Grid.Column="1" 
+                                 Background="#FFFFFF" Margin="0,0,5,0"
+                                 Style="{Binding TextChanged, Converter={StaticResource TextBoxStyleSelector}, UpdateSourceTrigger=PropertyChanged}" 
+                                 Text="{Binding CruiseInfo.CabinNumber, UpdateSourceTrigger=PropertyChanged}"/>
+-->
+                        <Grid  Grid.Row="8" Grid.ColumnSpan="2" Background="#E0F0FF">
+
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                            </Grid.RowDefinitions>
+
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1.3*"></ColumnDefinition>
+                                <ColumnDefinition Width="1.7*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            
+<!--
+                            <Border Name="Space_Border_4" Grid.Row="0" Height="5"/>
+
+                            <Border Name="Line_Border_1" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" 
+                                Height="1" Margin="0,0,5,0" Background="#ffD0D0D0"/>
+-->
+
+                            <Border Name="Space_Border_7" Grid.Row="2" Height="5"/>
+
+                            <CheckBox Name="CheckOptionStatus" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2"
+                                      Visibility="Visible"
+                                      IsChecked="True">
+                                <TextBlock>
+                                <AccessText Text="Каюта на опции"/>
+                                </TextBlock>
+                            </CheckBox>
+
+                            <CheckBox Name="CheckOptionStatus_1" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2"
+                                      Visibility="Visible" 
+                                      IsChecked="{Binding CruiseInfo.OptionFlag}">
+                                <TextBlock>
+                                <AccessText Text="Подтвердить опцию в круизной компании"/>
+                                </TextBlock>
+                            </CheckBox>
+
+                            <CheckBox Name="CheckOptionStatus_2" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2"
+                                      Visibility="Collapsed" 
+                                      Checked="OnCheckOptionStatus_Checked"
+                                      IsChecked="{Binding CruiseInfo.OptionFlag}">
+                                <TextBlock>
+                                <AccessText Text="Каюта на опции"/>
+                                </TextBlock>
+                            </CheckBox>
+
+                            <Border Name="Space_Border_9" Grid.Row="6" Height="5"/>
+
+                            <CheckBox Name="CheckOption_1" Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2" 
+                                  Visibility="Visible" IsChecked="{Binding CruiseInfo.IsBook}">
+                                <TextBlock>
+                                    <AccessText Text="{Binding CruiseInfo.CheckOptionText1}"/>
+                                </TextBlock>
+                            </CheckBox>
+                            <!--
+                                    {Binding CruiseInfo.OptionFlag}
+                                <AccessText Text="Подтвердить бронь в круизной компании"/>
+                            -->
+
+                            <CheckBox Name="CheckOption_2" Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="2" 
+                                   Visibility="Collapsed" IsChecked="{Binding CruiseInfo.IsBook}">
+                                <TextBlock>
+                                    <AccessText Text="{Binding CruiseInfo.CheckOptionText2}"/>
+                                </TextBlock>
+                            </CheckBox>
+                            <!--
+                                    {Binding CruiseInfo.OptionFlag}
+                                    <AccessText Text="Бронь подтверждена в круизной компании"/>
+                            -->
+
+                            <Border Name="Space_Border_8" Grid.Row="9" Height="5"/>
+
+                        </Grid>
+
+
+                        <TextBlock Name="tblOptionNumber_1" Grid.Row="13" Grid.Column="0" 
+                                   Visibility="Visible" Text="№ опции/счета:"/>
+                        <TextBox Name="tbxOptionNumber_1" Grid.Row="13" Grid.Column="1" 
+                                 Background="#FFFFFF" Margin="0,0,5,0" Height="22px" Visibility="Visible"
+                                 Style="{Binding TextChanged, Converter={StaticResource TextBoxStyleSelector}, UpdateSourceTrigger=PropertyChanged}"
+                                 Text="{Binding CruiseInfo.OptionNumber, UpdateSourceTrigger=PropertyChanged}"/>
+
+                        <TextBlock Name="tblOptionNumber_2" Grid.Row="14" Grid.Column="0" 
+                                   Visibility="Collapsed" Text="№ брони:"/>
+                        <TextBox Name="tbxOptionNumber_2" Grid.Row="14" Grid.Column="1" 
+                                 Background="#F8FCFF" Margin="0,0,5,0" Height="22px" Visibility="Collapsed" 
+                                 IsReadOnly="True"
+                                 Style="{Binding TextChanged, Converter={StaticResource TextBoxStyleSelector}, UpdateSourceTrigger=PropertyChanged}"
+                                 Text="{Binding CruiseInfo.OptionNumber, UpdateSourceTrigger=PropertyChanged}"/>
+
+                        <Border Name="Space_Border_5" Grid.Row="15" Height="5"/>
+
+                        <TextBlock Name="tblOptionDate_1" Grid.Row="16" Grid.Column="0" 
+                                   Visibility="Visible" Text="Опция до:"/>
+                        <!--
+                            <TextBox Name="tbxOptionDate_1" Grid.Row="10" Grid.Column="1" 
+                                     Background="#F8FCFF" Margin="0,0,5,0" Visibility="Visible"
+                                     Text="{Binding Service.OptionDateStr}"/>
+-->
+                        <Grid Name="tbxOptionDate_1" Grid.Row="16" Grid.Column="1" Height="22px" Visibility="Visible">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="5*" />
+                                <ColumnDefinition Width="3*" />
+                            </Grid.ColumnDefinitions>
+                            <!--
+                            <xctk:DateTimePicker TextAlignment="Left" Format="ShortDate" Margin="0,0,20,0" Value="{Binding CruiseInfo.OptionDate, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding CruiseInfo.IsBook, Converter={StaticResource Inverter}}"/>
+                            -->
+                            <DatePicker Name="dtpOptionDate" Margin="0,0,20,0" SelectedDate="{Binding CruiseInfo.OptionDate, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" IsEnabled="{Binding CruiseInfo.IsBook, Converter={StaticResource Inverter}}"/>
+                            <xctk:TimePicker Name="dtpOptionTime" TextAlignment="Right" Margin="0,0,5,0" Grid.Column="1" Value="{Binding CruiseInfo.OptionDate, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding CruiseInfo.IsBook, Converter={StaticResource Inverter}}"/>
+                        </Grid>
+
+                        <TextBlock Name="tblOptionDate_2" Grid.Row="17" Grid.Column="0" 
+                                   Visibility="Collapsed" Text="Дата бронирования:"/>
+                        <TextBox Name="tbxOptionDate_2" Grid.Row="17" Grid.Column="1" 
+                                 Background="#F8FCFF" Margin="0,0,5,0" Visibility="Collapsed" 
+                                 FontSize="14"  Height="22px"
+                                 Text="{Binding Service.OptionDateStr}"/>
+
+                        <Border Name="Space_Border_6" Grid.Row="18" Height="5"/>
+
+                        <!--
+                        <Border Name="Line_Border_1" Grid.Row="17" Grid.Column="0" Grid.ColumnSpan="2" 
+                                Height="1" Margin="0,0,5,0" Background="#ffD0D0D0"/>
+
+                        <Border Name="Space_Border_7" Grid.Row="18" Height="5"/>
+
+                        <CheckBox Name="CheckOption_1" Grid.Row="15" Grid.Column="0" Grid.ColumnSpan="2" 
+                                  Visibility="Visible" IsChecked="{Binding CruiseInfo.IsBook}">
+                            <TextBlock>
+                                <AccessText Text="Подтвердить опцию в круизной компании"/>
+                            </TextBlock>
+                        </CheckBox>
+
+                        <CheckBox Name="CheckOption_2" Grid.Row="16" Grid.Column="0" Grid.ColumnSpan="2" 
+                                   Visibility="Collapsed" IsChecked="{Binding CruiseInfo.IsBook}">
+                            <TextBlock>
+                                    <AccessText Text="Бронь подтверждена в круизной компании"/>
+                            </TextBlock>
+                        </CheckBox>
+
+                        <TextBlock Name="tblOptionStatus" Grid.Row="17" Grid.Column="0" Grid.ColumnSpan="2" 
+                                   Foreground="Red"
+                                   Text="Статус: Опция не создана в круизной компании"
+                                   Visibility="Collapsed">
+                        </TextBlock>
+
+                        <Border Name="Space_Border_8" Grid.Row="18" Height="5"/>
+-->
+
+                        <TextBlock Name="btnPrices" 
+                            Grid.Row="19" Grid.Column="0" 
+                            Margin="0,0,0,5"                             
+                            TextDecorations="Underline"
+                            HorizontalAlignment="Left" 
+                            Style="{StaticResource TblCenter}"
+                            Foreground="Red"
+                            Cursor="Hand"
+                            MouseUp="btnPrices_Click" 
+                            Text="Изменить  цены"/>
+
+                    </Grid>
+
+<!--
+                    <TextBlock Grid.Row="26" Grid.Column="0" Text="№ карты лояльности:"/>
+                    <TextBox Grid.Row="26" Grid.Column="1" Text="" Style="{StaticResource ItemInput}"/>
+                    
+                    <TextBlock Grid.Row="27" Grid.Column="0" >Проверить применение<LineBreak />карты лояльности</TextBlock>
+-->
+                    <TextBlock Name="tblSpecials" Grid.Row="28" Grid.Column="0" Style="{StaticResource Header2}" Text="Акции"/>
+                    <ListView Name="lstActions" Grid.Row="29" Grid.Column="0" Grid.ColumnSpan="2" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalContentAlignment="Stretch"  
+                        ItemsSource="{Binding Service.Specials}" ItemContainerStyle="{StaticResource ListItem2}" ItemTemplate="{StaticResource Value}"/>
+
+                    <TextBlock Name="tblBonuses" 
+                               Grid.Row="30" Grid.Column="0" 
+                               Style="{StaticResource Header2}" 
+                               Text="Бонусы"/>
+<!--
+                    <Button Name="btnBonuses" 
+                            Grid.Row="30" Grid.Column="1" 
+                            Margin="0,5,0,5"                             
+                            Width="70pt" 
+                            HorizontalAlignment="Left" 
+                            Click="btnBonuses_Click" 
+                            Content="Показать"/>
+-->
+                    <TextBlock Name="btnBonuses" 
+                            Grid.Row="30" Grid.Column="1" 
+                            Margin="0,5,0,5"                             
+                            TextDecorations="Underline"
+                            HorizontalAlignment="Left" 
+                            Style="{StaticResource TblCenter}"
+                            Foreground="RoyalBlue"
+                            Cursor="Hand"
+                            MouseUp="btnBonuses_Click" 
+                            Text="Показать"/>
+                    <!-- 
+                    <ListView  Grid.Row="31" Grid.Column="0" Grid.ColumnSpan="2" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalContentAlignment="Stretch"
+                        ItemsSource="{Binding Service.Bonuses}" ItemContainerStyle="{StaticResource ListItem2}" ItemTemplate="{StaticResource Value}"/>
+-->
+<!--
+                    <TextBlock Name="tblServices" Grid.Row="32" Grid.Column="0" Style="{StaticResource Header2}" Text="Сервисы"/>
+-->
+                    <TextBlock Name="tblServices" Grid.Row="32" Grid.Column="0" Style="{StaticResource Header3}" Text="Сервисы"/>
+
+                    <StackPanel Grid.Row="32" Grid.Column="1" Orientation="Horizontal">
+                        
+                    <TextBlock Name="btnServices" 
+                                       Margin="0,5,10,5"                             
+                                       TextDecorations="Underline"
+                                       HorizontalAlignment="Left" 
+                                       Style="{StaticResource TblCenter}"
+                                       Foreground="RoyalBlue"
+                                       Cursor="Hand"
+                                       MouseUp="btnServices_Click" 
+                                       Text="Показать"/>
+
+                    <TextBlock Name="btnAddService" 
+                                       Margin="10,5,0,5"                             
+                                       TextDecorations="Underline"
+                                       HorizontalAlignment="Left" 
+                                       Style="{StaticResource TblCenter}"
+                                       Foreground="Green"
+                                       Cursor="Hand"
+                                       Text="Добавить  сервис"/>
+                    </StackPanel>
+
+<!--                    
+                    <ListView Grid.Row="33" Grid.Column="0" Grid.ColumnSpan="2" 
+                              HorizontalContentAlignment="Stretch" 
+                              ItemsSource="{Binding Service.Services}" 
+                              ItemContainerStyle="{StaticResource ListItem2}" 
+                              ItemTemplate="{StaticResource KeyValue3}"/>
+
+                    <TextBlock Name="Space1" Grid.Row="34" Grid.Column="0" Height="5" Text=" "/>
+
+                    <TextBlock Name="tblFood" Grid.Row="35" Grid.Column="0" Style="{StaticResource TblockHeader2}" Text="Вариант питания:"/>
+                    <Button Name="btnFood" Click="btnFood_Click" Grid.Row="35" Grid.Column="1" Width="70pt" HorizontalAlignment="Left" Content="Показать"/>
+-->
+
+                    <TextBlock Name="Space2" Grid.Row="36" Grid.Column="0" Height="2" Text=" "/>
+
+                    <Line Grid.Row="37" Grid.Column="0" Grid.ColumnSpan="2" 
+                          Stretch="Fill" Stroke="DarkGray" X2="1" Margin="0,0,5,0"/>
+
+                    <ListView Name="lstBonusesAndServices" 
+                              Grid.Row="38" Grid.Column="0" Grid.ColumnSpan="2"
+                              Visibility="Collapsed"
+                              ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
+                              HorizontalContentAlignment="Stretch" 
+                              ItemsSource="{Binding BonusesAndServices}" 
+                              ItemContainerStyle="{StaticResource LvItemStyle}"
+                              ItemTemplate="{StaticResource BonusAndServiceComboItem}"/>
+<!--
+                    <StackPanel Grid.Row="39" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,5,0,5" Orientation="Horizontal" HorizontalAlignment="Right">
+                        <Button Command="{Binding ClearBonusesAndServicesCommand}" Width="160" Height="25" Content="Отменить изменения" ToolTip="Отменить изменения"/>
+                        <Button Command="{Binding BonusOkCommand}" Margin="5,0,5,0" Width="160" Height="25" Content="Сохранить" ToolTip="Сохранить изменения"/>
+                    </StackPanel>
+-->
+                </Grid>
+
+                <ControlTemplate.Triggers>
+
+                    <DataTrigger Binding="{Binding CruiseInfo.ChangeEnableFlag}" Value="False">
+                        <Setter TargetName="tbxCabinCategory" Property="IsReadOnly" Value="true"/>
+                        <Setter TargetName="tbxCabinNumber" Property="IsReadOnly" Value="true"/>
+                        <Setter TargetName="CheckOptionStatus_1" Property="IsEnabled" Value="false"/>
+                        <Setter TargetName="CheckOptionStatus_2" Property="IsEnabled" Value="false"/>
+                        <Setter TargetName="CheckOption_1" Property="IsEnabled" Value="false"/>
+                        <Setter TargetName="CheckOption_2" Property="IsEnabled" Value="false"/>
+                        <Setter TargetName="tbxOptionNumber_1" Property="IsReadOnly" Value="true"/>
+                        <Setter TargetName="dtpOptionDate" Property="IsEnabled" Value="false"/>
+                        <Setter TargetName="dtpOptionTime" Property="IsEnabled" Value="false"/>
+                    </DataTrigger>
+
+                    <DataTrigger Binding="{Binding Service.TouristInfoFlag}" Value="True">
+                        <Setter TargetName="Tourist_TextBlock" Property="Visibility" Value="Visible"/>
+                        <Setter TargetName="Tourist_TextBox" Property="Visibility" Value="Visible"/>
+                        <Setter TargetName="TouristListView" Property="Visibility" Value="Visible"/>
+                        <Setter TargetName="Space3" Property="Visibility" Value="Visible"/>
+                        <Setter TargetName="Tourist_Border" Property="Visibility" Value="Visible"/>
+                        <Setter TargetName="Space4" Property="Visibility" Value="Visible"/>
+                        <Setter TargetName="btnPassengers" Property="Text" Value="Свернуть"/>
+                    </DataTrigger>
+
+                    <DataTrigger Binding="{Binding Service.TouristInfoFlag}" Value="False">
+                        <Setter TargetName="Tourist_TextBlock" Property="Visibility" Value="Collapsed"/>
+                        <Setter TargetName="Tourist_TextBox" Property="Visibility" Value="Collapsed"/>
+                        <Setter TargetName="TouristListView" Property="Visibility" Value="Collapsed"/>
+                        <Setter TargetName="Space3" Property="Visibility" Value="Collapsed"/>
+                        <Setter TargetName="Tourist_Border" Property="Visibility" Value="Collapsed"/>
+                        <Setter TargetName="Space4" Property="Visibility" Value="Collapsed"/>
+                        <Setter TargetName="btnPassengers" Property="Text" Value="Показать"/>
+                    </DataTrigger>
+
+                    <DataTrigger Binding="{Binding Service.ServiceInfoFlag}" Value="True">
+                        <Setter TargetName="lstBonusesAndServices" Property="Visibility" Value="Visible"/>
+                        <Setter TargetName="btnServices" Property="Text" Value="Свернуть"/>
+                    </DataTrigger>
+   
+                    <DataTrigger Binding="{Binding Service.ServiceInfoFlag}" Value="False">
+                        <Setter TargetName="lstBonusesAndServices" Property="Visibility" Value="Collapsed"/>
+                        <Setter TargetName="btnServices" Property="Text" Value="Показать"/>
+                    </DataTrigger>
+
+                    <!-- OPTION / BRON  BLOCK  TRIGGERS -->
+
+                    <DataTrigger Binding="{Binding CruiseInfo.OptionCheckFlag}" Value="False">
+                        <Setter TargetName="CheckOptionStatus" Property="Visibility" Value="Collapsed"/>
+                    </DataTrigger>
+
+                    <DataTrigger Binding="{Binding CruiseInfo.OptionNumberFlag}" Value="True">
+                        <Setter TargetName="CheckOptionStatus_1" Property="Visibility" Value="Collapsed"/>
+                        <Setter TargetName="btnPrices" Property="Visibility" Value="Collapsed"/>
+                    </DataTrigger>
+<!--
+                    <DataTrigger Binding="{Binding CruiseInfo.OptionNumberFlag}" Value="False">
+                        <Setter TargetName="btnPrices" Property="Visibility" Value="Visible"/>
+                    </DataTrigger>
+-->
+                    <MultiDataTrigger>
+                        <MultiDataTrigger.Conditions>
+                            <Condition Binding="{Binding CruiseInfo.OptionNumberFlag}" Value="False"/>
+                            <Condition Binding="{Binding CruiseInfo.OptionFlag}" Value="True"/>
+                        </MultiDataTrigger.Conditions>
+                        <MultiDataTrigger.Setters>
+                            <Setter TargetName="CheckOptionStatus_1" Property="Visibility" Value="Collapsed"/>
+                            <Setter TargetName="CheckOptionStatus_2" Property="Visibility" Value="Visible"/>
+                        </MultiDataTrigger.Setters>
+                    </MultiDataTrigger>
+
+                    <MultiDataTrigger>
+                        <MultiDataTrigger.Conditions>
+                            <Condition Binding="{Binding CruiseInfo.OptionFlag}" Value="True"/>
+                            <Condition Binding="{Binding CruiseInfo.OptionNumber, Converter={StaticResource NullValueConverter}, UpdateSourceTrigger=PropertyChanged}" Value="False" />
+                        </MultiDataTrigger.Conditions>
+                        <MultiDataTrigger.Setters>
+                            <Setter TargetName="CheckOptionStatus_2" Property="IsEnabled" Value="False"/>
+                        </MultiDataTrigger.Setters>
+                    </MultiDataTrigger>
+
+                    <MultiDataTrigger>
+                        <MultiDataTrigger.Conditions>
+                            <!--
+                            <Condition Binding="{Binding CruiseInfo.OptionNumber, Converter={StaticResource NullValueConverter}, UpdateSourceTrigger=PropertyChanged}" Value="True" />
+                            -->
+                            <Condition Binding="{Binding CruiseInfo.OptionNumberFlag}" Value="False"/>
+                            <Condition Binding="{Binding CruiseInfo.OptionFlag}" Value="False"/>
+                        </MultiDataTrigger.Conditions>
+                        <MultiDataTrigger.Setters>
+                            <Setter TargetName="tblOptionNumber_1" Property="Visibility" Value="Collapsed"/>
+                            <Setter TargetName="tbxOptionNumber_1" Property="Visibility" Value="Collapsed"/>
+                            <Setter TargetName="tbxOptionDate_1" Property="Visibility" Value="Collapsed"/>
+                            <Setter TargetName="tblOptionDate_1" Property="Visibility" Value="Collapsed"/>
+                            <Setter TargetName="CheckOption_1" Property="Visibility" Value="Collapsed"/>
+                            <Setter TargetName="Space_Border_5" Property="Visibility" Value="Collapsed"/>
+                            <Setter TargetName="Space_Border_6" Property="Visibility" Value="Collapsed"/>
+                        </MultiDataTrigger.Setters>
+                    </MultiDataTrigger>
+
+                    <!--
+                    <DataTrigger Binding="{Binding CruiseInfo.OptionFlag}" Value="False">
+                        <Setter TargetName="CheckOption_1" Property="IsChecked" Value="False"/>
+                        <Setter TargetName="tbxOptionNumber_1" Property="Text" Value=""/>
+                    </DataTrigger>
+                    -->
+
+                    <DataTrigger Binding="{Binding CruiseInfo.OptionNumber, Converter={StaticResource NullValueConverter}, UpdateSourceTrigger=PropertyChanged}" Value="True">
+                        <Setter TargetName="CheckOption_1" Property="IsEnabled" Value="False"/>
+                        <Setter TargetName="tblDocumentsStatus" Property="Visibility" Value="Collapsed"/>
+                    </DataTrigger>
+
+                    <DataTrigger Binding="{Binding CruiseInfo.IsBook}" Value="True">
+                        <Setter TargetName="CheckOptionStatus" Property="Visibility" Value="Collapsed"/>
+                        <Setter TargetName="tblOptionNumber_1" Property="Visibility" Value="Collapsed"/>
+                        <Setter TargetName="tbxOptionNumber_1" Property="Visibility" Value="Collapsed"/>
+                        <Setter TargetName="tbxOptionDate_1" Property="Visibility" Value="Collapsed"/>
+                        <Setter TargetName="tblOptionDate_1" Property="Visibility" Value="Collapsed"/>
+                        <Setter TargetName="CheckOption_1" Property="Visibility" Value="Collapsed"/>
+                        <Setter TargetName="tblOptionNumber_2" Property="Visibility" Value="Visible"/>
+                        <Setter TargetName="tbxOptionNumber_2" Property="Visibility" Value="Visible"/>
+                        <Setter TargetName="tblOptionDate_2" Property="Visibility" Value="Visible"/>
+                        <Setter TargetName="tbxOptionDate_2" Property="Visibility" Value="Visible"/>
+                        <Setter TargetName="CheckOption_2" Property="Visibility" Value="Visible"/>
+                    </DataTrigger>
+
+                    
+                    <DataTrigger Binding="{Binding Service.Brutto}" Value="0">
+                        <Setter TargetName="tblBrutto" Property="Visibility" Value="Collapsed"/>
+                        <Setter TargetName="tbxBrutto" Property="Visibility" Value="Collapsed"/>
+                    </DataTrigger>
+
+                    <DataTrigger Binding="{Binding Service.PortTaxes}" Value="0">
+                        <Setter TargetName="tblPortTaxes" Property="Visibility" Value="Collapsed"/>
+                        <Setter TargetName="tbxPortTaxes" Property="Visibility" Value="Collapsed"/>
+                    </DataTrigger>
+
+                    <DataTrigger Binding="{Binding Service.LocalTaxes}" Value="0">
+                        <Setter TargetName="tblLocalTaxes" Property="Visibility" Value="Collapsed"/>
+                        <Setter TargetName="tbxLocalTaxes" Property="Visibility" Value="Collapsed"/>
+                    </DataTrigger>
+
+                    <DataTrigger Binding="{Binding Service.Tips}" Value="0">
+                        <Setter TargetName="tblTips" Property="Visibility" Value="Collapsed"/>
+                        <Setter TargetName="tbxTips" Property="Visibility" Value="Collapsed"/>
+                    </DataTrigger>
+
+                    <DataTrigger Binding="{Binding Service.OnboardCredit}" Value="0">
+                        <Setter TargetName="tblOnboardCredit" Property="Visibility" Value="Collapsed"/>
+                        <Setter TargetName="tbxOnboardCredit" Property="Visibility" Value="Collapsed"/>
+                    </DataTrigger>
+<!--
+                    <DataTrigger Binding="{Binding Service.CruiseTarif_Value}" Value="">
+                        <Setter TargetName="tblCruiseTarifName" Property="Visibility" Value="Collapsed"/>
+                        <Setter TargetName="tbxCruiseTarifName" Property="Visibility" Value="Collapsed"/>
+                    </DataTrigger>
+-->
+                    <DataTrigger Binding="{Binding Service.Specials.Count}" Value="0">
+                        <Setter TargetName="tblSpecials" Property="Visibility" Value="Collapsed"/>
+                    </DataTrigger>
+<!-- --> 
+                    <DataTrigger Binding="{Binding Service.Bonuses.Count}" Value="0">
+                        <Setter TargetName="tblBonuses" Property="Visibility" Value="Collapsed"/>
+                        <Setter TargetName="btnBonuses" Property="Visibility" Value="Collapsed"/>
+                    </DataTrigger>
+<!-- -->
+<!--
+                    <DataTrigger Binding="{Binding Service.Services.Count}" Value="0">
+                        <Setter TargetName="tblServices" Property="Visibility" Value="Collapsed"/>
+                        <Setter TargetName="Space1" Property="Visibility" Value="Collapsed"/>
+                        <Setter TargetName="tblFood" Property="Visibility" Value="Collapsed"/>
+                        <Setter TargetName="btnFood" Property="Visibility" Value="Collapsed"/>
+                        <Setter TargetName="Space2" Property="Visibility" Value="Collapsed"/>
+                    </DataTrigger>
+-->                    
+                    <DataTrigger Binding="{Binding Permission}" Value="0">
+                        <Setter TargetName="InfoListView" Property="Visibility" Value="Collapsed"/>
+                    </DataTrigger>
+
+                </ControlTemplate.Triggers>
+                
+                <ControlTemplate.Resources>
+                    <Style TargetType="TextBlock" BasedOn="{StaticResource TblockHeader2}"/>
+                    <Style TargetType="TextBox" BasedOn="{StaticResource TbNoEdit}"/>
+                </ControlTemplate.Resources>
+                
+            </ControlTemplate>
+            
+
+        </ResourceDictionary>
+    </UserControl.Resources>
+    
+    <Grid Name="Grid" Background="{StaticResource ActiveServiceBackground}" Margin="0,2,0,-2">
+        
+        <Grid.Resources>
+            <sys:Double x:Key="Denominator">11.0</sys:Double>
+        </Grid.Resources>
+        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Name="Row1" Height="8*">
+                <RowDefinition.Resources>
+                    <sys:Double x:Key="Numerator">5.0</sys:Double>
+                </RowDefinition.Resources>
+            </RowDefinition>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Name="Row2" Height="2*">
+                <RowDefinition.Resources>
+                    <sys:Double x:Key="Numerator">3.0</sys:Double>
+                </RowDefinition.Resources>
+            </RowDefinition>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Name="Row3" Height="0">
+                <RowDefinition.Resources>
+                    <sys:Double x:Key="Numerator">3.0</sys:Double>
+                </RowDefinition.Resources>
+            </RowDefinition>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        
+        
+        <Control Grid.Row="0" Template="{StaticResource ServiceTabHeader}"></Control>
+        <Border Grid.Row="1" Grid.ColumnSpan="2" Margin="0" Style="{StaticResource BorderHeader}">
+            <TextBlock Style="{StaticResource TblCenter}" Text="1. Создание брони в круиз-компаниях"/>
+        </Border>
+        <Border Grid.Row="2" Style="{StaticResource ActiveServiceBorder}" MouseEnter="UIElement_OnMouseEnter1" MouseLeave="UIElement_OnMouseLeave1">
+            <ScrollViewer Name="CriuseViewer"  Grid.Row="1" VerticalAlignment="Stretch" VerticalScrollBarVisibility="Auto">
+                <Control Name="Block1" Template="{StaticResource BronCreation}"/>
+            </ScrollViewer>
+        </Border>
+        <Border Grid.Row="3" Grid.ColumnSpan="2" Margin="0" Style="{StaticResource BorderHeader}">
+            <TextBlock Style="{StaticResource TblCenter}" Text="2. Статус документов от партнера"/>
+        </Border>
+        <Border Grid.Row="4" Style="{StaticResource ActiveServiceBorder}" MouseEnter="UIElement_OnMouseEnter2" MouseLeave="UIElement_OnMouseLeave2">
+            <ScrollViewer Grid.Row="1" VerticalAlignment="Stretch" VerticalScrollBarVisibility="Auto">
+                <Grid Name="Grid2" Style="{StaticResource SwitchableGrid}" Margin="5,0,5,0">
+                    <Grid.Resources>
+                        <ResourceDictionary>
+
+                            <ResourceDictionary.MergedDictionaries>
+                                <ResourceDictionary Source="/WpfControlLibrary;component/Resources/Resources.xaml"/>
+                            </ResourceDictionary.MergedDictionaries>
+
+                            <Style TargetType="TextBox">
+                                <Setter Property="Margin" Value="0,5,0,0"></Setter>
+                            </Style>
+
+                            <Style x:Key="tbBase_" TargetType="TextBox" BasedOn="{StaticResource TbSimple}">
+                                <Setter Property="IsReadOnly" Value="False"/>
+                            </Style>
+
+                            <Style x:Key="tbDefault_" TargetType="TextBox" BasedOn="{StaticResource tbBase_}">
+                                <Setter Property="Foreground" Value="Black"/>
+                            </Style>
+
+                            <Style x:Key="tbChanged_" TargetType="TextBox"  BasedOn="{StaticResource tbBase_}">
+                                <Setter Property="Foreground" Value="Crimson"></Setter>
+                            </Style>
+
+                            <i:TextBoxStyleSelector DefaultStyle="{StaticResource tbDefault_}" ChangedStyle="{StaticResource tbChanged_}" x:Key="TextBoxStyleSelector_"/>
+
+                        </ResourceDictionary>
+
+                    </Grid.Resources>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1.3*" />
+                        <ColumnDefinition Width="1.7*" />
+                    </Grid.ColumnDefinitions>
+<!--                    
+                    <TextBlock Grid.Row="1" Grid.Column="0" Text="№ каюты:" Name="CardNumber"/>
+                    <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding CruiseInfo.CabinNumber, UpdateSourceTrigger=PropertyChanged}"/>
+
+                    <TextBlock Grid.Row="2" Grid.Column="0" Text="Категория каюты:"/>
+                    <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding CruiseInfo.Category, UpdateSourceTrigger=PropertyChanged}"/>
+
+                    <TextBlock Grid.Row="3" Grid.Column="0" Text="Бронь на опции до:"/>
+                    <Grid Grid.Row="3" Grid.Column="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="5*" />
+                            <ColumnDefinition Width="3*" />
+                        </Grid.ColumnDefinitions>
+                        <xctk:DateTimePicker TextAlignment="Left" Format="ShortDate" Margin="0,5,20,0" Value="{Binding CruiseInfo.OptionDate}" IsEnabled="{Binding CruiseInfo.IsBook, Converter={StaticResource Inverter}}"/>
+                        <xctk:TimePicker TextAlignment="Right" Margin="5,5,0,0" Grid.Column="1" Value="{Binding CruiseInfo.OptionDate}" IsEnabled="{Binding CruiseInfo.IsBook, Converter={StaticResource Inverter}}"/>
+                    </Grid>
+-->
+<!--
+                    <TextBlock Grid.Row="4" Grid.Column="0" Text="Уровень дефицита кают:"/>
+                    <ComboBox Margin="0,5,0,0" Grid.Row="4" Grid.Column="1" ItemsSource="{Binding Service.CabinCountList}" SelectedValue="{Binding CruiseInfo.CabinDef}"/>
+-->
+<!--
+                    <TextBlock Grid.Row="5" Grid.Column="0" Text="№ брони в кр.компании:"/>
+                    <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding CruiseInfo.OptionNumber, UpdateSourceTrigger=PropertyChanged}"/>
+
+                    <TextBlock Grid.Row="6" Grid.Column="0" Text="№ карты лояльности:"/>
+                    <TextBox Grid.Row="6" Grid.Column="1" />
+
+                    <TextBlock Grid.Row="6" Grid.Column="0" Text="Отказ по спец сервису:"/>
+                    <TextBox Grid.Row="6" Grid.Column="1" Text="{Binding CruiseInfo.SpecCanc, UpdateSourceTrigger=PropertyChanged}"/>
+-->
+<!--
+                    <Border Grid.Row="7" Height="7"/>
+
+                    <Border Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="2" Margin="0" Style="{StaticResource BorderHeader}">
+                        <TextBlock Style="{StaticResource TblCenter}" Text="Статус документов от партнера"/>
+                    </Border>
+-->
+                    <Grid Grid.Row="9" Grid.Column="0" ColumnSpan="2">
+                        
+                        <Grid.Resources>
+<!--
+                            <Style TargetType="TextBlock" BasedOn="{StaticResource TblockHeader2}">
+                                <Setter Property="VerticalAlignment" Value="Bottom"/>
+                                <Setter Property="MaxWidth" Value="100"/>
+                            </Style>
+-->                            
+<!--
+                            <Style TargetType="AccessText">
+                                <Setter Property="TextWrapping" Value="Wrap"/>
+                            </Style>
+-->
+
+                        </Grid.Resources>
+                        
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1.3*" />
+                            <ColumnDefinition Width="1.7*" />
+                        </Grid.ColumnDefinitions>
+                        
+<!--
+                        <CheckBox IsChecked="{Binding CruiseInfo.IsBook}">
+                            <TextBlock>
+                                <AccessText Text="Опция подтверждена"/>
+                            </TextBlock>
+                        </CheckBox>
+-->
+                        <CheckBox Name="chbDocumentQuery" Grid.Row="0" Grid.Column="0" Height="24" VerticalAlignment="Center" 
+                                  IsChecked="{Binding CruiseInfo.DocumentQuery}">
+                            <CheckBox.Style>
+                                <Style>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding CruiseInfo.ChangeEnableFlag}" Value="False">
+                                            <Setter Property="CheckBox.IsEnabled" Value="false"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </CheckBox.Style>
+                            <TextBlock >
+                                <AccessText Text="Документы запрошены"/>
+                            </TextBlock>
+                        </CheckBox>
+
+                        <TextBox Name="QueryDateString" Grid.Row="0" Grid.Column="1" 
+                                 Width="115" HorizontalAlignment="Left"
+                                 Margin="0,5,0,0"
+                                 IsReadOnly="True"
+                                 Text="{Binding CruiseInfo.DocumentQueryDateString}">
+                            <TextBox.Style>
+                                <Style>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding CruiseInfo.DocumentQuery}" Value="false">
+                                            <Setter Property="TextBox.Foreground" Value="LightGray"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBox.Style>
+                        </TextBox>
+
+                        <CheckBox Name="chbDocumentGet" Grid.Row="1" Grid.Column="0" Height="24" VerticalAlignment="Center" 
+                                  IsChecked="{Binding CruiseInfo.DocumentGet}">
+                            <CheckBox.Style>
+                                <Style>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding CruiseInfo.ChangeEnableFlag}" Value="False">
+                                            <Setter Property="CheckBox.IsEnabled" Value="false"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </CheckBox.Style>
+                            <TextBlock >
+                                <AccessText Text="Документы получены"/>
+                            </TextBlock>
+                        </CheckBox>
+
+                        <TextBox Grid.Row="1" Grid.Column="1"  
+                                 Width="115" HorizontalAlignment="Left"
+                                 Margin="0,5,0,0"
+                                 IsReadOnly="True"
+                                 Text="{Binding CruiseInfo.DocumentGetDateString}">
+                            <TextBox.Style>
+                                <Style>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding CruiseInfo.DocumentGet}" Value="false">
+                                            <Setter Property="TextBox.Foreground" Value="LightGray"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBox.Style>
+                        </TextBox>
+
+
+                    </Grid>
+
+                    <Border Grid.Row="5" Height="5"/>
+                    
+                    <StackPanel Margin="0,5,0,5" Grid.Row="11" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right">
+                        <!--
+                        <Button Command="{Binding ClearAddOptionCommand}" 
+                                Width="120" Height="25" 
+                                Background="LightSkyBlue"
+                                Content="Отменить изменения"/>
+                        -->
+                        <Button x:Name="btnChange"
+                                Click="btnChange_Click"
+                                Width="90" Height="25" 
+                                Background="LightSkyBlue" 
+                                Content="Изменить">
+                            <!--
+                            <Button.Style>
+                                <Style>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding CruiseInfo.ChangeEnableFlag}" Value="True">
+                                            <Setter Property="Button.Background" Value="DarkTurquoise" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+                            -->
+                        </Button>
+                            
+                        <Button Command="{Binding AddOptionCommand}" 
+                                Margin="15,0,0,0" Width="140" Height="25" 
+                                FontSize="14"
+                                Background="PaleGreen" 
+                                Content="Сохранить"/>
+
+                        <TextBlock Name="btnUndo" 
+                                Margin="15,2,10,0"                             
+                                TextDecorations="Underline"
+                                Style="{StaticResource TblCenter}"
+                                FontSize="11"
+                                Foreground="RoyalBlue"
+                                Cursor="Hand"
+                                MouseUp="btnUndo_Click" 
+                                Text="Отменить  изменения"/>
+
+                    </StackPanel>
+
+                </Grid>
+            </ScrollViewer>
+        </Border>
+
+<!--       
+        <Border Grid.Row="5" Grid.ColumnSpan="2" Margin="0" Style="{StaticResource BorderHeader}">
+            <TextBlock Style="{StaticResource TblCenter}" Text="3. Бонусы и сервисы"/>
+        </Border>
+        
+        <Border Grid.Row="6" Style="{StaticResource ActiveServiceBorder}"  MouseEnter="UIElement_OnMouseEnter3" MouseLeave="UIElement_OnMouseLeave3">
+            <ScrollViewer Grid.Row="1" VerticalAlignment="Stretch" VerticalScrollBarVisibility="Auto">
+                <Grid Name="Block3" Style="{StaticResource SwitchableGrid}">
+                    <Grid.Resources>
+                        <Style TargetType="TextBox">
+                            <Setter Property="Margin" Value="0,5,0,0"/>
+                        </Style>
+                    </Grid.Resources>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <ListView Name="BonusesListView_2" 
+                              ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
+                              HorizontalContentAlignment="Stretch" 
+                              ItemsSource="{Binding BonusesAndServices}" 
+                              ItemContainerStyle="{StaticResource LvItemStyle}"
+                              ItemTemplate="{StaticResource BonusAndService}"/>
+
+                    <StackPanel Grid.Row="2" Margin="0,5,0,5" Orientation="Horizontal" HorizontalAlignment="Right">
+                        <Button Command="{Binding ClearBonusesAndServicesCommand}" Width="140" Height="25" Content="Отменить изменения"/>
+                        <Button Command="{Binding BonusOkCommand}" Margin="5,0,5,0" Width="100" Height="25" Content="ОК"/>
+                    </StackPanel>
+                </Grid>
+            </ScrollViewer>
+        </Border>
+-->
+
+<!--        
+        <Border Grid.Row="5" Grid.ColumnSpan="2" Margin="0"></Border>
+        <Border Grid.Row="6" Grid.ColumnSpan="2" Margin="0"></Border>
+-->        
+<!--
+        <Border Grid.Row="7" Grid.ColumnSpan="2" Margin="0">
+            <TextBlock Style="{StaticResource TblCenter}" Text="3. Бонусы и сервисы"/>
+        </Border>
+-->
+
+    </Grid>
+</UserControl>

@@ -1,0 +1,114 @@
+﻿<UserControl x:Class="WpfControlLibrary.View.VoucherInfoView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:util="clr-namespace:WpfControlLibrary.Util"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/WpfControlLibrary;component/Resources/Resources.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            
+            <util:OrdinalConverter x:Key="OrdinalConverter"/>
+
+            <DataTemplate x:Key="PaymentSchedule">
+                <Grid x:Name="Grid">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="150"></ColumnDefinition>
+                        <ColumnDefinition Width="100"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Margin="0,0,0,0" VerticalAlignment="Center" Text="{Binding Name, StringFormat={}{0}:}"/>
+                    <TextBox Style="{StaticResource TbNoEdit}" Grid.Column="1" Margin="0,0,0,0" VerticalAlignment="Center" FontSize="12" Text="{Binding Value}"/>
+                </Grid>
+            </DataTemplate>
+
+            <DataTemplate x:Key="Payments">
+                
+                <DataTemplate.Resources>
+                    <Style TargetType="TextBlock" BasedOn="{StaticResource TblockHeader2}"/>
+                    <Style TargetType="TextBox" BasedOn="{StaticResource TbNoEdit}">
+                        <Setter Property="VerticalAlignment" Value="Center"/>
+                    </Style>
+                </DataTemplate.Resources>
+                
+                <Grid x:Name="Grid">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="1*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="80"></ColumnDefinition>
+                        <ColumnDefinition Width="150"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="0" Background="Transparent">
+                        <TextBlock Text="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListViewItem}, 
+						    Converter={StaticResource ResourceKey=OrdinalConverter}, StringFormat={}{0}.}"/>
+                        <TextBlock Margin="2,0,0,0" HorizontalAlignment="Left" Text="Оплата:"/>
+                    </StackPanel>
+                    <Border Grid.Row="0" Grid.Column="1" Background="Transparent">
+                        <TextBox VerticalAlignment="Center" FontSize="12" Text="{Binding DateTransaction, StringFormat=HH:mm / dd.MM.yy}"/>
+                    </Border>
+                    <TextBlock FontWeight="Normal" Margin="12,0,0,0" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Text="Сумма:"/>
+                    <TextBox Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" FontSize="12" Text="{Binding SummTransactionStr}"/>
+                    <TextBlock FontWeight="Normal" Margin="12,0,0,0" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Text="По курсу: "/>
+                    <TextBox Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" FontSize="12" Text="{Binding Course, StringFormat={}{0:#.00}}"/>
+                </Grid>
+            </DataTemplate>
+            
+            <Style x:Key="TransactionsTab" TargetType="TabItem">
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding Transactions.Count}" Value="0">
+                        <Setter Property="Visibility" Value="Collapsed"></Setter>
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <!--<Control Margin="8,0,0,0" Template="{StaticResource Row}" DataContext="{Binding Info[0]}"></Control>-->
+        <TabControl Grid.Row="1" BorderBrush="Transparent" Background="Transparent">
+            <TabControl.ItemContainerStyle>
+                <Style TargetType="TabItem">
+                    <Setter Property="Margin" Value="0,0,0,0" />
+                    <Setter Property="Padding" Value="5,8,5,8" />
+                </Style>
+            </TabControl.ItemContainerStyle>
+            <TabItem Template="{DynamicResource TabItemLight}">
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock>График платежей</TextBlock>
+                    </StackPanel>
+                </TabItem.Header>
+                <TabItem.Content>
+                    <ListView ItemsSource="{Binding Info}" ItemTemplate="{StaticResource PaymentSchedule}"
+                        ItemContainerStyle="{StaticResource LvItemStyle}" ItemsPanel="{StaticResource IpTemplate}"/>
+                </TabItem.Content>
+            </TabItem>
+            <TabItem Template="{DynamicResource TabItemLight}" Style="{StaticResource TransactionsTab}">
+                <TabItem.Header>
+                    <StackPanel Margin="7,0,7,0" Orientation="Horizontal">
+                        <TextBlock>Оплачено</TextBlock>
+                    </StackPanel>
+                </TabItem.Header>
+                <TabItem.Content>
+                    <ListView ItemsSource="{Binding Transactions}" ItemTemplate="{StaticResource Payments}"
+                        ItemContainerStyle="{StaticResource LvItemStyle}" ItemsPanel="{StaticResource IpTemplate}"/>
+                </TabItem.Content>
+            </TabItem>
+        </TabControl>
+        <!--<Control Grid.Row="2" Margin="8,0,0,0" Template="{StaticResource Row}" DataContext="{Binding Info[4]}"></Control>-->
+    </Grid>
+</UserControl>

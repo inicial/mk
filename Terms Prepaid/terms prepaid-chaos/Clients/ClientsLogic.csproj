@@ -1,0 +1,397 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{FF8C6FE0-26AF-4D1B-A5E8-32F12B0D033B}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>lanta.Clients</RootNamespace>
+    <AssemblyName>Clients</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Lanta.SQLConfig, Version=0.0.0.5, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\DirectClientDogovor\bin\Lanta.SQLConfig.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.WinForms, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Runtime.Serialization">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.ServiceModel">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Resources\AddMissedClient.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Resources\AddMissedClient.Designer.cs">
+      <DependentUpon>AddMissedClient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ClientPassportEdit.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ClientPassportEdit.Designer.cs">
+      <DependentUpon>ClientPassportEdit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ClientPassports.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ClientPassports.Designer.cs">
+      <DependentUpon>ClientPassports.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ClientsMainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ClientsMainForm.Designer.cs">
+      <DependentUpon>ClientsMainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ClientUnionDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ClientUnionDialog.Designer.cs">
+      <DependentUpon>ClientUnionDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ClientDiffDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ClientDiffDialog.Designer.cs">
+      <DependentUpon>ClientDiffDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ClientCopyData.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ClientCopyData.Designer.cs">
+      <DependentUpon>ClientCopyData.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DataBaseName.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DataBaseName.Designer.cs">
+      <DependentUpon>DataBaseName.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DiscountCard.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DiscountCard.Designer.cs">
+      <DependentUpon>DiscountCard.cs</DependentUpon>
+    </Compile>
+    <Compile Include="EditClient.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EditClient.Designer.cs">
+      <DependentUpon>EditClient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="EditDogovorComment.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EditDogovorComment.Designer.cs">
+      <DependentUpon>EditDogovorComment.cs</DependentUpon>
+    </Compile>
+    <Compile Include="EMailCheck.cs" />
+    <Compile Include="ExceptionForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ExceptionForm.Designer.cs">
+      <DependentUpon>ExceptionForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FilterClient.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FilterClient.Designer.cs">
+      <DependentUpon>FilterClient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="lantaDataSet.Designer.cs">
+      <DependentUpon>lantaDataSet.xsd</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="LoadPicture.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LoadPicture.Designer.cs">
+      <DependentUpon>LoadPicture.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Passanger.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Passanger.Designer.cs">
+      <DependentUpon>Passanger.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ProgressStatisticCalculation.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ProgressStatisticCalculation.Designer.cs">
+      <DependentUpon>ProgressStatisticCalculation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="ReportSendList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ReportSendList.Designer.cs">
+      <DependentUpon>ReportSendList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ShowList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ShowList.Designer.cs">
+      <DependentUpon>ShowList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Vocabulary.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Vocabulary.Designer.cs">
+      <DependentUpon>Vocabulary.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\ru.lantatur.lanta\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\AddMissedClient.resx">
+      <DependentUpon>AddMissedClient.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ClientPassportEdit.resx">
+      <DependentUpon>ClientPassportEdit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ClientPassports.resx">
+      <DependentUpon>ClientPassports.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Clients.rdlc" />
+    <EmbeddedResource Include="ClientsMainForm.resx">
+      <DependentUpon>ClientsMainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ClientUnionDialog.resx">
+      <DependentUpon>ClientUnionDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ClientDiffDialog.resx">
+      <DependentUpon>ClientDiffDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ClientCopyData.resx">
+      <DependentUpon>ClientCopyData.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataBaseName.resx">
+      <DependentUpon>DataBaseName.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DiscountCard.resx">
+      <DependentUpon>DiscountCard.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EditClient.resx">
+      <DependentUpon>EditClient.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EditDogovorComment.resx">
+      <DependentUpon>EditDogovorComment.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ExceptionForm.resx">
+      <DependentUpon>ExceptionForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FilterClient.resx">
+      <DependentUpon>FilterClient.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LoadPicture.resx">
+      <DependentUpon>LoadPicture.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Passanger.resx">
+      <DependentUpon>Passanger.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ProgressStatisticCalculation.resx">
+      <DependentUpon>ProgressStatisticCalculation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ReportSendList.resx">
+      <DependentUpon>ReportSendList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ShowList.resx">
+      <DependentUpon>ShowList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Vocabulary.resx">
+      <DependentUpon>Vocabulary.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Вставить.JPG" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Выход.JPG" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Resources\Редактировать.JPG" />
+  </ItemGroup>
+  <ItemGroup>
+    <WebReferences Include="Web References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WebReferenceUrl Include="http://online.mcruises.ru/EncryptionService/EncryptionService.asmx">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\ru.lantatur.lanta\</RelPath>
+      <UpdateFromURL>http://online.mcruises.ru/EncryptionService/EncryptionService.asmx</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>Clients_ru_lantatur_lanta_EncryptionService</CachedSettingsPropName>
+    </WebReferenceUrl>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\ru.lantatur.lanta\EncryptionService.disco" />
+    <None Include="Web References\ru.lantatur.lanta\EncryptionService.wsdl" />
+    <None Include="Web References\ru.lantatur.lanta\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\arrw01_24b.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Обновить.JPG" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Сервисы.JPG" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="lantaDataSet.xsc">
+      <DependentUpon>lantaDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="lantaDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>lantaDataSet.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="lantaDataSet.xss">
+      <DependentUpon>lantaDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="Resources\Удалить.JPG" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\arrw01_24b1.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\arrw01_34b.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Редактирование списка.JPG" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Сохранить.JPG" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

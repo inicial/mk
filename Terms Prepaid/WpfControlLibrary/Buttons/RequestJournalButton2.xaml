@@ -1,0 +1,245 @@
+﻿<UserControl x:Class="WpfControlLibrary.Buttons.RequestJournalButton2"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:util="clr-namespace:WpfControlLibrary.Util"
+             mc:Ignorable="d" 
+             d:DesignHeight="60" d:DesignWidth="460">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/WpfControlLibrary;component/Resources/Resources.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+            <util:Inverter x:Key="Inverter"/>
+            <util:RequestJournalButtonFlashConverter x:Key="RequestJournalButtonFlashConverter"/>
+
+            <Style x:Key="FlashingTextBlock" TargetType="TextBlock">
+                <Setter Property="Background" Value="White"/>
+                <Setter Property="Foreground" Value="Black"/>
+                <Setter Property="TextAlignment" Value="Center"/>
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding Path=Text, RelativeSource={RelativeSource Self}, Converter={StaticResource RequestJournalButtonFlashConverter}}" Value="True">
+                        <DataTrigger.EnterActions>
+                            <BeginStoryboard>
+                                <Storyboard TargetProperty="Background">
+                                    <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(TextBlock.Background).(SolidColorBrush.Color)" Duration="0:0:0.5" 
+                                                                      AutoReverse="True" RepeatBehavior="Forever">
+                                        <LinearColorKeyFrame Value="White" KeyTime="0:0:0"/>
+                                        <LinearColorKeyFrame Value="White" KeyTime="0:0:0.25"/>
+                                        <LinearColorKeyFrame Value="ForestGreen" KeyTime="0:0:0.25"/>
+                                        <LinearColorKeyFrame Value="ForestGreen" KeyTime="0:0:0.5"/>
+                                    </ColorAnimationUsingKeyFrames>
+                                </Storyboard>
+                            </BeginStoryboard>
+                            <BeginStoryboard>
+                                <Storyboard TargetProperty="Foreground">
+                                    <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(TextBlock.Foreground).(SolidColorBrush.Color)" Duration="0:0:0.5" 
+                                                                      AutoReverse="True" RepeatBehavior="Forever">
+                                        <LinearColorKeyFrame Value="Black" KeyTime="0:0:0"/>
+                                        <LinearColorKeyFrame Value="Black" KeyTime="0:0:0.25"/>
+                                        <LinearColorKeyFrame Value="White" KeyTime="0:0:0.25"/>
+                                        <LinearColorKeyFrame Value="White" KeyTime="0:0:0.5"/>
+                                    </ColorAnimationUsingKeyFrames>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </DataTrigger.EnterActions>
+                        <DataTrigger.ExitActions>
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimation Storyboard.TargetProperty="(TextBlock.Background).(SolidColorBrush.Color)" To="White" Duration="0:0:0"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimation Storyboard.TargetProperty="(TextBlock.Foreground).(SolidColorBrush.Color)" To="ForestGreen" Duration="0:0:0"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </DataTrigger.ExitActions>
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+
+        </ResourceDictionary>
+    </UserControl.Resources>
+    
+    <Grid Height="50" VerticalAlignment="Top">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="34"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="260"/>
+            <ColumnDefinition Width="10"/>
+            <ColumnDefinition Width="190"/>
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Left">
+            <!--
+            <TextBlock Visibility="Visible" Text="ЖУРНАЛ ЗАЯВОК" TextAlignment="Center" Margin="0" FontSize="14"/>
+            -->
+            <TextBlock Visibility="Visible" Text="ЖУРНАЛ  ЗАЯВОК" TextAlignment="Center" Margin="10,0,0,0" FontSize="12"
+                       Foreground="RoyalBlue" TextDecorations="Underline" Cursor="Hand" ToolTip="Открыть журнал заявок">
+                <TextBlock.InputBindings>
+                    <MouseBinding Command="{Binding ShowAllCommand}"  MouseAction="LeftClick" />
+                </TextBlock.InputBindings>
+            </TextBlock>
+        </StackPanel>
+
+        <Border Grid.Row="1" Grid.Column="0" BorderThickness="1" BorderBrush="Gray" Width="250">
+            <Grid>
+                <Grid.Resources>
+                    <Style x:Key="Border" TargetType="Border">
+                        <Setter Property="BorderBrush" Value="Black"/>
+                        <Setter Property="BorderThickness" Value="1"/>
+                        <Setter Property="Width" Value="25"/>
+                    </Style>
+                    <Style TargetType="TextBlock" >
+                        <Setter Property="TextAlignment" Value="Center"/>
+                    </Style>
+                </Grid.Resources>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                
+                <TextBlock Margin="0,1,0,0" Grid.Row="0" Grid.Column="0" Text="сообщения от клиентов:" TextAlignment="Left"/>
+                <TextBlock Margin="0,1,0,0" Grid.Row="1" Grid.Column="0" Text="сообщения от сотрудников:" TextAlignment="Left"/>
+
+                <Button Content="все" Grid.Row="0" Grid.Column="1" Command="{Binding ShowAllCommand}" Style="{StaticResource LightGraySmallButton}"/>
+
+                <Border Grid.Row="0" Grid.Column="2" Style="{StaticResource Border}">
+                    <TextBlock Text="{Binding MtCCountAll}" Style="{StaticResource FlashingTextBlock}">
+                        <TextBlock.InputBindings>
+                            <MouseBinding Command="{Binding ShowAllCommand}"  MouseAction="LeftClick" />
+                        </TextBlock.InputBindings>
+                    </TextBlock>
+                </Border>
+
+                <Button Content="мои" Grid.Row="0" Grid.Column="3" Command="{Binding ShowOnlyMyCommand}" Style="{StaticResource LightGraySmallButton}"/>
+
+                <Border Grid.Row="0" Grid.Column="4" Style="{StaticResource Border}">
+                    <TextBlock Text="{Binding MtCCountSelf}" Style="{StaticResource FlashingTextBlock}">
+                        <TextBlock.InputBindings>
+                            <MouseBinding Command="{Binding ShowOnlyMyCommand}"  MouseAction="LeftClick" />
+                        </TextBlock.InputBindings>
+                    </TextBlock>
+                </Border>
+
+                <Button Content="все" Grid.Row="1" Grid.Column="1" Command="{Binding ShowAllCommand}" Style="{StaticResource LightGraySmallButton}"/>
+
+                <Border Grid.Row="1" Grid.Column="2" Style="{StaticResource Border}">
+                    <TextBlock Text="{Binding MtMCountAll}" Style="{StaticResource FlashingTextBlock}">
+                        <TextBlock.InputBindings>
+                            <MouseBinding Command="{Binding ShowAllCommand}"  MouseAction="LeftClick" />
+                        </TextBlock.InputBindings>
+                    </TextBlock>    
+                </Border>
+
+                <Button Content="мои" Grid.Row="1" Grid.Column="3" Command="{Binding ShowOnlyMyCommand}" Style="{StaticResource LightGraySmallButton}"/>
+
+                <Border Grid.Row="1" Grid.Column="4" Style="{StaticResource Border}">
+                    <TextBlock Text="{Binding MtMCountSelf}" Style="{StaticResource FlashingTextBlock}">
+                        <TextBlock.InputBindings>
+                            <MouseBinding Command="{Binding ShowOnlyMyCommand}"  MouseAction="LeftClick" />
+                        </TextBlock.InputBindings>
+                    </TextBlock>    
+                </Border>
+            </Grid>
+        </Border>
+
+        <StackPanel Grid.Row="0" Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Left">
+            <!--
+            <TextBlock Visibility="Visible" Text="ПОПУТЧИКИ" TextAlignment="Center" Margin="0" FontSize="14"/>
+            -->
+            <TextBlock Visibility="Visible" Text="ЖУРНАЛ  ПОПУТЧИКОВ" TextAlignment="Center" Margin="10,0,0,0" FontSize="12"
+                       Foreground="RoyalBlue" TextDecorations="Underline" Cursor="Hand" ToolTip="Открыть журнал попутчиков">
+                <TextBlock.InputBindings>
+                    <MouseBinding Command="{Binding ShowAllCompanionsCommand}"  MouseAction="LeftClick" />
+                </TextBlock.InputBindings>
+            </TextBlock>
+        </StackPanel>
+
+        <Border Grid.Row="1" Grid.Column="2" BorderThickness="1" BorderBrush="Gray" Width="190">
+            
+            <Grid>
+                <Grid.Resources>
+                    <Style x:Key="Border" TargetType="Border">
+                        <Setter Property="BorderBrush" Value="Black"/>
+                        <Setter Property="BorderThickness" Value="1"/>
+                        <Setter Property="Width" Value="25"/>
+                    </Style>
+                    <Style TargetType="TextBlock" >
+                        <Setter Property="TextAlignment" Value="Center"/>
+                    </Style>
+                </Grid.Resources>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="85"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Margin="0,1,0,0" Grid.Row="0" Grid.Column="0" Text="от клиентов:" TextAlignment="Left"/>
+                <TextBlock Margin="0,1,0,0" Grid.Row="1" Grid.Column="0" Text="от сотрудников:" TextAlignment="Left"/>
+
+                <Button Content="все" Grid.Row="0" Grid.Column="1" Command="{Binding ShowAllCompanionsCommand}" Style="{StaticResource LightGraySmallButton}"/>
+
+                <Border Grid.Row="0" Grid.Column="2" Style="{StaticResource Border}">
+                    <TextBlock Text="{Binding MtCCountAllComp}" Style="{StaticResource FlashingTextBlock}">
+                        <TextBlock.InputBindings>
+                            <MouseBinding Command="{Binding ShowAllCompanionsCommand}"  MouseAction="LeftClick" />
+                        </TextBlock.InputBindings>
+                    </TextBlock>
+                </Border>
+
+                <Button Content="мои" Grid.Row="0" Grid.Column="3" Command="{Binding ShowOnlyMyCompanionsCommand}" Style="{StaticResource LightGraySmallButton}"/>
+
+                <Border Grid.Row="0" Grid.Column="4" Style="{StaticResource Border}">
+                    <TextBlock Text="{Binding MtCCountSelfComp}" Style="{StaticResource FlashingTextBlock}">
+                        <TextBlock.InputBindings>
+                            <MouseBinding Command="{Binding ShowOnlyMyCompanionsCommand}"  MouseAction="LeftClick" />
+                        </TextBlock.InputBindings>
+                    </TextBlock>
+                </Border>
+
+                <Button Content="все" Grid.Row="1" Grid.Column="1" Command="{Binding ShowAllCompanionsCommand}" Style="{StaticResource LightGraySmallButton}"/>
+
+                <Border Grid.Row="1" Grid.Column="2" Style="{StaticResource Border}">
+                    <TextBlock Text="{Binding MtMCountAllComp}" Style="{StaticResource FlashingTextBlock}">
+                        <TextBlock.InputBindings>
+                            <MouseBinding Command="{Binding ShowAllCompanionsCommand}"  MouseAction="LeftClick" />
+                        </TextBlock.InputBindings>
+                    </TextBlock>
+                </Border>
+
+                <Button Content="мои" Grid.Row="1" Grid.Column="3" Command="{Binding ShowOnlyMyCompanionsCommand}" Style="{StaticResource LightGraySmallButton}"/>
+
+                <Border Grid.Row="1" Grid.Column="4" Style="{StaticResource Border}">
+                    <TextBlock Text="{Binding MtMCountSelfComp}" Style="{StaticResource FlashingTextBlock}">
+                        <TextBlock.InputBindings>
+                            <MouseBinding Command="{Binding ShowOnlyMyCompanionsCommand}"  MouseAction="LeftClick" />
+                        </TextBlock.InputBindings>
+                    </TextBlock>
+                </Border>
+            </Grid>
+
+        </Border>
+
+    </Grid>
+    
+</UserControl>

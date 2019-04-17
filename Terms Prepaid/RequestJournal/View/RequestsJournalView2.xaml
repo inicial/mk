@@ -1,0 +1,361 @@
+﻿<UserControl
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:common="clr-namespace:WpfControlLibrary.Common"
+    xmlns:requestJournal="clr-namespace:WpfControlLibrary.Model.RequestJournal"
+    xmlns:buttons="clr-namespace:WpfControlLibrary.Buttons"
+    xmlns:util="clr-namespace:WpfControlLibrary.Util"
+    xmlns:view="clr-namespace:WpfControlLibrary.View"
+    xmlns:converters="clr-namespace:WpfControlLibrary.View.Converters"
+    xmlns:common1="clr-namespace:WpfControlLibrary.Model.Common"
+    mc:Ignorable="d"
+	x:Class="WpfControlLibrary.RequestsJournalView2"
+	x:Name="UserControl"
+	d:DesignWidth="1000" d:DesignHeight="480"
+    xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+    xmlns:helpers="clr-namespace:WpfControlLibrary.Helpers">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/WpfControlLibrary;component/Resources/Resources.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/WPF.Bootstrap;component/Themes/Default.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <BooleanToVisibilityConverter x:Key="BoolToVis" />
+
+            <converters:BooleanToVisibilityConverter  x:Key="BooleanToVisibilityConverterInvert" True="Visible" False="Collapsed" />
+            <util:RequestMessagesSeenStatusConvertor4 x:Key="RequestMessagesSeenStatusConvertor4"/>
+            <util:BoolToFontWeightInvertConverter x:Key="BoolToFontWeightInvertConverter"/>
+
+            <SolidColorBrush x:Key="CorrespodenseManagerBrush" Color="#d2b38d"/>
+            <SolidColorBrush x:Key="CorrespodenseClientBrush" Color="#80cdf5"/>
+            
+            <Style x:Key="popupStyle" TargetType="{x:Type Popup}" >
+                <Style.Triggers>
+                    <Trigger Property="IsOpen" Value="True">
+                        <Trigger.EnterActions>
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation Storyboard.TargetProperty="Height" From="10" To="255" Duration="0:0:0.20" />
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </Trigger.EnterActions>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+
+            <Style x:Key="HeaderCorrespWithClient" TargetType="{x:Type DataGridColumnHeader}">
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding DataContext.ShowCorrespondenceWithClient, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" Value="True">
+                        <Setter Property="Background" Value="{StaticResource CorrespodenseClientBrush}"></Setter>
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+
+            <Style x:Key="HeaderCorrespWithManager" TargetType="{x:Type DataGridColumnHeader}">
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding DataContext.ShowCorrespondenceWithManager, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" Value="True">
+                        <Setter Property="Background" Value="{StaticResource CorrespodenseManagerBrush}"/>
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+            
+            <Style x:Key="CorrespondenceBorder" TargetType="Border">
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding DataContext.ShowCorrespondenceWithManager, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" Value="True">
+                        <Setter Property="Background" Value="{StaticResource CorrespodenseManagerBrush}"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding DataContext.ShowCorrespondenceWithClient, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" Value="True">
+                        <Setter Property="Background" Value="{StaticResource CorrespodenseClientBrush}"/>
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+            
+            <Style x:Key="CorrespondenceView" TargetType="UserControl">
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding DataContext.ShowCorrespondenceWithManager, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" Value="True">
+                        <Setter Property="DataContext" Value="{Binding RequestMessagesViewModelMtM}"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding DataContext.ShowCorrespondenceWithClient, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" Value="True">
+                        <Setter Property="DataContext" Value="{Binding RequestMessagesViewModelMtC}"/>
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+
+            <Style x:Key="HeaderButton" TargetType="Button">
+                <Setter Property="Margin" Value="0"/>
+                <Setter Property="Width" Value="Auto"/>
+                <Setter Property="Background" Value="Transparent"/>
+                <Setter Property="BorderThickness" Value="0"/>
+                <Setter Property="BorderBrush" Value="Transparent"/>
+            </Style>
+
+            <requestJournal:RequestStatusConverter x:Key="RequestStatusConverter"/>
+
+            <ControlTemplate x:Key="TextFilter">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock HorizontalAlignment="Center" Text="{Binding Name}"/>
+                    <TextBox HorizontalAlignment="Center" Margin="0,5,0,0" Grid.Row="1" Text="{Binding Text}"/>
+                </Grid>
+            </ControlTemplate>
+
+            <ControlTemplate x:Key="RequestStatusFilter">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock HorizontalAlignment="Center" Text="{Binding Name}"/>
+                    <ComboBox HorizontalAlignment="Stretch" Margin="0,5,0,0" Grid.Row="1" SelectedItem="{Binding Value}" ItemsSource="{Binding Values}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate DataType="requestJournal:RequestStatus">
+                                <TextBlock Text="{Binding Name}"/>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                </Grid>
+            </ControlTemplate>
+
+            <ControlTemplate x:Key="PerformerFilter">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock HorizontalAlignment="Center" Text="{Binding Name}"/>
+                    <ComboBox HorizontalAlignment="Stretch" Margin="0,5,0,0" Grid.Row="1" SelectedItem="{Binding Value}" ItemsSource="{Binding Values}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate DataType="common1:User">
+                                <TextBlock Text="{Binding Name}"/>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                </Grid>
+            </ControlTemplate>
+
+            <ControlTemplate x:Key="ComboBoxFilter">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock HorizontalAlignment="Center" Text="{Binding Name}"/>
+                    <ComboBox HorizontalAlignment="Stretch" Margin="0,5,0,0" Grid.Row="1" SelectedItem="{Binding Value}" ItemsSource="{Binding Values}"/>
+                </Grid>
+            </ControlTemplate>
+
+            <ControlTemplate x:Key="DateFilter">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock HorizontalAlignment="Center" Text="{Binding Name}"/>
+                    <StackPanel HorizontalAlignment="Center" Margin="0,3,0,0"  Grid.Row="1" Orientation="Horizontal">
+                        <TextBlock VerticalAlignment="Center" Text="от"/>
+                        <DatePicker SelectedDate="{Binding Path=DateBegin, Mode=TwoWay}" Margin="3,0,0,0"/>
+                        <TextBlock VerticalAlignment="Center" Text="до" Margin="5,0,0,0"/>
+                        <DatePicker SelectedDate="{Binding Path=DateEnd, Mode=TwoWay}" Margin="3,0,0,0"/>
+                    </StackPanel>
+                </Grid>
+            </ControlTemplate>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition>
+                <RowDefinition.Style>
+                    <Style TargetType="RowDefinition">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding DataContext.HideAllRows, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" Value="True">
+                                <Setter Property="Height" Value="30"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding DataContext.HideAllRows, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" Value="False">
+                                <Setter Property="Height" Value="Auto"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </RowDefinition.Style>
+            </RowDefinition>
+            <RowDefinition>
+                <RowDefinition.Style>
+                    <Style TargetType="RowDefinition">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding DataContext.HideAllRows, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" Value="False">
+                                <Setter Property="Height" Value="Auto"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding DataContext.HideAllRows, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" Value="True">
+                                <Setter Property="Height" Value="1*"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </RowDefinition.Style>
+            </RowDefinition>
+        </Grid.RowDefinitions>
+        <StackPanel Margin="5,0,5,5" Orientation="Horizontal">
+            <StackPanel.Resources>
+                <Style TargetType="Control">
+                    <Setter Property="Margin" Value="0,0,10,0"/>
+                    <Setter Property="VerticalAlignment" Value="Bottom"/>
+                </Style>
+            </StackPanel.Resources>
+            <Control Template="{StaticResource DateFilter}" DataContext="{Binding DateFilter}"/>
+            <Control Template="{StaticResource RequestStatusFilter}" DataContext="{Binding StatusFilter}"/>
+            <Control Template="{StaticResource PerformerFilter}" DataContext="{Binding PerformerFilter}"/>
+            <Control Template="{StaticResource ComboBoxFilter}" DataContext="{Binding ClientFilter}"/>
+
+            <Button x:Name="TakeAJobBtn" VerticalAlignment="Top" Height="22" Width="130" Style="{StaticResource BurlyWoodButton}" FontWeight="SemiBold" Content="Взять в работу"
+                    Command="{Binding TakeAJobCommand}" Margin="0,21,0,0"/>
+
+            <Button x:Name="AppointPerformerBtn" Margin="10,0,0,0" VerticalAlignment="Bottom" Height="22" Width="180" Style="{StaticResource BlueButton}" FontWeight="SemiBold" 
+                    Command="{Binding AppointPerformerCommand}" Content="Назначить исполнителя" IsEnabled="{Binding RequestJournal}" Visibility="{Binding IsSuperviser, Converter={StaticResource BoolToVis}}"/>
+            <Button Margin="5,0,0,0" VerticalAlignment="Bottom" Width="22" Height="22" Command="{Binding UpdateCommand}">
+                <Image Source="../img/Refresh_small.png"/>
+            </Button>
+        </StackPanel>
+        <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" VerticalAlignment="Stretch" >
+            <DataGrid helpers:DataGridBehavior2.DataGridDoubleClickCommand="{Binding ShowCorrespWithClientCommand}" Name="DataGrid" ItemsSource="{Binding Requests}" AutoGenerateColumns="False" Unloaded="FrameworkElement_OnUnloaded"
+                      CanUserAddRows="False" CanUserDeleteRows="False" CanUserSortColumns="False" CanUserReorderColumns="False" SelectionMode="Single" SelectedItem="{Binding SelectedItem}">
+                <DataGrid.Resources>
+                    <Style TargetType="Button">
+                        <Setter Property="Margin" Value="0,0"/>
+                    </Style>
+                    <Style TargetType="DataGridCell" BasedOn="{StaticResource DataGridCellNoLostFocus}">
+                        <Setter Property="FontWeight" Value="{Binding Seen, Converter={StaticResource BoolToFontWeightInvertConverter}}"/>
+                    </Style>
+                </DataGrid.Resources>
+                <DataGrid.Columns >
+                    <DataGridTextColumn IsReadOnly="True" Header="№ запроса" Binding="{Binding Number}" Width="Auto"/>
+                    <DataGridTextColumn IsReadOnly="True" Header="Дата" Binding="{Binding Date, StringFormat={}{0:HH:mm} / {0:dd.MM.yy}}" Width="Auto"/>
+                    <DataGridTextColumn IsReadOnly="True" Header="Заявка от" Binding="{Binding FirstMessage.SenderAddress}" Width="Auto"/>
+
+                    <DataGridTemplateColumn IsReadOnly="True" Header="Посмотреть">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <buttons:RequestMessageButton DataContext="{Binding FirstMessage}"/>
+                                </Grid>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+                    <DataGridTextColumn IsReadOnly="True" Header="Статус" Binding="{Binding RequestStatuses, Converter={StaticResource RequestStatusConverter}}" Width="Auto">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style>
+                                <Setter Property="TextBlock.TextWrapping" Value="Wrap" />
+                                <Setter Property="TextBlock.TextAlignment" Value="Center"/>
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+
+                    <DataGridTextColumn IsReadOnly="True" Header="Исполнитель" Binding="{Binding Performer}" Width="Auto"/>
+
+                    <DataGridTextColumn IsReadOnly="True" Header="Переписка с клиентом" Width="Auto" HeaderStyle="{StaticResource HeaderCorrespWithClient}">
+                        <DataGridTextColumn.Binding>
+                            <MultiBinding StringFormat="{}Сообщений: {0}, новых: {1}">
+                                <Binding Path="MessagesCountMtc"/>
+                                <Binding Path="MessagesCountMtcUnwatched"/>
+                            </MultiBinding>
+                        </DataGridTextColumn.Binding>
+                        <DataGridTextColumn.HeaderTemplate>
+                            <DataTemplate>
+                                <Button Name="Button"  Style="{StaticResource DefaultButton}" FontWeight="SemiBold" Content="Переписка с клиентом"
+                                    Command="{Binding DataContext.ShowCorrespWithClientCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" />
+                                <DataTemplate.Triggers>
+                                    <DataTrigger Binding="{Binding DataContext.ShowCorrespondenceWithClient, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" Value="True">
+                                        <Setter TargetName="Button" Property="Style" Value="{StaticResource PrimaryButton}"/>
+                                        <Setter TargetName="Button" Property="Margin" Value="5,0,0,0"></Setter>
+                                    </DataTrigger>
+                                </DataTemplate.Triggers>
+                            </DataTemplate>
+                        </DataGridTextColumn.HeaderTemplate>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Binding="{Binding LastMessageMtC, Converter={StaticResource RequestMessagesSeenStatusConvertor4}}" IsReadOnly="True" Header="Статус переписки" Width="Auto"/>
+                    <DataGridTextColumn IsReadOnly="True" Header="Переписка с сотрудниками"  Width="Auto" HeaderStyle="{StaticResource HeaderCorrespWithManager}">
+                        <DataGridTextColumn.Binding>
+                            <MultiBinding StringFormat="{}Сообщений: {0}, новых: {1}">
+                                <Binding Path="MessagesCountMtm"/>
+                                <Binding Path="MessagesCountMtmUnwatched"/>
+                            </MultiBinding>
+                        </DataGridTextColumn.Binding>
+                        <DataGridTextColumn.HeaderTemplate>
+                            <DataTemplate>
+                                <Button Name="Button"  Style="{StaticResource DefaultButton}" FontWeight="SemiBold" Content="Переписка с сотрудниками"
+                                    Command="{Binding DataContext.ShowCorrespWithManagerCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" />
+                                <DataTemplate.Triggers>
+                                    <DataTrigger Binding="{Binding DataContext.ShowCorrespondenceWithManager, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" Value="True">
+                                        <Setter TargetName="Button" Property="Style" Value="{StaticResource BurlyWoodButton2}"/>
+                                        <Setter TargetName="Button" Property="Margin" Value="5,0,0,0"></Setter>
+                                    </DataTrigger>
+                                </DataTemplate.Triggers>
+                            </DataTemplate>
+                        </DataGridTextColumn.HeaderTemplate>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Binding="{Binding LastMessageMtM, Converter={StaticResource RequestMessagesSeenStatusConvertor4}}" IsReadOnly="True" Header="Статус переписки" Width="Auto"/>
+                </DataGrid.Columns>
+
+                <DataGrid.RowStyle>
+                    <Style TargetType="{x:Type DataGridRow}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding DataContext.HideAllRows, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" Value="True">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                                <Setter Property="Height" Value="0"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </DataGrid.RowStyle>
+            
+                <DataGrid.ColumnHeaderStyle>
+                    <Style TargetType="{x:Type DataGridColumnHeader}">
+                        <Setter Property="Command" Value="{Binding DataContext.ShowDataGridCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}"/>
+                    </Style>
+                </DataGrid.ColumnHeaderStyle>
+
+                <!--
+                <DataGrid.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Name="MenuItemBind" Header="Привязать" Command="{Binding BindingButtonCommand}" CommandParameter="{Binding Path=SelectedIndex, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}">
+                            <MenuItem.Icon>
+                                <Image Width="24" Height="24" Source="..\img\bind.png" />
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <Popup x:Name="PopupBinding" PlacementTarget="{Binding ElementName=DataGrid, Path=SelectedItem}" IsOpen="{Binding PopupIsOpen}" AllowsTransparency="True" 
+                               PopupAnimation="Slide" StaysOpen="True">
+                            <ComboBox SelectedItem="{Binding MessageBinder.SelectedId, RelativeSource={RelativeSource TemplatedParent}}"
+                                ItemsSource="{Binding DataContext.RequestIdCollection, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Vertical">
+                                            <TextBlock Text="{Binding .,StringFormat={}№ {0}}"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+                        </Popup>
+                    </ContextMenu>
+                </DataGrid.ContextMenu>-->
+            </DataGrid>
+        </ScrollViewer>
+        <!--<Border Grid.Row="2" Style="{StaticResource CorrespondenceBorder}" Visibility="{Binding DataContext.HideAllRows, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, 
+                Converter={StaticResource BooleanToVisibilityConverterInvert}}">
+            <view:RequestMessagesView Style="{StaticResource CorrespondenceView}" BorderBrush="Black" BorderThickness="0" />
+        </Border>-->
+        <Border Grid.Row="2" Style="{StaticResource CorrespondenceBorder}" Visibility="{Binding DataContext.ShowCorrespondenceWithClient, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, 
+                Converter={StaticResource BoolToVis}}">
+            <view:RequestMessagesView DataContext="{Binding RequestMessagesViewModelMtC}" BorderBrush="Black" BorderThickness="0" />
+        </Border>
+        <Border Grid.Row="2" Style="{StaticResource CorrespondenceBorder}" Visibility="{Binding DataContext.ShowCorrespondenceWithManager, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, 
+                Converter={StaticResource BoolToVis}}">
+            <view:RequestMessagesView DataContext="{Binding RequestMessagesViewModelMtM}" BorderBrush="Black" BorderThickness="0" />
+        </Border>
+    </Grid>
+</UserControl>

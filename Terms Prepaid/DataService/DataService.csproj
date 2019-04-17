@@ -1,0 +1,261 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{0F658145-C78B-433F-BEE5-75ECA080D943}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DataService</RootNamespace>
+    <AssemblyName>DataService</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=4.4.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.5.0.0\lib\net40\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="GalaSoft.MvvmLight, Version=5.3.0.19038, Culture=neutral, PublicKeyToken=0e453835af4ee6ce, processorArchitecture=MSIL">
+      <HintPath>..\packages\MvvmLightLibs.5.3.0.0\lib\net40\GalaSoft.MvvmLight.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="GalaSoft.MvvmLight.Extras, Version=5.3.0.19026, Culture=neutral, PublicKeyToken=f46ff315b1088208, processorArchitecture=MSIL">
+      <HintPath>..\packages\MvvmLightLibs.5.3.0.0\lib\net40\GalaSoft.MvvmLight.Extras.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\CommonServiceLocator.1.3\lib\portable-net4+sl5+netcore45+wpa81+wp8\Microsoft.Practices.ServiceLocation.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Net" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\MvvmLightLibs.5.3.0.0\lib\net40\System.Windows.Interactivity.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AsteriskDataModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AsteriskDataModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AsteriskDataModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AsteriskDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AsteriskDataModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AsteriskDataModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="CallRecord.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CallRecord.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CallRecord.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CallRecord.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CallRecordModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CallRecordModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="CallRecordRepo.cs" />
+    <Compile Include="cdr.cs">
+      <DependentUpon>AsteriskDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CollectingLowcostAirlinesData.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CollectingLowcostAirlinesData.dbml</DependentUpon>
+    </Compile>
+    <Compile Include="IDataRepository.cs" />
+    <Compile Include="mk_CallRecord.cs">
+      <DependentUpon>CallRecord.tt</DependentUpon>
+    </Compile>
+    <Compile Include="mk_CallRecordsStatusFilter.cs">
+      <DependentUpon>CallRecord.tt</DependentUpon>
+    </Compile>
+    <Compile Include="mk_CallRecordStatus.cs">
+      <DependentUpon>CallRecord.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Msg.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="Repo.cs" />
+    <Compile Include="Repository.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Request2.cs">
+      <DependentUpon>RequestsJournal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RequestMessage2.cs">
+      <DependentUpon>RequestsJournal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RequestMessageAttachment2.cs">
+      <DependentUpon>RequestsJournal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RequestsJournal.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RequestsJournal.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RequestsJournal.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RequestsJournal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RequestsJournal.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RequestsJournal.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="RequestStatus2.cs">
+      <DependentUpon>RequestsJournal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RequestStatusHistory2.cs">
+      <DependentUpon>RequestsJournal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RequestType2.cs">
+      <DependentUpon>RequestsJournal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TouristData.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TouristData.dbml</DependentUpon>
+    </Compile>
+    <Compile Include="TouristRepo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <EntityDeploy Include="CallRecordModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>CallRecordModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <EntityDeploy Include="AsteriskDataModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>AsteriskDataModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="AsteriskDataModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>AsteriskDataModel.edmx</DependentUpon>
+      <LastGenOutput>AsteriskDataModel.Context.cs</LastGenOutput>
+    </None>
+    <None Include="AsteriskDataModel.edmx.diagram">
+      <DependentUpon>AsteriskDataModel.edmx</DependentUpon>
+    </None>
+    <None Include="AsteriskDataModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>AsteriskDataModel.edmx</DependentUpon>
+      <LastGenOutput>AsteriskDataModel.cs</LastGenOutput>
+    </None>
+    <None Include="CallRecord.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>CallRecordModel.edmx</DependentUpon>
+      <LastGenOutput>CallRecord.Context.cs</LastGenOutput>
+    </None>
+    <None Include="CallRecordModel.edmx.diagram">
+      <DependentUpon>CallRecordModel.edmx</DependentUpon>
+    </None>
+    <None Include="CallRecord.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>CallRecordModel.edmx</DependentUpon>
+      <LastGenOutput>CallRecord.cs</LastGenOutput>
+    </None>
+    <None Include="CollectingLowcostAirlinesData.dbml">
+      <Generator>MSLinqToSQLGenerator</Generator>
+      <LastGenOutput>CollectingLowcostAirlinesData.designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <EntityDeploy Include="RequestsJournal.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>RequestsJournal.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="RequestsJournal.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>RequestsJournal.edmx</DependentUpon>
+      <LastGenOutput>RequestsJournal.Context.cs</LastGenOutput>
+    </None>
+    <None Include="RequestsJournal.edmx.diagram">
+      <DependentUpon>RequestsJournal.edmx</DependentUpon>
+    </None>
+    <None Include="RequestsJournal.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>RequestsJournal.edmx</DependentUpon>
+      <LastGenOutput>RequestsJournal.cs</LastGenOutput>
+    </None>
+    <None Include="TouristData.dbml">
+      <Generator>MSLinqToSQLGenerator</Generator>
+      <LastGenOutput>TouristData.designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="TouristData.dbml.layout">
+      <DependentUpon>TouristData.dbml</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="CollectingLowcostAirlinesData.dbml.layout">
+      <DependentUpon>CollectingLowcostAirlinesData.dbml</DependentUpon>
+    </None>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,173 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="lantaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityType Name="mk_CallRecords">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Phone" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="100" />
+          <Property Name="PlaceOnline" Type="varchar" MaxLength="500" />
+          <Property Name="StatusId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="mk_CallRecordsStatuses">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="mk_CallRecordsStatusFilters">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'lanta.dbo.Mk_ring_from_site' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <!--Errors Found During Generation:
+warning 6013: The table/view 'lanta.dbo.mk_status_ring' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="mk_status_ring">
+          <Property Name="id" Type="int" />
+          <Property Name="name_en" Type="varchar" MaxLength="50" />
+          <Property Name="name_ru" Type="varchar" MaxLength="50" />
+          <Property Name="is_enable" Type="bit" />
+        </EntityType>-->
+        <Association Name="FK_mk_CallRecords_mk_CallRecordsStatuses">
+          <End Role="mk_CallRecordsStatuses" Type="Self.mk_CallRecordsStatuses" Multiplicity="1" />
+          <End Role="mk_CallRecords" Type="Self.mk_CallRecords" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="mk_CallRecordsStatuses">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="mk_CallRecords">
+              <PropertyRef Name="StatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="lantaModelStoreContainer">
+          <EntitySet Name="mk_CallRecords" EntityType="Self.mk_CallRecords" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="mk_CallRecordsStatuses" EntityType="Self.mk_CallRecordsStatuses" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="mk_CallRecordsStatusFilters" EntityType="Self.mk_CallRecordsStatusFilters" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_mk_CallRecords_mk_CallRecordsStatuses" Association="Self.FK_mk_CallRecords_mk_CallRecordsStatuses">
+            <End Role="mk_CallRecordsStatuses" EntitySet="mk_CallRecordsStatuses" />
+            <End Role="mk_CallRecords" EntitySet="mk_CallRecords" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="lantaModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityType Name="mk_CallRecord">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Phone" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="PlaceOnline" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="StatusId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="mk_CallRecordsStatuses" Relationship="Self.FK_mk_CallRecords_mk_CallRecordsStatuses" FromRole="mk_CallRecords" ToRole="mk_CallRecordsStatuses" />
+        </EntityType>
+        <EntityType Name="mk_CallRecordStatus">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="mk_CallRecords" Relationship="Self.FK_mk_CallRecords_mk_CallRecordsStatuses" FromRole="mk_CallRecordsStatuses" ToRole="mk_CallRecords" />
+        </EntityType>
+        <Association Name="FK_mk_CallRecords_mk_CallRecordsStatuses">
+          <End Role="mk_CallRecordsStatuses" Type="lantaModel.mk_CallRecordStatus" Multiplicity="1" />
+          <End Role="mk_CallRecords" Type="lantaModel.mk_CallRecord" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="mk_CallRecordsStatuses">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="mk_CallRecords">
+              <PropertyRef Name="StatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CallRecordsContext" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="mk_CallRecords" EntityType="lantaModel.mk_CallRecord" />
+          <EntitySet Name="mk_CallRecordStatuses" EntityType="lantaModel.mk_CallRecordStatus" />
+          <AssociationSet Name="FK_mk_CallRecords_mk_CallRecordsStatuses" Association="Self.FK_mk_CallRecords_mk_CallRecordsStatuses">
+            <End Role="mk_CallRecordsStatuses" EntitySet="mk_CallRecordStatuses" />
+            <End Role="mk_CallRecords" EntitySet="mk_CallRecords" />
+          </AssociationSet>
+          <EntitySet Name="mk_CallRecordsStatusFilters" EntityType="lantaModel.mk_CallRecordsStatusFilter" />
+        </EntityContainer>
+        <EntityType Name="mk_CallRecordsStatusFilter">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="lantaModelStoreContainer" CdmEntityContainer="CallRecordsContext">
+          <EntitySetMapping Name="mk_CallRecords">
+            <EntityTypeMapping TypeName="lantaModel.mk_CallRecord">
+              <MappingFragment StoreEntitySet="mk_CallRecords">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="PlaceOnline" ColumnName="PlaceOnline" />
+                <ScalarProperty Name="StatusId" ColumnName="StatusId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="mk_CallRecordStatuses">
+            <EntityTypeMapping TypeName="lantaModel.mk_CallRecordStatus">
+              <MappingFragment StoreEntitySet="mk_CallRecordsStatuses">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="mk_CallRecordsStatusFilters">
+            <EntityTypeMapping TypeName="lantaModel.mk_CallRecordsStatusFilter">
+              <MappingFragment StoreEntitySet="mk_CallRecordsStatusFilters">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

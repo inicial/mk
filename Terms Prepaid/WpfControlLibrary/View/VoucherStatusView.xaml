@@ -1,0 +1,147 @@
+﻿<UserControl x:Class="WpfControlLibrary.View.VoucherStatusView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:util="clr-namespace:WpfControlLibrary.Util"
+             xmlns:col="clr-namespace:System.Collections;assembly=mscorlib"
+             xmlns:voucher="clr-namespace:WpfControlLibrary.Model.Voucher"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="600">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/WpfControlLibrary;component/Resources/Resources.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+            <util:NullValueDecimalConverter x:Key="NullValueDecimalConverter" />
+            <util:TwoValueEqualsConverter x:Key="TwoValueEqualsConverter"/>
+            <util:NullValueConverter x:Key="NullValueConverter"/>
+            <util:TwoDateEqualsConverter x:Key="TwoDateEqualsConverter"/>
+
+            <!--<col:ArrayList x:Key="Info">
+                <voucher:ServiceSettingInfo Name="Оплата до:" Value="{}" Manager="" Date=""/>
+            </col:ArrayList>-->
+            
+            <ControlTemplate x:Key="ServiceSetting">
+                <Grid Width="910">
+                    <Grid.Resources>
+                        <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource TbNoEdit}">
+                            <Setter Property="Margin" Value="5,0,0,0"/>
+                            <Setter Property="VerticalAlignment" Value="Center"/>
+                        </Style>
+
+                        <Style TargetType="TextBlock" BasedOn="{StaticResource TblockHeader2}">
+                            <Setter Property="Margin" Value="10,0,0,0"/>
+                        </Style>
+                    </Grid.Resources>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Margin="15,0,0,0" Grid.Column="0" Text="{Binding Name, StringFormat={}{0}:}"/>
+                    <TextBlock Grid.Column="2" Text="Дата изменения:"/>
+                    <TextBlock Grid.Column="4" Text="Менеджер:"/>
+                    <TextBox Grid.Column="1" Text="{Binding Value}"/>
+                    <TextBox Grid.Column="3" Text="{Binding Date}"/>
+                    <TextBox Grid.Column="5" Text="{Binding Manager}"/>
+                </Grid>
+            </ControlTemplate>
+            
+            <ControlTemplate x:Key="DiscountSetting">
+                <Grid Width="910">
+                    <Grid.Resources>
+                        <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource TbNoEdit}">
+                            <Setter Property="Margin" Value="5,0,0,0"/>
+                            <Setter Property="VerticalAlignment" Value="Center"/>
+                        </Style>
+
+                        <Style TargetType="TextBlock" BasedOn="{StaticResource TblockHeader2}">
+                            <Setter Property="Margin" Value="10,0,0,0"/>
+                        </Style>
+                    </Grid.Resources>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Margin="15,0,0,0" Grid.Column="0" Text="{Binding DiscountValue.Name, StringFormat={}{0}:}"/>
+                    <TextBlock Grid.Column="2" Text="Дата изменения:"/>
+                    <TextBlock Grid.Column="4" Text="Менеджер:"/>
+                    <TextBox Grid.Column="1" Text="{Binding TrueNumericValue}"/>
+                    <TextBox Grid.Column="3" Text="{Binding DiscountValue.Date}"/>
+                    <TextBox Grid.Column="5" Text="{Binding DiscountValue.Manager}"/>
+                </Grid>
+            </ControlTemplate>
+
+            <DataTemplate x:Key="Service">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="1*"/>
+                    </Grid.RowDefinitions>
+                    <StackPanel Height="20" Margin="5,2,5,2" Background="{StaticResource DarkYellowHeaderBrush}" Grid.Row="0" Grid.ColumnSpan ="6" Orientation="Horizontal">
+                        <TextBlock VerticalAlignment="Center" FontWeight="Bold" Text="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListViewItem}, 
+							        Converter={StaticResource ResourceKey=OrdinalConverter}, StringFormat={}{0}.}"/>
+                        <TextBlock Style="{StaticResource TblNoEdit}" Margin="3,0,0,0" Text="{Binding ServiceName}"/>
+                    </StackPanel>
+                    <Control x:Name="PPaymenValue" Template="{StaticResource ServiceSetting}" Grid.Row="1" DataContext="{Binding Group.Setting.PPaymentValue}"/>
+                    <Control x:Name="PPaymentDate"  Template="{StaticResource ServiceSetting}" Grid.Row="2" DataContext="{Binding Group.Setting.PPaymentData}"/>
+                    <Control Template="{StaticResource ServiceSetting}" Grid.Row="3" DataContext="{Binding Group.Setting.PaymentValue}"/>
+                    <Control x:Name="PaymentDate" Template="{StaticResource ServiceSetting}" Grid.Row="4" DataContext="{Binding Group.Setting.PaymentData}"/>
+                    <Control x:Name="Discount" Template="{StaticResource DiscountSetting}" Grid.Row="5" DataContext="{Binding Group.Setting.Discount}"/>
+                </Grid>
+                <DataTemplate.Triggers>
+                    <DataTrigger Value="True" Binding="{Binding Path=Group.Setting.PaymentData.Value, Converter={StaticResource NullValueConverter}}">
+                        <Setter TargetName="PaymentDate" Property="Visibility" Value="Collapsed"/>
+                    </DataTrigger>
+                    <DataTrigger Value="True">
+                        <DataTrigger.Binding>
+                            <MultiBinding Converter="{StaticResource TwoDateEqualsConverter}">
+                                <Binding Path="Group.Setting.PaymentData.DateTime"/>
+                                <Binding Path="Group.Setting.PPaymentData.DateTime"/>
+                            </MultiBinding>
+                        </DataTrigger.Binding>
+                        <Setter TargetName="PPaymentDate" Property="Visibility" Value="Collapsed"/>
+                    </DataTrigger>
+                    <DataTrigger Value="True">
+                        <DataTrigger.Binding>
+                            <MultiBinding Converter="{StaticResource TwoValueEqualsConverter}">
+                                <Binding Path="Group.Setting.PaymentValue.Value"/>
+                                <Binding Path="Group.Setting.PPaymentValue.Value"/>
+                            </MultiBinding>
+                        </DataTrigger.Binding>
+                        <Setter TargetName="PPaymenValue" Property="Visibility" Value="Collapsed"/>
+                    </DataTrigger>
+                    <DataTrigger Value="True" Binding="{Binding Path=Group.Setting.PPaymentValue.Value, Converter={StaticResource NullValueConverter}}">
+                        <Setter TargetName="PPaymenValue" Property="Visibility" Value="Collapsed"/>
+                    </DataTrigger>
+                    <DataTrigger Value="True" Binding="{Binding Path=Group.Setting.Discount.TrueNumericValue, Converter={StaticResource NullValueDecimalConverter}}">
+                        <Setter TargetName="Discount" Property="Visibility" Value="Collapsed"/>
+                    </DataTrigger>
+                </DataTemplate.Triggers>
+            </DataTemplate>
+
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+        <ScrollViewer PreviewMouseWheel="UIElement_OnPreviewMouseWheel" Grid.Row="0" VerticalScrollBarVisibility="Auto">
+            <ListView x:Name="Services" ItemsSource="{Binding Voucher.GeneralServiceList, Mode=OneWay}" ItemTemplate="{StaticResource Service}" 
+                ItemContainerStyle="{StaticResource LvItemStyle}" ItemsPanel="{StaticResource IpTemplate}"/>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

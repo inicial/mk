@@ -1,0 +1,35 @@
+﻿<UserControl x:Class="WpfControlLibrary.OrderTaskButton"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="100" d:DesignWidth="205">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/WPF.Bootstrap;component/Themes/Default.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+
+    <StackPanel HorizontalAlignment="Left" VerticalAlignment="Top">
+        <ToggleButton Name="btnOption" 
+                      Height="38" Width="195" Margin="5,0,0,0" 
+                      FontSize="16" FontFamily="Arial" FontWeight="Bold"  
+                      Style="{StaticResource InfoToggleButton}" 
+                      Unchecked="btnOption_Unchecked" Checked="btnOption_Checked">
+            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14" FontWeight="Normal">Поставить задачу к заказу</TextBlock>
+        </ToggleButton>
+
+        <Popup AllowsTransparency="True" PopupAnimation="Slide" StaysOpen="False" x:Name="popupOption" PlacementTarget="{Binding ElementName=btnOption}">
+            <StackPanel HorizontalAlignment="Left" Orientation="Vertical" MinHeight="100" MinWidth="135" Background="White">
+
+            </StackPanel>
+        </Popup>
+    </StackPanel>
+
+</UserControl>

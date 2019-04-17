@@ -1,0 +1,71 @@
+﻿<common:PopupWindow x:Class="WpfControlLibrary.View.CollectingLowcostAirlinesView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:common="clr-namespace:WpfControlLibrary.Common"
+             xmlns:util="clr-namespace:WpfControlLibrary.Util"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="700">
+
+    <UserControl.Resources>
+
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/WpfControlLibrary;component/Resources/Resources.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/WPF.Bootstrap;component/Themes/Default.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            
+            <Style x:Key="ElementStyle">
+                <Setter Property="TextBlock.TextWrapping" Value="Wrap" />
+                <Setter Property="TextBlock.TextAlignment" Value="Left"/>
+                <Setter Property="TextBlock.Background" Value="Beige"/>
+            </Style>
+
+            <Style x:Key="ElementStyle2" BasedOn="{StaticResource ElementStyle}">
+                <Setter Property="TextBlock.FontWeight" Value="Bold"/>
+            </Style>
+
+            <Style x:Key="HeaderStyleBase2" TargetType="DataGridColumnHeader">
+                <Setter Property="BorderThickness" Value="0,0,1,1"/>
+                <Setter Property="BorderBrush" Value="Gray"/>
+                <Setter Property="Background" Value="BurlyWood"/>
+                <Setter Property="FontFamily" Value="{StaticResource DefaultFont}"></Setter>
+                <Setter Property="ContentTemplate">
+                    <Setter.Value>
+                        <DataTemplate>
+                            <TextBlock TextWrapping="Wrap" Text="{Binding}"></TextBlock>
+                        </DataTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+        </ResourceDictionary>
+    </UserControl.Resources>
+    
+    <Border BorderBrush="Black" BorderThickness="1,1,1,1">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            
+            <Control Template="{StaticResource WindowHead}" Tag="Cборы и доплаты авиакомпаний лоукостеров" 
+                     DataContext="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}"/>
+            
+            <DataGrid x:Name="Grid" Grid.Row="1" ItemsSource="{Binding Path=Info}" CanUserAddRows="False" AutoGenerateColumns="False" 
+                ColumnHeaderStyle="{StaticResource HeaderStyleBase}" CanUserSortColumns="False" SelectionChanged="Selector_OnSelectionChanged">
+                <DataGrid.Columns>
+                    <DataGridTextColumn ElementStyle="{StaticResource ElementStyle2}" Width="100" Binding="{Binding Path=Airline, Mode=OneWay}" Header="Авиакомпания*"/>
+                    <DataGridTextColumn ElementStyle="{StaticResource ElementStyle}" Width="150" Binding="{Binding Path=Check_in, Mode=OneWay}" Header="Регистрация на рейс"/>
+                    <DataGridTextColumn ElementStyle="{StaticResource ElementStyle}" Width="400" Binding="{Binding Path=SeatSelection, Mode=OneWay}" Header="Выбор места"/>
+                    <DataGridTextColumn ElementStyle="{StaticResource ElementStyle}" Width="400" Binding="{Binding Path=FreeCarryOnBaggage, Mode=OneWay}" Header="Бесплатная ручная кладь (с собой в салон)"/>
+                    <DataGridTextColumn ElementStyle="{StaticResource ElementStyle}" Width="250" Binding="{Binding Path=Baggage, Mode=OneWay}" Header="Багаж (сдаем в грузовой отсек)"/>
+                    <DataGridTextColumn ElementStyle="{StaticResource ElementStyle}" Width="200" Binding="{Binding Path=Food, Mode=OneWay}" Header="Питание"/>
+                </DataGrid.Columns>
+            </DataGrid>
+            <ListView Background="Gainsboro" Grid.Row="2" ItemsSource="{Binding NoteStrings}"/>
+        </Grid>
+    </Border>
+</common:PopupWindow>

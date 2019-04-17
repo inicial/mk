@@ -1,0 +1,92 @@
+﻿<UserControl x:Class="WpfControlLibrary.View.InshurControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/WpfControlLibrary;component/Resources/Resources.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+            <DataTemplate x:Key="UralsibInshur">
+                <Grid x:Name="Grid">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        <ColumnDefinition Width="1*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0" Margin="0,0,0,0" Orientation="Horizontal">
+                        <TextBlock Style="{StaticResource HideIfOneTextBlock}" Text="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListViewItem}, 
+							        Converter={StaticResource ResourceKey=OrdinalConverter}, StringFormat={}{0}.}"/>
+                        <TextBlock Margin="5,0,0,0" VerticalAlignment="Center" Text="{Binding Name, StringFormat={}{0} -}"/>
+                    </StackPanel>
+                    <TextBlock Style="{StaticResource TblockHeader2}" Grid.Column="1" Margin="5,0,0,0" VerticalAlignment="Center" FontWeight="SemiBold" Text="{Binding Value}"/>
+                </Grid>
+            </DataTemplate>
+            
+            <Style x:Key="UralsibHeader" TargetType="Border" BasedOn="{StaticResource BorderHeader}">
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding Service.UralsibData.Count}" Value="0">
+                        <Setter Property="Visibility" Value="Collapsed"/>
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid Background="{StaticResource ActiveServiceBackground}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Control Template="{StaticResource ServiceTabHeader}"></Control>
+
+        <Border Grid.Row="1" Style="{StaticResource ActiveServiceBorder}">
+            <ScrollViewer Grid.Row="1" VerticalAlignment="Stretch" VerticalScrollBarVisibility="Auto">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <Border Grid.Row="0" Style="{StaticResource UralsibHeader}">
+                        <TextBlock Style="{StaticResource TblCenter}" Text="Страховки в системе Уралсиб"/>
+                    </Border>
+
+                    <ListView Margin="0,5,0,5" Grid.Row="1"  ItemsSource="{Binding Service.UralsibData}" ItemTemplate="{StaticResource UralsibInshur}"
+                        ItemContainerStyle="{StaticResource LvItemStyle}" ItemsPanel="{StaticResource IpTemplate}"/>
+
+                    <Border Grid.Row="2" Style="{StaticResource BorderHeader}">
+                        <TextBlock Style="{StaticResource TblCenter}" Text="Туристы по услуге страховка"/>
+                    </Border>
+                    
+                    <ListView Grid.Row="3" x:Name="LbFligthsTo" ItemsSource="{Binding Service.Tourists, Mode=OneWay}"
+                        ItemContainerStyle="{StaticResource LvItemStyle}" ItemTemplate="{StaticResource TouristTemplate}"
+                            ItemsPanel="{StaticResource IpTemplate}"/>
+
+                    <Button Margin="5,20,5,10" Grid.Row="4" Height="25" Content="Система выписки страховок" Command="{Binding InsuranceSystemCommand}"/>
+
+                    <Grid Grid.Row="5" Margin="5,5,5,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="1*"/>
+                        </Grid.ColumnDefinitions>
+                        <CheckBox Margin="5,0,5,0" VerticalAlignment="Center" Grid.Column="0" Content="Страховка выписана вручную" IsChecked="{Binding InsuranceManually}"/>
+                        <Button Grid.Column="1" Height="25" Content="Ok" Command="{Binding InshurOkCommand}"/>
+                    </Grid>
+                </Grid>
+            </ScrollViewer>
+        </Border>
+        
+    </Grid>
+</UserControl>

@@ -1,0 +1,37 @@
+﻿<UserControl x:Class="WpfControlLibrary.Buttons.RequestMessageButton"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:helpers="clr-namespace:WpfControlLibrary.Helpers"
+             xmlns:htmlEditor="clr-namespace:Smith.WPF.HtmlEditor;assembly=Smith.WPF.HtmlEditor"
+             mc:Ignorable="d" 
+             d:DesignHeight="100" d:DesignWidth="100">
+    <UserControl.Resources>
+        <helpers:HtmlWrapConverter x:Key="HtmlWrapConverter"/>
+        <helpers:HtmlToTextConverter x:Key="HtmlToTextConverter"/>
+    </UserControl.Resources>
+    <Grid>
+        <!--<Button Click="Button_OnClick" Name="Button" BorderBrush="LightGray" BorderThickness="1" Background="#00000000" Height="30" Width="30" FontFamily="Arial" FontWeight="Bold">
+            <Image Margin="0,0,0,0" Width="24" Height="24" Source="..\img\loupe_small.png" />
+            <Button.Style>
+                <Style>
+                    <Style.Triggers>
+                        <EventTrigger RoutedEvent="Mouse.MouseUp">
+                            <EventTrigger.Actions ></EventTrigger.Actions>
+                        </EventTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+        </Button>-->
+        <ToggleButton Name="Button"  Width="32" Height="32">
+            <Image Margin="0,0,0,0" Width="24" Height="24" Source="..\img\loupe_small.png" />
+        </ToggleButton>
+        <Popup IsOpen="{Binding IsChecked, ElementName=Button}" Focusable="True" Name="Popup" Width="500" Height="400" AllowsTransparency="True" PopupAnimation="Slide" StaysOpen="False" PlacementTarget="{Binding ElementName=Button}">
+            <Border CornerRadius="5" BorderThickness="1" BorderBrush="DarkGray" Background="White">
+                <TextBox Margin="5" Foreground="Black"  Text="{Binding Html, Converter={StaticResource HtmlToTextConverter}}"/>
+                <!--<WebBrowser Margin="5" helpers:BrowserBehavior.Html="{Binding HtmlWithHead}" Name="Browser"/>-->
+            </Border>
+        </Popup>
+    </Grid>
+</UserControl>

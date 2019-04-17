@@ -1,0 +1,174 @@
+﻿<common:SimpleWindow x:Class="WpfControlLibrary.View.ProblemRequestsView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:requestJournal="clr-namespace:WpfControlLibrary.Model.RequestJournal"
+        xmlns:common="clr-namespace:WpfControlLibrary.Common"
+        xmlns:util="clr-namespace:WpfControlLibrary.Util"
+        Background="#D6D3CE"             
+        Title="Проблемные заявки" SizeToContent="WidthAndHeight" Topmost="True" ResizeMode="NoResize" FontWeight="Bold" SourceInitialized="SimpleWindow_SourceInitialized" WindowStyle="SingleBorderWindow" ScrollViewer.VerticalScrollBarVisibility="Disabled" WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/WpfControlLibrary;component/Resources/Resources.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+            <util:RequestProblemGroupConverter x:Key="RequestProblemGroupConverter"/>
+            <util:ProblemRequestTabConverter x:Key="ProblemRequestTabConverter"/>
+
+            <ControlTemplate x:Key="WinFormsTextBlock">
+                <Border Background="White" BorderBrush="#848284" BorderThickness="1,1,0,0">
+                    <Border Background="White" BorderBrush="White" BorderThickness="0,0,1,1">
+                        <Border Background="White" BorderBrush="#424142" BorderThickness="1,1,0,0">
+                            <Border Background="White" BorderBrush="#D6D3CE" BorderThickness="0,0,1,1">
+                                <TextBlock Width="30" Foreground="Red" Name="TextBlock" TextAlignment="Center" Text="{Binding DataContext, RelativeSource={RelativeSource TemplatedParent}}"/>
+                            </Border>
+                        </Border>
+                    </Border>
+                </Border>
+                <ControlTemplate.Triggers>
+                    <Trigger SourceName="TextBlock" Property="Text" Value="0">
+                        <Setter TargetName="TextBlock" Property="Foreground" Value="Black"/>
+                    </Trigger>
+                </ControlTemplate.Triggers>
+            </ControlTemplate>
+            
+            <ControlTemplate x:Key="ProblemGroup">
+                <StackPanel Orientation="Horizontal">
+                    <Button FontFamily="Microsoft Sans Serif" Width="600" Height="40" Style="{StaticResource WinFormsButton}" Content="{Binding DataContext.ProblemName, RelativeSource={RelativeSource TemplatedParent}}" 
+                            Command="{Binding DataContext.SelectProblemCmd, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" Click="Button_OnClick"
+                            CommandParameter="{Binding DataContext, RelativeSource={RelativeSource TemplatedParent}}"/>
+                    <Control Margin="5,0,0,0" Height="20" Template="{StaticResource WinFormsTextBlock}" DataContext="{Binding DataContext.Count, RelativeSource={RelativeSource TemplatedParent}}"/>
+                </StackPanel>
+            </ControlTemplate>
+
+            <ControlTemplate x:Key="Tab">
+                <ListView ItemsSource="{Binding .}">
+                    <ListView.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Vertical"/>
+                        </ItemsPanelTemplate>
+                    </ListView.ItemsPanel>
+                    <ListView.ItemTemplate>
+                        <DataTemplate DataType="requestJournal:RequestProblemGroup">
+                            <Control Margin="2" DataContext="{Binding .}" Template="{StaticResource ProblemGroup}"/>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </ControlTemplate>
+
+            <Style x:Key="TabItem" TargetType="TabItem">
+                <Setter Property="FontFamily" Value="Microsoft Sans Serif"/>
+                <Setter Property="FontWeight" Value="Normal"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="TabItem">
+                            <Grid Margin="0,0,0,0">
+                                <Border Name="Border" BorderThickness="0,1,0,0" BorderBrush="White" CornerRadius="0" Margin="0,0,0,0">
+                                    <ContentPresenter Height="15" x:Name="ContentSite" VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Header" Margin="10,2"/>
+                                </Border>
+                                <Border Name="Border2" BorderThickness="0,0,1,0" BorderBrush="{StaticResource ActiveTabBorderBrush}" Margin="0,0,0,-1"/>
+                                <Border Name="Border3" BorderThickness="0,0,0,1" BorderBrush="White" Margin="0,0,0,-1"/>
+                            </Grid>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="Tag" Value="0">
+                                    <Setter TargetName="Border" Property="BorderThickness" Value="1,1,0,0"/>
+                                    <Setter TargetName="Border" Property="Margin" Value="1,0,0,0"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+                <Style.Triggers>
+                    <Trigger Property="IsSelected" Value="True">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="TabItem">
+                                    <Grid Margin="0,0,0,0">
+                                        <Border Name="Border" BorderThickness="1,1,0,0" BorderBrush="White" CornerRadius="0" Margin="-1,-1,1,0">
+                                            <ContentPresenter x:Name="ContentSite" VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Header" Margin="10,2"/>
+                                        </Border>
+                                        <Border Name="Border2" BorderThickness="0,0,1,0" BorderBrush="{StaticResource ActiveTabBorderBrush}" Margin="0,0,0,-1"/>
+                                        <Border Name="Border3" BorderThickness="0,0,0,1" BorderBrush="{StaticResource ControlBackgroundColor}" Margin="0,0,1,-1"/>
+                                    </Grid>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+            
+            <ControlTemplate x:Key="TabControlControlTemplate1" TargetType="{x:Type TabControl}">
+            	<Grid ClipToBounds="True" SnapsToDevicePixels="True" KeyboardNavigation.TabNavigation="Local">
+            		<Grid.ColumnDefinitions>
+            			<ColumnDefinition x:Name="ColumnDefinition0"/>
+            			<ColumnDefinition x:Name="ColumnDefinition1" Width="0"/>
+            		</Grid.ColumnDefinitions>
+            		<Grid.RowDefinitions>
+            			<RowDefinition x:Name="RowDefinition0" Height="Auto"/>
+            			<RowDefinition x:Name="RowDefinition1" Height="*"/>
+            		</Grid.RowDefinitions>
+            		<TabPanel x:Name="HeaderPanel" Grid.Column="0" IsItemsHost="True" Margin="2,2,2,0" Grid.Row="0" KeyboardNavigation.TabIndex="1" Panel.ZIndex="1"/>
+            		<Border x:Name="ContentPanel" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Grid.Column="0" KeyboardNavigation.DirectionalNavigation="Contained" Grid.Row="1" KeyboardNavigation.TabIndex="2" KeyboardNavigation.TabNavigation="Local">
+            			<Border BorderBrush="White" BorderThickness="1,1,0,0" Margin="0,-1,0,0">
+                            <Border x:Name="BottomAndRight" BorderThickness="0,0,1,1" BorderBrush="#848284">
+                                <Border x:Name="BottomAndRight2" BorderThickness="0,0,1,1" BorderBrush="#424142" Background="{StaticResource ControlBackgroundColor}">
+                                    <ContentPresenter x:Name="PART_SelectedContentHost" ContentTemplate="{TemplateBinding SelectedContentTemplate}" Content="{TemplateBinding SelectedContent}" ContentStringFormat="{TemplateBinding SelectedContentStringFormat}" ContentSource="SelectedContent" Margin="{TemplateBinding Padding}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                                </Border>
+                            </Border>
+                        </Border>
+                    </Border>
+            	</Grid>
+            	<ControlTemplate.Triggers>
+            		<Trigger Property="TabStripPlacement" Value="Bottom">
+            			<Setter Property="Grid.Row" TargetName="HeaderPanel" Value="1"/>
+            			<Setter Property="Grid.Row" TargetName="ContentPanel" Value="0"/>
+            			<Setter Property="Height" TargetName="RowDefinition0" Value="*"/>
+            			<Setter Property="Height" TargetName="RowDefinition1" Value="Auto"/>
+            			<Setter Property="Margin" TargetName="HeaderPanel" Value="2,0,2,2"/>
+            		</Trigger>
+            		<Trigger Property="TabStripPlacement" Value="Left">
+            			<Setter Property="Grid.Row" TargetName="HeaderPanel" Value="0"/>
+            			<Setter Property="Grid.Row" TargetName="ContentPanel" Value="0"/>
+            			<Setter Property="Grid.Column" TargetName="HeaderPanel" Value="0"/>
+            			<Setter Property="Grid.Column" TargetName="ContentPanel" Value="1"/>
+            			<Setter Property="Width" TargetName="ColumnDefinition0" Value="Auto"/>
+            			<Setter Property="Width" TargetName="ColumnDefinition1" Value="*"/>
+            			<Setter Property="Height" TargetName="RowDefinition0" Value="*"/>
+            			<Setter Property="Height" TargetName="RowDefinition1" Value="0"/>
+            			<Setter Property="Margin" TargetName="HeaderPanel" Value="2,2,0,2"/>
+            		</Trigger>
+            		<Trigger Property="TabStripPlacement" Value="Right">
+            			<Setter Property="Grid.Row" TargetName="HeaderPanel" Value="0"/>
+            			<Setter Property="Grid.Row" TargetName="ContentPanel" Value="0"/>
+            			<Setter Property="Grid.Column" TargetName="HeaderPanel" Value="1"/>
+            			<Setter Property="Grid.Column" TargetName="ContentPanel" Value="0"/>
+            			<Setter Property="Width" TargetName="ColumnDefinition0" Value="*"/>
+            			<Setter Property="Width" TargetName="ColumnDefinition1" Value="Auto"/>
+            			<Setter Property="Height" TargetName="RowDefinition0" Value="*"/>
+            			<Setter Property="Height" TargetName="RowDefinition1" Value="0"/>
+            			<Setter Property="Margin" TargetName="HeaderPanel" Value="0,2,2,2"/>
+            		</Trigger>
+            		<Trigger Property="IsEnabled" Value="False">
+            			<Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+            		</Trigger>
+            	</ControlTemplate.Triggers>
+            </ControlTemplate>
+            
+        </ResourceDictionary>
+    </Window.Resources>
+    <Grid Background="{StaticResource ControlBackgroundColor}">
+        <TabControl Background="{StaticResource ControlBackgroundColor}" SelectedIndex="{Binding ShowSelfOnly, Converter={StaticResource ProblemRequestTabConverter}}"
+                     Margin="0" Padding="0" Template="{DynamicResource TabControlControlTemplate1}">
+            <TabItem Header="Все" Style="{StaticResource TabItem}" Tag="0">
+                <TabItem.Content>
+                    <Control Template="{StaticResource Tab}" DataContext="{Binding ProblemGroupsAll}"/>
+                </TabItem.Content>
+            </TabItem>
+            <TabItem Header="Мои"  Style="{StaticResource TabItem}" Tag="1">
+                <TabItem.Content>
+                    <Control Template="{StaticResource Tab}" DataContext="{Binding ProblemGroupsSelf}"/>
+                </TabItem.Content>
+            </TabItem>
+        </TabControl>   
+    </Grid>
+</common:SimpleWindow>

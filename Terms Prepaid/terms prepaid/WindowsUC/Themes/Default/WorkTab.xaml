@@ -1,0 +1,50 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <SolidColorBrush x:Key="TabBrush" Color="#FFEFEFF2" />
+    <SolidColorBrush x:Key="TabBorderBrush" Color="DarkGray" />
+    <SolidColorBrush x:Key="TabUnselectedBrush" Color="#FFE5E5E8" />
+
+    <Style x:Key="WorkTabControl" TargetType="{x:Type TabControl}">
+        <Setter Property="Background" Value="{DynamicResource TabBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource TabBorderBrush}" />
+        <Setter Property="MinWidth" Value="75">
+        </Setter>
+    </Style>
+
+    <Style x:Key="WorkTabItem" TargetType="{x:Type TabItem}">
+        <Setter Property="Background" Value="{DynamicResource TabBrush}" />
+        <Setter Property="MinWidth" Value="75"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="TabItem">
+                    <Border Name="Border" BorderThickness="1,1,1,0" BorderBrush="{DynamicResource TabBorderBrush}">
+                        <ContentPresenter x:Name="ContentSite"
+                                        VerticalAlignment="Center" HorizontalAlignment="Center"
+                                        ContentSource="Header" Margin="10,3"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource TabBrush}" />
+                            <Setter TargetName="Border" Property="Margin" Value="-2,-2,-2,-1" />
+                            <Setter TargetName="Border" Property="Padding" Value="2,1,2,1" />
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="False">
+                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource TabUnselectedBrush}"/>
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsMouseOver" Value="True"/>
+                                <Condition Property="IsSelected" Value="False"/>
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.Setters>
+                                <Setter TargetName="Border" Property="Background" Value="{DynamicResource TabBrush}" />
+                            </MultiTrigger.Setters>
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

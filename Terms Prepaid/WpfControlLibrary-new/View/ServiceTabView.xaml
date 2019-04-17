@@ -1,0 +1,114 @@
+﻿<UserControl x:Class="WpfControlLibrary.View.ServiceTabView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:col="clr-namespace:System.Collections;assembly=mscorlib"
+             xmlns:flight="clr-namespace:WpfControlLibrary.Model.Flight"
+             xmlns:voucher="clr-namespace:WpfControlLibrary.Model.Voucher"
+             xmlns:view="clr-namespace:WpfControlLibrary.View"
+             xmlns:util="clr-namespace:WpfControlLibrary.Util"
+             xmlns:controls="clr-namespace:WpfControlLibrary.Controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="550" d:DesignWidth="420">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/WpfControlLibrary;component/Resources/Resources.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/WPF.Bootstrap;component/Themes/Default.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <util:ServiceTabHeaderConverter x:Key="ServiceTabHeaderConverter"/>
+            <util:OrdinalConverter x:Key="OrdinalConverter" />
+
+            <Style x:Key="LvItemStyleNoMargin" TargetType="ListViewItem"> <!--BasedOn="{StaticResource LvItemStyle}">-->
+                <Setter Property="Margin" Value="0,0,0,0"></Setter>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                            <ContentPresenter/>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            
+            <Style x:Key="ServiceItemTextBlock" BasedOn="{StaticResource ServiceHeaderTextBlock}" TargetType="TextBlock">
+                <Setter Property="FontWeight" Value="Normal"></Setter>
+                <Style.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="TextDecorations" Value="Underline"></Setter>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+
+            <ItemsPanelTemplate x:Key="IpTemplateNoMargin">
+                <WrapPanel Orientation="Vertical"/>
+            </ItemsPanelTemplate>
+
+            <DataTemplate x:Key="ServiceData" DataType="ListViewItem">
+
+                <Button x:Name="btnOption" Tag="{Binding}" Margin="3,3,0,0" 
+                        FontWeight="Bold" Foreground="DodgerBlue" Style="{StaticResource InlineButton}" 
+                        VerticalAlignment="Center" Click="BtnOption_OnClick">
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Style="{StaticResource ServiceItemTextBlock}" Margin="5,2,0,0" Text="{Binding FullName}"/>
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+                
+                <DataTemplate.Triggers>
+                    <DataTrigger Binding="{Binding Path=IsSelected, RelativeSource={RelativeSource AncestorType={x:Type ListViewItem}}}"
+                        Value="True">
+                        <Setter TargetName="btnOption" Property="Visibility" Value="Collapsed"/>
+                    </DataTrigger>
+                </DataTemplate.Triggers>
+            </DataTemplate>
+           
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid Background="Beige">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+        <ListView Visibility="Collapsed" x:Name="LbFlightsBack" ItemsSource="{Binding Services}"
+            ItemTemplate="{StaticResource ServiceData}" ItemContainerStyle="{StaticResource LvItemStyleNoMargin}"
+            ItemsPanel="{StaticResource IpTemplateNoMargin}" SelectedItem="{Binding SelectedService}" 
+            SelectedIndex="{Binding SelectedIndex}">
+        </ListView>
+
+        <ItemsControl Grid.Row="1" x:Name="LbFlightsBack2" ItemsSource="{Binding Services}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Grid util:GridHelpers.RowCount="{Binding Services.Count}"/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+
+            <ItemsControl.ItemContainerStyle>
+                <Style>
+                    <Setter Property="Grid.Row" Value="{Binding RowIndex}" />
+                </Style>
+            </ItemsControl.ItemContainerStyle>
+
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <WrapPanel>
+                        <Button x:Name="btnOption" Tag="{Binding}" Margin="3,3,0,0" Visibility="{Binding Visible}"
+                            FontWeight="Bold" Foreground="#A01D425D" Style="{StaticResource InlineButton}"
+                            VerticalAlignment="Center" Click="BtnOption_OnClick">
+                            <Button.Content>
+                                <Border Background="#A0DEB887" BorderBrush="Gray" BorderThickness="1">
+                                    <TextBlock FontWeight="Bold" Style="{StaticResource ServiceItemTextBlock}" Margin="5,2,5,0" Text="{Binding FullName}"/>
+                                </Border>
+                            </Button.Content>
+                        </Button>
+                    </WrapPanel>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+        <ContentPresenter Margin="0,1,0,0" Grid.Row="2" Content="{Binding ServiceView}"/>
+    </Grid>
+</UserControl>

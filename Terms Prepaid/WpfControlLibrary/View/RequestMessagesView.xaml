@@ -1,0 +1,193 @@
+﻿<UserControl x:Class="WpfControlLibrary.View.RequestMessagesView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:viewModel="clr-namespace:WpfControlLibrary.ViewModel"
+             xmlns:buttons="clr-namespace:WpfControlLibrary.Buttons"
+             xmlns:view="clr-namespace:WpfControlLibrary.View"
+             xmlns:util="clr-namespace:WpfControlLibrary.Util"
+             xmlns:componentModel="clr-namespace:System.ComponentModel;assembly=WindowsBase"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="800">
+    <UserControl.Resources>
+        <ResourceDictionary>
+
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/WpfControlLibrary;component/Resources/Resources.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+            <util:BoolToFontWeightInvertConverter x:Key="BoolToFontWeightInvertConverter"/>
+            <util:RequestMessagesSeenStatusConvertor5 x:Key="RequestMessagesSeenStatusConvertor5"/>
+           
+            <ControlTemplate x:Key="StarToggleBtnTemplate" TargetType="ToggleButton">
+                <Grid Width="18" Height="18" Background="Transparent">
+                    <Image x:Name="ExpandImage" Source="../img/star_deactive.png" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="1,1,1,1" />
+                </Grid>
+                <ControlTemplate.Triggers>
+                    <Trigger Property="IsChecked" Value="True">
+                        <Setter Property="Source" TargetName="ExpandImage" Value="../img/star_active.png"/>
+                    </Trigger>
+                </ControlTemplate.Triggers>
+            </ControlTemplate>
+
+            <ControlTemplate x:Key="ArrowToggleBtnTemplate" TargetType="ToggleButton">
+                <Grid Width="18" Height="18" Background="Transparent">
+                    <Image x:Name="ExpandImage" Source="../img/green_arrow.png" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="1,1,1,1" />
+                </Grid>
+                <ControlTemplate.Triggers>
+                    <Trigger Property="IsChecked" Value="True">
+                        <Setter Property="Source" TargetName="ExpandImage" Value="../img/red_arrow.png"/>
+                    </Trigger>
+                </ControlTemplate.Triggers>
+            </ControlTemplate>
+
+            <ControlTemplate x:Key="ArrowToggleBtnCommentTemplate" TargetType="ToggleButton">
+                <Grid Width="18" Height="18" Background="Transparent">
+                    <Image x:Name="ExpandImage" Source="../img/comment3.png" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="1,1,1,1" />
+                </Grid>
+            </ControlTemplate>
+
+            <Style x:Key="StarToggleBtn" TargetType="ToggleButton">
+                <Setter Property="Template" Value="{StaticResource StarToggleBtnTemplate}" />
+            </Style>
+
+            <ControlTemplate x:Key="AttachmentToggleBtnTemplate" TargetType="ToggleButton">
+                <Grid Width="18" Height="18" Background="Transparent">
+                    <Image x:Name="ExpandImage" Source="" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="1,1,1,1" />
+                </Grid>
+                <ControlTemplate.Triggers>
+                    <Trigger Property="IsChecked" Value="True">
+                        <Setter Property="Source" TargetName="ExpandImage" Value="../img/attachment_small.png"/>
+                    </Trigger>
+                </ControlTemplate.Triggers>
+            </ControlTemplate>
+
+            <Style x:Key="AttachmentToggleBtn" TargetType="ToggleButton">
+                <Setter Property="Template" Value="{StaticResource AttachmentToggleBtnTemplate}" />
+            </Style>
+
+            <Style x:Key="ArrowToggleBtn" TargetType="ToggleButton">
+                <Setter Property="Template" Value="{StaticResource ArrowToggleBtnTemplate}" />
+            </Style>
+
+            <Style x:Key="ArrowToggleBtnComment" TargetType="ToggleButton">
+                <Setter Property="Template" Value="{StaticResource ArrowToggleBtnCommentTemplate}" />
+            </Style>
+
+            <util:BooleanToStyleConverter x:Key="ToggleButtonStyleConverter" TrueStyle="{StaticResource ArrowToggleBtnComment}" FalseStyle="{StaticResource ArrowToggleBtn}"/>
+
+            <CollectionViewSource Source="{Binding Messages}" x:Key="SortedMessages">
+                <CollectionViewSource.SortDescriptions>
+                    <componentModel:SortDescription PropertyName="RequestMessage.Date" Direction="Descending"/>
+                </CollectionViewSource.SortDescriptions>
+            </CollectionViewSource>
+
+        </ResourceDictionary>
+    </UserControl.Resources>
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="2*"/>
+        </Grid.RowDefinitions>
+       
+        <DataGrid VerticalAlignment="Stretch" VerticalScrollBarVisibility="Auto" ItemsSource="{Binding MessagesInvert}" HorizontalAlignment="Stretch" 
+                    AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" CanUserSortColumns="False" CanUserReorderColumns="False" 
+                    SelectionMode="Single" SelectedItem="{Binding SelectedItem}" EnableColumnVirtualization="False" EnableRowVirtualization="False" ColumnWidth="*">
+            <DataGrid.Resources>
+                <Style TargetType="DataGridCell"  BasedOn="{StaticResource DataGridCellNoLostFocus}">
+                    <Setter Property="FontWeight" Value="{Binding RequestMessage.Seen, Converter={StaticResource BoolToFontWeightInvertConverter}}"/>
+                    <Style.Triggers>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="BorderBrush" Value="Transparent"/>
+                            <Setter Property="Foreground" Value="Black"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+                    
+            </DataGrid.Resources>
+                
+            <DataGrid.Columns>
+                <DataGridTemplateColumn Width="Auto" IsReadOnly="True">
+                    <DataGridTemplateColumn.HeaderTemplate>
+                        <DataTemplate>
+                            <Image Margin="-2" Width="18" Height="18" Source="../img/star_header.png"></Image>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.HeaderTemplate>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate DataType="viewModel:IRequestMessageViewModel">
+                            <ToggleButton IsChecked="{Binding Favorites, Mode=TwoWay}" Style="{StaticResource StarToggleBtn}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Width="Auto" IsReadOnly="True">
+                    <DataGridTemplateColumn.HeaderTemplate>
+                        <DataTemplate>
+                            <Image Margin="-2" Width="18" Height="18" Source="../img/attachment_small.png"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.HeaderTemplate>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate DataType="viewModel:IRequestMessageViewModel">
+                            <buttons:LockableToggleButton LockToggle="True" IsChecked="{Binding AttachmentsIsExist, Mode=OneWay}" Style="{StaticResource AttachmentToggleBtn}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Width="Auto" IsReadOnly="True">
+                    <DataGridTemplateColumn.HeaderTemplate>
+                        <DataTemplate>
+                            <Image Margin="-2" Width="18" Height="18" Source="../img/arrows.png"></Image>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.HeaderTemplate>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate DataType="viewModel:IRequestMessageViewModel">
+                            <buttons:LockableToggleButton LockToggle="True" IsChecked="{Binding RequestMessage.IsIncomming, Mode=TwoWay}" Style="{Binding IsComment, Converter={StaticResource ToggleButtonStyleConverter}}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn IsReadOnly="True" Header="Тема" Binding="{Binding RequestMessage.Theme, Mode=OneWay}"/>
+                <DataGridTextColumn IsReadOnly="True" Header="От" Binding="{Binding RequestMessage.SenderAddress, Mode=OneWay}" Width="Auto"/>
+                <DataGridTextColumn IsReadOnly="True" Header="Кому" Binding="{Binding RequestMessage.DestinationAddress, Mode=OneWay}" Width="Auto"/>
+                <DataGridTextColumn IsReadOnly="True" Header="Дата" Binding="{Binding RequestMessage.Date, Mode=OneWay, StringFormat={}{0:HH:mm} / {0:dd.MM.yy}}" Width="Auto"/>
+                <DataGridTextColumn IsReadOnly="True" Header="Статус" Binding="{Binding RequestMessage, Converter={StaticResource RequestMessagesSeenStatusConvertor5}}" Width="Auto"/>
+
+                <DataGridTemplateColumn Width="Auto">
+                    <DataGridTemplateColumn.HeaderTemplate>
+                        <DataTemplate>
+                            <!--<Button Content="Закрыть переписку" Command="{Binding DataContext.CloseCorrespondenceCmd, RelativeSource={RelativeSource AncestorType=UserControl}}" />-->
+                            <CheckBox Content="Закрыть переписку" Command="{Binding DataContext.CloseCorrespondenceCmd, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                      IsChecked="{Binding DataContext.CorrespondenceIsClosed, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.HeaderTemplate>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate></DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <!--
+                <DataGridTemplateColumn Width="65">
+                    <DataGridTemplateColumn.HeaderTemplate>
+                        <DataTemplate>
+                            <Button Command="{Binding DataContext.CloseButtonCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" VerticalAlignment="Top" Margin="0" Name="CloseButton" HorizontalAlignment="Right" 
+                                Height="22" Width="70" FontFamily="Arial" FontWeight="Bold" Style="{StaticResource SuccessButton}">
+                                <StackPanel Orientation="Horizontal" >
+                                    <Image Margin="12,-3,0,0" Width="12" Height="12" Source="..\img\back_btn.png" />
+                                    <TextBlock Margin="5,0,0,0" FontSize="9" FontFamily="Arial" FontWeight="Normal" VerticalAlignment="Center"><Run Text="Назад"/></TextBlock>
+                                </StackPanel>
+                            </Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.HeaderTemplate>
+                    <DataGridTemplateColumn.CellTemplate>
+                    <DataTemplate></DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>-->
+            </DataGrid.Columns>
+            </DataGrid>
+        <GridSplitter BorderBrush="#202020" BorderThickness="0,1,0,0"  ShowsPreview="True" Background="Transparent" ResizeDirection="Rows" ResizeBehavior="PreviousAndNext"  
+            Grid.Row="1" Height="5" VerticalAlignment="Center" HorizontalAlignment="Stretch"/>
+        <ScrollViewer BorderBrush="#202020" BorderThickness="0,1,0,0" Grid.Row="2" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+            <view:RequestMessageView DataContext="{Binding RequestMessageViewModel}"/>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

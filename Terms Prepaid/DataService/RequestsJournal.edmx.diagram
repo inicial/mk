@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="f798a5368b6f4b88bb64129652254cc5" Name="Diagram1" >
+        <EntityTypeShape EntityType="RequestsJournal.RequestMessage2" Width="1.625" PointX="5" PointY="2.875" />
+        <EntityTypeShape EntityType="RequestsJournal.Request2" Width="1.5" PointX="7.25" PointY="1.625" />
+        <AssociationConnector Association="RequestsJournal.RequestRequestMessage" />
+        <EntityTypeShape EntityType="RequestsJournal.RequestType2" Width="1.5" PointX="9.375" PointY="3.25" />
+        <AssociationConnector Association="RequestsJournal.RequestTypeRequest" />
+        <EntityTypeShape EntityType="RequestsJournal.RequestStatus2" Width="1.5" PointX="10" PointY="0.75" />
+        <AssociationConnector Association="RequestsJournal.RequestStatusRequest" />
+        <EntityTypeShape EntityType="RequestsJournal.RequestStatusHistory2" Width="1.5" PointX="7.25" PointY="4.875" />
+        <AssociationConnector Association="RequestsJournal.RequestStatusRequestStatusHistory" />
+        <AssociationConnector Association="RequestsJournal.RequestRequestStatusHistory" />
+        <EntityTypeShape EntityType="RequestsJournal.RequestMessageAttachment2" Width="2.25" PointX="4.5" PointY="0.5" IsExpanded="true" />
+        <AssociationConnector Association="RequestsJournal.RequestMessageAttachmentRequestMessage" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

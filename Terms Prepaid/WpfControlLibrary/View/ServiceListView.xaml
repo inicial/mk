@@ -1,0 +1,787 @@
+﻿<UserControl x:Class="WpfControlLibrary.View.ServiceListView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:util="clr-namespace:WpfControlLibrary.Util"
+             mc:Ignorable="d" 
+             d:DesignWidth="1100" d:DesignHeight="300" >
+
+    <!--####################################################################################################-->
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+
+            <!--====================================================================================================-->
+
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/WpfControlLibrary;component/Resources/Resources.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+            <util:EmptyStringIfNullConverter x:Key="EmptyStringIfNullConverter" />
+
+            <!--====================================================================================================-->
+
+            <SolidColorBrush x:Key="PanelBorderBrush" Color="#ffe0e0e0" />
+            <SolidColorBrush x:Key="BottomBorderBrush" Color="#fff0f0f0" />
+            <SolidColorBrush x:Key="HeaderLineBrush" Color="#A9A9A9" /> <!--  WhiteSmoke-->
+
+            <!--====================================================================================================-->
+
+            <Style x:Key="ListBorder" TargetType="{x:Type Border}">
+                <Setter Property="Background" Value="{StaticResource PanelBorderBrush}" />
+                <Setter Property="BorderBrush" Value="DarkGray" />
+                <Setter Property="BorderThickness" Value="1 1 1 1" />
+            </Style>
+
+            <Style x:Key="BottomBorder" TargetType="{x:Type Border}">
+                <Setter Property="Background" Value="{StaticResource BottomBorderBrush}" />
+                <Setter Property="BorderBrush" Value="DarkGray" />
+                <Setter Property="BorderThickness" Value="0 0 0 0" />
+            </Style>
+
+            <Style x:Key="ServiceItemTextBlock" TargetType="{x:Type TextBlock}">
+                <Setter Property="FontWeight" Value="Normal"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
+                <Setter Property="Margin" Value="0,0,0,0"/>
+                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="HorizontalAlignment" Value="Center"/>
+            </Style>
+
+            <Style x:Key="ServiceItemGroupTextBlock" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource ServiceItemTextBlock}" >
+                <!--
+                <Setter Property="FontWeight" Value="Normal"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
+                <Setter Property="Margin" Value="0,0,0,0"/>
+                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="HorizontalAlignment" Value="Center"/>
+                -->
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding Path=HideInGroupFlag, Mode=OneWay}" Value="true">
+                        <Setter Property="Visibility" Value="Hidden"/>
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+
+            <Style x:Key="ServiceListViewStyle" TargetType="ListView">
+                <Setter Property="BorderBrush" Value="#F0F0F0"></Setter>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="ListBox">
+                            <Border BorderThickness="{TemplateBinding BorderThickness}" 
+                                    BorderBrush="{TemplateBinding BorderBrush}" 
+                                    Background="{TemplateBinding Background}">
+                                <ScrollViewer CanContentScroll="False" Padding="0" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+                                    <ItemsPresenter ClipToBounds="True"></ItemsPresenter>
+                                </ScrollViewer>
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <Style x:Key="ServiceHeaderTextBlock" TargetType="{x:Type TextBlock}">
+                <Setter Property="Padding" Value="1,0,1,0"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
+                <Setter Property="TextAlignment" Value="Center"/>
+                <Setter Property="TextWrapping" Value="Wrap"/>
+                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="FontWeight" Value="Normal"/>
+                <Setter Property="Foreground" Value="Black"/>
+            </Style>
+
+            <Style x:Key="HeaderLine" TargetType="{x:Type Line}">
+                <Setter Property="Width" Value="1"/>
+                <Setter Property="Stretch" Value="Fill"/>
+                <Setter Property="Stroke" Value="{StaticResource HeaderLineBrush}" />
+                <Setter Property="Margin" Value="0,0,0,0"/>
+                <Setter Property="Y2" Value="1"/>
+            </Style>
+
+            <Style x:Key="GridLine" TargetType="{x:Type Line}">
+                <Setter Property="Width" Value="1"/>
+                <Setter Property="Stretch" Value="Fill"/>
+                <Setter Property="Stroke" Value="LightGray"/>
+                <Setter Property="Margin" Value="0,0,0,0"/>
+                <Setter Property="Y2" Value="1"/>
+            </Style>
+
+            <Style x:Key="ServiceBaseItemStyle" TargetType="ListViewItem">
+                <Setter Property="Margin" Value="0"/>
+                <Setter Property="Padding" Value="0,0"/>
+                <Setter Property="BorderBrush" Value="#D0D0D0"/>
+                <Setter Property="BorderThickness" Value="0"/>
+                <!--
+                <Setter Property="BorderThickness" Value="0,0,0,1"/>
+                <Setter Property="Height" Value="20"/>
+                -->
+                <Setter Property="Cursor" Value="Hand"/>
+
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="ListBoxItem">
+                            <Border Name="bd" 
+                                    Background="{TemplateBinding Background}" 
+                                    BorderBrush="{TemplateBinding BorderBrush}" 
+                                    BorderThickness="{TemplateBinding BorderThickness}">
+                                <ContentPresenter Name="content" Margin="{TemplateBinding Padding}"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <!--
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="bd" Property="Background" Value="#f5f5f5" />
+                                </Trigger>
+                                -->
+                                <!--
+                                <Trigger Property="IsSelected" Value="True">
+                                    <Setter TargetName="bd" Property="Background" Value="#FFFFFF" />
+                                </Trigger>
+                                -->
+                                <Trigger Property="IsEnabled" Value="false">
+                                    <Setter TargetName="bd" Property="Background" Value="#f5f5f5"/>
+                                    <Setter Property="Foreground" Value="#777"/>
+                                    <Setter Property="Opacity" Value="0.7"/>
+                                </Trigger>
+                                <!--
+                                <DataTrigger Binding="{Binding Path=ColorIndex, Mode=OneWay}" Value="0">
+                                    <Setter Property="Background" Value="White"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Path=ColorIndex, Mode=OneWay}" Value="1">
+                                    <Setter Property="Background" Value="LightGray"/>
+                                </DataTrigger>
+                                -->
+                                <DataTrigger Binding="{Binding Path=FilterFlag, Mode=OneWay}" Value="True">
+                                    <!--
+                                    <Setter Property="Background" Value="Pink"/>
+                                    -->
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                </DataTrigger>
+
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <Style x:Key="ServiceBaseBorderStyle" TargetType="Border">
+                <Setter Property="Margin" Value="0"/>
+                <Setter Property="Padding" Value="1,1"/>
+                <Setter Property="BorderBrush" Value="Gray"/>
+                <Setter Property="BorderThickness" Value="0"/>
+                <!--
+                <Setter Property="BorderThickness" Value="0,0,0,1"/>
+                <Setter Property="Height" Value="20"/>
+                -->
+            </Style>
+
+            <Style x:Key="ServiceEditImageStyle" TargetType="Image">
+                <Setter Property="Margin" Value="0"/>
+                <Setter Property="Source" Value="/WpfControlLibrary;component/img/gear.png"/>
+                <Setter Property="Cursor" Value="Hand"/>
+                <Setter Property="Width" Value="16"/>
+                <Setter Property="Height" Value="16"/>
+                <Setter Property="Visibility" Value="Collapsed"/>
+
+                <Style.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="Source" Value="/WpfControlLibrary;component/img/gear_green.png"/>
+                    </Trigger>
+                    <DataTrigger Binding="{Binding Path=BeginClass, Mode=OneWay}" Value="True">
+                        <Setter Property="Visibility" Value="Visible"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding Path=MidClass, Mode=OneWay}" Value="True">
+                        <Setter Property="Visibility" Value="Visible"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding Path=EditableFlag, Mode=OneWay}" Value="False">
+                        <Setter Property="Visibility" Value="Collapsed"/>
+                    </DataTrigger>
+
+                </Style.Triggers>
+            </Style>
+
+            <!--
+            <Style x:Key="ServiceBaseCellStyle" TargetType="Border">
+                <Setter Property="Margin" Value="0"/>
+                <Setter Property="Padding" Value="1,1"/>
+                <Setter Property="BorderBrush" Value="#D0D0D0"/>
+                <Setter Property="BorderThickness" Value="0"/>
+                <Setter Property="Cursor" Value="Hand"/>
+
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="ListBoxItem">
+                            <Border Name="bd" 
+                                    Background="{TemplateBinding Background}" 
+                                    BorderBrush="{TemplateBinding BorderBrush}" 
+                                    BorderThickness="{TemplateBinding BorderThickness}">
+                                <ContentPresenter Name="content" Margin="{TemplateBinding Padding}"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="bd" Property="Background" Value="#f5f5f5" />
+                                </Trigger>
+                                <Trigger Property="IsEnabled" Value="false">
+                                    <Setter TargetName="bd" Property="Background" Value="#f5f5f5"/>
+                                    <Setter Property="Foreground" Value="#777"/>
+                                    <Setter Property="Opacity" Value="0.7"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            -->
+
+            <Style x:Key="ServiceItemBorderStyle" TargetType="Border" BasedOn="{StaticResource ServiceBaseBorderStyle}">
+                <Setter Property="BorderThickness" Value="0,0,1,1"/>
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding Path=BeginClass, Mode=OneWay}" Value="true">
+                        <Setter Property="BorderThickness" Value="0,0,1,1"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding Path=MidClass, Mode=OneWay}" Value="true">
+                        <Setter Property="BorderThickness" Value="0,0,1,1"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding Path=EndClass, Mode=OneWay}" Value="true">
+                        <Setter Property="BorderThickness" Value="0,0,1,1"/>
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+
+            <Style x:Key="ServiceItemGroupBorderStyle" TargetType="Border" BasedOn="{StaticResource ServiceBaseBorderStyle}">
+                <Setter Property="BorderThickness" Value="0,0,1,0"/>
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding Path=BeginClass, Mode=OneWay}" Value="true">
+                        <Setter Property="BorderThickness" Value="0,0,1,0"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding Path=MidClass, Mode=OneWay}" Value="true">
+                        <Setter Property="BorderThickness" Value="0,0,1,1"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding Path=EndClass, Mode=OneWay}" Value="true">
+                        <Setter Property="BorderThickness" Value="0,0,1,1"/>
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+
+            <Style x:Key="ServiceItemGrouppingBorderStyle" TargetType="Border" BasedOn="{StaticResource ServiceBaseBorderStyle}">
+                <Setter Property="BorderThickness" Value="0,0,1,0"/>
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding Path=HideBorderClass, Mode=OneWay}" Value="false">
+                        <Setter Property="BorderThickness" Value="0,0,1,1"/>
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+
+            <Style x:Key="ServiceItemGroupLastBorderStyle" TargetType="Border" BasedOn="{StaticResource ServiceBaseBorderStyle}">
+                <Setter Property="BorderThickness" Value="0,0,0,0"/>
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding Path=BeginClass, Mode=OneWay}" Value="true">
+                        <Setter Property="BorderThickness" Value="0,0,0,0"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding Path=MidClass, Mode=OneWay}" Value="true">
+                        <Setter Property="BorderThickness" Value="0,0,0,1"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding Path=EndClass, Mode=OneWay}" Value="true">
+                        <Setter Property="BorderThickness" Value="0,0,0,1"/>
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+
+            <Style x:Key="ServiceItemStyle" TargetType="ListViewItem" BasedOn="{StaticResource ServiceBaseItemStyle}">
+                <Setter Property="BorderThickness" Value="0,0,0,0"/>
+            </Style>
+
+            <Style x:Key="_ServiceItemStyle" TargetType="ListViewItem" BasedOn="{StaticResource ServiceBaseItemStyle}">
+                <Setter Property="BorderThickness" Value="0,0,0,1"/>
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding Path=BeginClass, Mode=OneWay}" Value="true">
+                        <Setter Property="BorderThickness" Value="0,0.5,0,1"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding Path=MidClass, Mode=OneWay}" Value="true">
+                        <Setter Property="BorderThickness" Value="0,0,0,1"/>
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+            
+            <!--
+            <Style x:Key="ServiceGroupItemStyle" TargetType="ListViewItem" BasedOn="{StaticResource ServiceBaseItemStyle}">
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding Path=BeginClass, Mode=OneWay}" Value="true">
+                        <Setter Property="BorderThickness" Value="0,0,0,0"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding Path=EndClass, Mode=OneWay}" Value="true">
+                        <Setter Property="BorderThickness" Value="0,0,0,1"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding Path=MidClass, Mode=OneWay}" Value="true">
+                        <Setter Property="BorderThickness" Value="0,0,0,1"/>
+                    </DataTrigger>
+
+                </Style.Triggers>
+            </Style>
+            -->
+
+            <!--====================================================================================================-->
+
+            <DataTemplate x:Key="ServiceItemTemplate">
+                <Grid x:Name="Grid">
+                    
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="24"></ColumnDefinition>
+                        <!--<ColumnDefinition Width="1"></ColumnDefinition>-->
+                        <ColumnDefinition Width="66"></ColumnDefinition>
+                        <ColumnDefinition Width="66"></ColumnDefinition>
+                        <ColumnDefinition Width="26"></ColumnDefinition>
+                        <ColumnDefinition Width="26"></ColumnDefinition>
+                        <ColumnDefinition Width="401"></ColumnDefinition>
+                        <ColumnDefinition Width="26"></ColumnDefinition>
+                        <ColumnDefinition Width="45"></ColumnDefinition>
+                        <ColumnDefinition Width="51"></ColumnDefinition>
+                        <ColumnDefinition Width="51"></ColumnDefinition>
+                        <ColumnDefinition Width="51"></ColumnDefinition>
+                        <ColumnDefinition Width="36"></ColumnDefinition>
+                        <ColumnDefinition Width="36"></ColumnDefinition>
+                        <ColumnDefinition Width="171"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+
+                    <Border Grid.Column="0" Style="{StaticResource ServiceItemGrouppingBorderStyle}">
+                        <TextBlock Style="{StaticResource ServiceItemGroupTextBlock}" 
+                               Text="{Binding Day}"/>
+                    </Border>
+                    <!--
+                    <Line Grid.Column="1" Style="{StaticResource GridLine}"/>
+                    -->
+                    <Border Grid.Column="1" Style="{StaticResource ServiceItemGrouppingBorderStyle}">
+                        <TextBlock Style="{StaticResource ServiceItemGroupTextBlock}" 
+                               Text="{Binding Date, StringFormat=dd.MM.yy}"/>
+                    </Border>
+                    <Border Grid.Column="2" Style="{StaticResource ServiceItemGrouppingBorderStyle}">
+                        <TextBlock Style="{StaticResource ServiceItemGroupTextBlock}" 
+                               Text="{Binding DateEnd, StringFormat=dd.MM.yy}"/>
+                    </Border>
+                    <Border Grid.Column="3" Style="{StaticResource ServiceItemGrouppingBorderStyle}">
+                        <TextBlock Style="{StaticResource ServiceItemGroupTextBlock}" 
+                               Text="{Binding DaysNightsString, Converter={StaticResource EmptyStringIfNullConverter}}"/>
+                    </Border>
+                    <Border Grid.Column="4" Style="{StaticResource ServiceItemGrouppingBorderStyle}">
+                        <TextBlock Style="{StaticResource ServiceItemGroupTextBlock}" 
+                               Text="{Binding Days, Converter={StaticResource EmptyStringIfNullConverter}}"/>
+                    </Border>
+                    <Border Grid.Column="5" Style="{StaticResource ServiceItemBorderStyle}">
+                        <TextBlock Margin="5,0,0,0"
+                               HorizontalAlignment="Left"
+                               Style="{StaticResource ServiceItemTextBlock}" 
+                               Text="{Binding ServiceName}"/>
+                    </Border>
+                    <Border Grid.Column="6" Style="{StaticResource ServiceItemBorderStyle}">
+                        <TextBlock Style="{StaticResource ServiceItemTextBlock}" 
+                               Text="{Binding NumberString}"/>
+                    </Border>
+                    <Border Grid.Column="7" Style="{StaticResource ServiceItemBorderStyle}">
+                        <TextBlock Style="{StaticResource ServiceItemTextBlock}" 
+                               Text="{Binding NettoString}"/>
+                    </Border>
+                    <Border Grid.Column="8" Style="{StaticResource ServiceItemBorderStyle}">
+                        <TextBlock Style="{StaticResource ServiceItemTextBlock}" 
+                               Text="{Binding BruttoString}"/>
+                    </Border>
+                    <Border Grid.Column="9" Style="{StaticResource ServiceItemBorderStyle}">
+                        <TextBlock Style="{StaticResource ServiceItemTextBlock}" 
+                               Text="{Binding PercentString}"/>
+                    </Border>
+                    <Border Grid.Column="10" Style="{StaticResource ServiceItemBorderStyle}">
+                        <TextBlock Style="{StaticResource ServiceItemTextBlock}" 
+                               Text="{Binding SummaString}"/>
+                    </Border>
+                    <Border Grid.Column="11" Style="{StaticResource ServiceItemBorderStyle}">
+                        <TextBlock Style="{StaticResource ServiceItemTextBlock}" 
+                               Text="{Binding PricingString}"/>
+                    </Border>
+                    <Border Grid.Column="12" Style="{StaticResource ServiceItemGroupBorderStyle}">
+                        <Image x:Name="EditImage" Tag="{Binding DlKey}" 
+                               Margin="3,0,4,0" 
+                               VerticalAlignment="Center" HorizontalAlignment="Center"
+                               MouseDown="EditImage_MouseDown" 
+                               MouseUp="EditImage_MouseUp" 
+                               Style="{StaticResource ServiceEditImageStyle}" />
+                    </Border>
+                    <Border Grid.Column="13" Style="{StaticResource ServiceItemGroupBorderStyle}">
+                        <TextBlock Margin="10,0,0,0"
+                               HorizontalAlignment="Left"
+                               Style="{StaticResource ServiceItemTextBlock}" 
+                               Text="{Binding Status}"/>
+                    </Border>
+                    <!--
+                    <Border Grid.Column="13" Style="{StaticResource ServiceItemGroupBorderStyle}">
+                        <Image Margin="3,0,4,0" VerticalAlignment="Center" HorizontalAlignment="Center"
+                           Source="/WpfControlLibrary;component/img/gear_red.png" Width="16" Height="16" >
+                            <Image.Style>
+                                <Style TargetType="{x:Type Image}">
+                                    <Style.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Source" Value="/WpfControlLibrary;component/img/gear_red.png"/>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Image.Style>
+                        </Image>
+                    </Border>
+                    -->
+                    <Border Grid.Column="14" Style="{StaticResource ServiceItemGroupLastBorderStyle}">
+                        <TextBlock Style="{StaticResource ServiceItemTextBlock}" 
+                               Text=""/>
+                    </Border>
+
+                </Grid>
+            </DataTemplate>
+
+            <!--====================================================================================================-->
+
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <!--####################################################################################################-->
+
+    <ScrollViewer CanContentScroll="False" Padding="0" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
+        <Grid Name="ServiceListGrid">
+        <!--....................................................................................................-->
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0"/>           <!-- Label -->
+                <RowDefinition Height="0"/>            <!-- Separator -->
+                <RowDefinition Height="46"/>           <!-- Column headers -->
+                <RowDefinition Height="0"/>            <!-- Separator -->
+                <RowDefinition Height="*"/>            <!-- Service list -->
+                <RowDefinition Height="0"/>            <!-- Separator -->
+                <RowDefinition Height="0"/>           <!-- Buttons -->
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />            <!-- Service list -->
+            </Grid.ColumnDefinitions>
+
+        <!--....................................................................................................-->
+        <Border Name="ServiceListLabelBorder" Grid.Row="0" Grid.Column="0">
+            <TextBlock Name="tblServiceListLabel" 
+                       Margin="3,0,10,0" 
+                       VerticalAlignment="Center" 
+                       FontSize="14" FontWeight="Normal"
+                       Text="Услуги" />
+        </Border>
+
+        <!--....................................................................................................-->
+        <Border Name="ServiceListHeaderBorder" Grid.Row="2" Grid.Column="0" Background="#E0E0E0" >  <!-- #AFC8E2  #FF6694C6 -->
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Name="tblHeaderDay" 
+                           Style="{StaticResource ServiceHeaderTextBlock}" 
+                           Width="45"
+                           Height="25"
+                           Padding="1,3,1,0"
+                           VerticalAlignment="Center" 
+                           HorizontalAlignment="Center"
+                           Text="День" >
+                    <TextBlock.LayoutTransform>
+                        <TransformGroup>
+                            <RotateTransform Angle="90"/>
+                            <ScaleTransform ScaleX="-1" ScaleY="-1"/>
+                        </TransformGroup>
+                    </TextBlock.LayoutTransform>
+                </TextBlock>
+                <Line Style="{StaticResource HeaderLine}"/>
+                <!--
+                <TextBlock Name="tblHeaderDate" 
+                           Style="{StaticResource ServiceHeaderTextBlock}" 
+                           Width="65"
+                           Padding="5,0,5,0"
+                           Text="Дата заезда" />
+                -->
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="22"/>
+                        <RowDefinition Height="1"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="65" />
+                        <ColumnDefinition Width="1" />
+                        <ColumnDefinition Width="65" />
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Name="tblHeaderDates" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3"
+                           Style="{StaticResource ServiceHeaderTextBlock}" 
+                           Width="100"
+                           Text="Дата путевки" />
+                    <Line Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Height="1" X2="1" 
+                          Stretch="Fill" Margin="0,0,0,0" Stroke="{StaticResource HeaderLineBrush}"/>
+                    <TextBlock Name="tblHeaderBegin" Grid.Row="2" Grid.Column="0" 
+                           Style="{StaticResource ServiceHeaderTextBlock}" 
+                           Width="65"
+                           Text="заезд" />
+                    <Line Grid.Row="2" Grid.Column="1" Style="{StaticResource HeaderLine}"/>
+                    <TextBlock Name="tblHeaderEnd" Grid.Row="2" Grid.Column="2" 
+                           Style="{StaticResource ServiceHeaderTextBlock}" 
+                           Width="65"
+                           Text="оконч." />
+                </Grid>
+                <Line Style="{StaticResource HeaderLine}"/>
+                <!--
+                <TextBlock Name="tblHeaderNights" 
+                           Style="{StaticResource ServiceHeaderTextBlock}" 
+                           Width="22"
+                           Text="Н" />
+                -->
+                <TextBlock Name="tblHeaderNights" 
+                           Style="{StaticResource ServiceHeaderTextBlock}" 
+                           Width="45"
+                           Height="25"
+                           Padding="1,3,1,0"
+                           VerticalAlignment="Center" 
+                           HorizontalAlignment="Center"
+                           Text="Ночей" >
+                    <TextBlock.LayoutTransform>
+                        <TransformGroup>
+                            <RotateTransform Angle="90"/>
+                            <ScaleTransform ScaleX="-1" ScaleY="-1"/>
+                        </TransformGroup>
+                    </TextBlock.LayoutTransform>
+                </TextBlock>                
+                <Line Style="{StaticResource HeaderLine}"/>
+                <!--
+                <TextBlock Name="tblHeaderDays" 
+                           Style="{StaticResource ServiceHeaderTextBlock}" 
+                           Width="24"
+                           Text="Дн" />
+                -->
+                <TextBlock Name="tblHeaderDays" 
+                           Style="{StaticResource ServiceHeaderTextBlock}" 
+                           Width="45"
+                           Height="25"
+                           Padding="1,3,1,0"
+                           VerticalAlignment="Center" 
+                           HorizontalAlignment="Center"
+                           Text="Дней" >
+                    <TextBlock.LayoutTransform>
+                        <TransformGroup>
+                            <RotateTransform Angle="90"/>
+                            <ScaleTransform ScaleX="-1" ScaleY="-1"/>
+                        </TransformGroup>
+                    </TextBlock.LayoutTransform>
+                </TextBlock>
+                <Line Style="{StaticResource HeaderLine}"/>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="22"/>
+                            <RowDefinition Height="1"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="99" />
+                            <ColumnDefinition Width="1" />
+                            <ColumnDefinition Width="300" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Name="tblHeaderName1" Grid.Row="0" Grid.Column="0" 
+                           Style="{StaticResource ServiceHeaderTextBlock}" 
+                           Width="100" Margin="10,0,0,0" TextAlignment="Left" 
+                           Text="Услуга" />
+                        <Line Grid.Row="0" Grid.Column="1" Style="{StaticResource HeaderLine}"/>
+                        <TextBlock Name="tblHeaderCurrency" Grid.Row="0" Grid.Column="2" 
+                           Style="{StaticResource ServiceHeaderTextBlock}" 
+                           Width="200" Margin="80,0,10,0" TextAlignment="Left" 
+                           Text="{Binding ServiceCurrency, StringFormat=Валюта путевки:  {0} }" />
+
+                        <Line Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Height="1" X2="1" 
+                          Stretch="Fill" Margin="0,0,0,0" Stroke="{StaticResource HeaderLineBrush}"/>
+                        <TextBlock Name="tblHeaderServiceName" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3"
+                           Style="{StaticResource ServiceHeaderTextBlock}" 
+                           Width="380" Margin="0,0,0,0" TextAlignment="Left" 
+                           Text="{Binding SelectedServiceName}" />
+                    </Grid>
+                
+                    <!--
+                    <TextBlock Name="tblHeaderName" 
+                           TextAlignment="Left"
+                           Style="{StaticResource ServiceHeaderTextBlock}" 
+                           Width="200"
+                           Padding="10,0,10,0"
+                           Text="Услуга" />
+                    -->
+                <!--
+                <TextBlock Name="tblHeaderCurrency" 
+                           TextAlignment="Left"
+                           Style="{StaticResource ServiceHeaderTextBlock}" 
+                           Width="200"
+                           Padding="0,0,10,0"
+                           Text="  " />
+                -->
+                <!-- Валюта путевки: EUR -->
+                <Line Style="{StaticResource HeaderLine}"/>
+                <TextBlock Name="tblHeaderPax" 
+                           Style="{StaticResource ServiceHeaderTextBlock}" 
+                           Width="45"
+                           Height="25"
+                           Padding="1,3,1,0"
+                           VerticalAlignment="Center" 
+                           HorizontalAlignment="Center"
+                           Text="Pax" >
+                    <TextBlock.LayoutTransform>
+                        <TransformGroup>
+                            <RotateTransform Angle="90"/>
+                            <ScaleTransform ScaleX="-1" ScaleY="-1"/>
+                        </TransformGroup>
+                    </TextBlock.LayoutTransform>
+                </TextBlock>
+                <Line Style="{StaticResource HeaderLine}"/>
+                <TextBlock Name="tblColumnHeader6" 
+                           Style="{StaticResource ServiceHeaderTextBlock}" 
+                           Width="44"
+                           Text="Нетто" />
+                <Line Style="{StaticResource HeaderLine}"/>
+                <TextBlock Name="tblColumnHeader7" 
+                           Style="{StaticResource ServiceHeaderTextBlock}" 
+                           Width="50"
+                           Text="Брутто" />
+                <Line Style="{StaticResource HeaderLine}"/>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="13"/>
+                        <RowDefinition Height="15"/>
+                        <RowDefinition Height="1"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="50" />
+                        <ColumnDefinition Width="1" />
+                        <ColumnDefinition Width="50" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Name="tblHeaderCommision" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3"
+                               Style="{StaticResource ServiceHeaderTextBlock}" 
+                               Width="100"
+                               Text="Комиссия" />
+                    <TextBlock Name="tblHeaderPartner" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3"
+                               Style="{StaticResource ServiceHeaderTextBlock}" 
+                               Width="100"
+                               Margin="0,-4,0,0"
+                           Text="от партнера" />
+                    <Line Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Height="1" X2="1" 
+                          Stretch="Fill" Margin="0,0,0,0" Stroke="{StaticResource HeaderLineBrush}"/>
+                    <TextBlock Name="tblHeaderPercent" Grid.Row="3" Grid.Column="0" 
+                               Style="{StaticResource ServiceHeaderTextBlock}" 
+                               Width="50"
+                               Margin="0,-2,0,0"
+                               Text="%" />
+                    <Line Grid.Row="3" Grid.Column="1" Style="{StaticResource HeaderLine}"/>
+                    <TextBlock Name="tblHeaderSumma" Grid.Row="3" Grid.Column="2" 
+                               Style="{StaticResource ServiceHeaderTextBlock}" 
+                               Width="50"
+                               Margin="0,-3,0,0"
+                               Text="сумма" />
+                </Grid>
+                <Line Style="{StaticResource HeaderLine}"/>
+                <!--
+                <TextBlock Name="tblHeaderPricing" 
+                           Style="{StaticResource ServiceHeaderTextBlock}" 
+                           Width="60"
+                           Text="Наценка" />
+                -->
+                <TextBlock Name="tblHeaderPricing" 
+                           Style="{StaticResource ServiceHeaderTextBlock}" 
+                           Width="45"
+                           Height="35"
+                           Padding="1,8,1,0"
+                           VerticalAlignment="Center" 
+                           HorizontalAlignment="Center"
+                           Text="Нацен" >
+                    <TextBlock.LayoutTransform>
+                        <TransformGroup>
+                            <RotateTransform Angle="90"/>
+                            <ScaleTransform ScaleX="-1" ScaleY="-1"/>
+                        </TransformGroup>
+                    </TextBlock.LayoutTransform>
+                </TextBlock>
+                <Line Style="{StaticResource HeaderLine}"/>
+                    <TextBlock Name="tblHeaderEdit" 
+                           Style="{StaticResource ServiceHeaderTextBlock}" 
+                           Width="45"
+                           Height="35"
+                           Padding="5,8,5,0"
+                           VerticalAlignment="Center" 
+                           HorizontalAlignment="Center"
+                           Text="Изм." >
+                        <TextBlock.LayoutTransform>
+                            <TransformGroup>
+                                <RotateTransform Angle="90"/>
+                                <ScaleTransform ScaleX="-1" ScaleY="-1"/>
+                            </TransformGroup>
+                        </TextBlock.LayoutTransform>
+                    </TextBlock>
+                    <Line Style="{StaticResource HeaderLine}"/>
+                    <TextBlock Name="tblHeaderState" 
+                           Style="{StaticResource ServiceHeaderTextBlock}" 
+                           Width="170"
+                           Padding="10,0,1,0"
+                           TextAlignment="Left"
+                           Text="Состояние" />
+                <Line Style="{StaticResource HeaderLine}"/>
+            </StackPanel>
+        </Border>
+
+        <!--....................................................................................................-->
+        <Border Name="ServiceListBorder" Grid.Row="4" Grid.Column="0" Style="{StaticResource ListBorder}">
+
+            <ListView Name="ServiceList" 
+                      SelectionChanged="ServiceList_SelectionChanged"
+                      Style="{StaticResource ServiceListViewStyle}" 
+                      ItemContainerStyle="{StaticResource ServiceItemStyle}"
+                      ItemTemplate="{StaticResource ServiceItemTemplate}"
+                      ItemsSource="{Binding Path=Voucher.ServiceList}">
+
+                <ListView.Resources>
+                    <Style TargetType="GridViewColumnHeader">
+                        <Setter Property="Visibility" Value="Collapsed" />
+                    </Style>
+                </ListView.Resources>
+
+            </ListView>
+
+        </Border>
+
+        <!--....................................................................................................-->
+        <Border Name="ServiceButtonsBorder" Grid.Row="6" Grid.Column="0" 
+                Visibility="Collapsed"
+                Style="{StaticResource BottomBorder}">
+
+                <StackPanel Name="PolicyStackPanel" Grid.Row="0" Grid.Column="3" 
+                        Orientation="Horizontal" HorizontalAlignment="Right"
+                        Height="35" >
+                    <Button Name="NewPolicyButton" Width="230" Height="27" 
+                            Margin="10,2,20,2" 
+                            VerticalAlignment="Center" 
+                            Style="{StaticResource SuccessButton}"
+                            Click="NewPolicyButton_Click">
+
+                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" 
+                                       Margin="10,0,10,2"
+                                       FontSize="14" FontWeight="Normal"
+                                       Text="Выписать  и  выложить  в  ЛК"/>
+                    </Button>
+                    <Button Name="RealisPolicyButton" Width="280" Height="27" 
+                            Margin="10,2,20,2" 
+                            VerticalAlignment="Center" 
+                            Style="{StaticResource InfoButton}"
+                            Cursor="Hand"
+                            Click="RealisPolicyButton_Click">
+
+                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" 
+                                   Margin="10,0,10,2"
+                                   FontSize="14" FontWeight="Normal" 
+                                   Text="Выписать  и  выложить  реализатору"/>
+                    </Button>
+
+                </StackPanel>            
+        </Border>
+
+        </Grid>
+    </ScrollViewer>
+
+    <!--####################################################################################################-->
+
+</UserControl>

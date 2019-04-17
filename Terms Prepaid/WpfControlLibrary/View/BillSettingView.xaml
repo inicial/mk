@@ -1,0 +1,188 @@
+﻿<UserControl x:Class="WpfControlLibrary.View.BillSettingView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:ds="clr-namespace:WpfControlLibrary.View.DogovorSetting"
+             xmlns:util="clr-namespace:WpfControlLibrary.Util"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="800">
+
+        <UserControl.Resources>
+
+            <util:PriceConverter2 x:Key="PriceConverter2"/>
+
+            <GridLength x:Key="Info">2*</GridLength>
+            <GridLength x:Key="Control">1*</GridLength>
+            <GridLength x:Key="Button">1*</GridLength>
+
+            <GridLength x:Key="FirstControlRow">90</GridLength>
+            <GridLength x:Key="SecondControlRow">60</GridLength>
+
+            <GridLength x:Key="RowHeight">Auto</GridLength>
+
+            <sys:Double x:Key="Offset">20</sys:Double>
+
+            <Thickness x:Key="OffsetThickness" Right="{StaticResource Offset}"/>
+            <Thickness x:Key="GridMargin" Left="5" Top="3" Bottom="3" />
+
+            <Style x:Key="SaveButton" TargetType="Button">
+                <Setter Property="Content" Value="Сохранить"/>
+                <Setter Property="HorizontalAlignment" Value="Left"/>
+                <Setter Property="Width" Value="130"/>
+            </Style>
+
+            <ControlTemplate x:Key="DateInfo">
+                <ds:Row4 Value1="{Binding Name}" Value2="{Binding DateValue}" Value3="{Binding DateChange}" Value4="{Binding Manager}"/>
+            </ControlTemplate>
+
+            <ControlTemplate x:Key="ValueInfo">
+                <ds:Row4 Value1="{Binding Name}" Value3="{Binding DateChange}" Value4="{Binding Manager}">
+                    <Style TargetType="ds:Row4">
+                        <Setter Property="Value2">
+                            <Setter.Value>
+                                <MultiBinding Converter="{StaticResource PriceConverter2}">
+                                    <Binding Path="NumericValue"/>
+                                    <Binding Path="NumericValue"/>
+                                    <!--<Binding Path="DataContext.Rate" RelativeSource="{RelativeSource AncestorType={x:Type UserControl}}"/>-->
+                                </MultiBinding>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </ds:Row4>
+            </ControlTemplate>
+
+            <ControlTemplate x:Key="DateControl">
+                <Grid Margin="{StaticResource OffsetThickness}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="{Binding Source={StaticResource FirstControlRow}}" />
+                        <ColumnDefinition Width="{Binding Source={StaticResource Offset}}" />
+                        <ColumnDefinition Width="{Binding Source={StaticResource SecondControlRow}}" />
+                    </Grid.ColumnDefinitions>
+                    <xctk:DateTimePicker TextAlignment="Left" Format="ShortDate" Value="{Binding DateValue}"/>
+                    <xctk:TimePicker TextAlignment="Right" Grid.Column="2" Value="{Binding DateValue}"/>
+                </Grid>
+            </ControlTemplate>
+
+            <ControlTemplate x:Key="ValueControl">
+                <ControlTemplate.Resources>
+
+                    <Style TargetType="TextBlock">
+                        <Setter Property="VerticalAlignment" Value="Center"/>
+                        <Setter Property="Margin" Value="5,0,0,0"/>
+                    </Style>
+                </ControlTemplate.Resources>
+                <Grid >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="{Binding Source={StaticResource FirstControlRow}}" />
+                        <ColumnDefinition Width="{Binding Source={StaticResource Offset}}" />
+                        <ColumnDefinition Width="{Binding Source={StaticResource SecondControlRow}}" />
+                        <ColumnDefinition Width="{Binding Source={StaticResource Offset}}"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBox Grid.Column="0" Text="{Binding ProcentValue, StringFormat={}{0:#}}"/>
+                    <TextBlock Grid.Column="1" Text="%"/>
+                    <TextBox Grid.Column="2" Text="{Binding NumericValue, StringFormat={}{0:#}}"/>
+                    <TextBlock Grid.Column="3" Text="$"/>
+                </Grid>
+            </ControlTemplate>
+
+            <ControlTemplate x:Key="PaymentBlock">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="{StaticResource Info}"/>
+                        <ColumnDefinition Width="{StaticResource Control}"/>
+                        <ColumnDefinition Width="{StaticResource Button}"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="{StaticResource RowHeight}"/>
+                        <RowDefinition Height="{StaticResource RowHeight}"/>
+                        <RowDefinition Height="{StaticResource RowHeight}"/>
+                        <RowDefinition Height="{StaticResource RowHeight}"/>
+                    </Grid.RowDefinitions>
+
+                    <Control Grid.Row="0" Grid.Column="0" Template="{StaticResource DateInfo}"  DataContext="{Binding Payment.PrePaymentDate}"/>
+                    <Control Grid.Row="1" Grid.Column="0" Template="{StaticResource DateInfo}"  DataContext="{Binding Payment.PaymentDate}"/>
+                    <Control Grid.Row="2" Grid.Column="0" Template="{StaticResource ValueInfo}" DataContext="{Binding Payment.PrePaymentValue}"/>
+                    <Control Grid.Row="3" Grid.Column="0" Template="{StaticResource ValueInfo}" DataContext="{Binding Payment.PaymentValue}"/>
+
+                    <Border Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Grid.RowSpan="4" Background="BurlyWood"/>
+
+                    <Control Grid.Row="0" Grid.Column="1" Template="{StaticResource DateControl}"  DataContext="{Binding Payment.PrePaymentDate}" Margin="{StaticResource GridMargin}"/>
+                    <Control Grid.Row="1" Grid.Column="1" Template="{StaticResource DateControl}"  DataContext="{Binding Payment.PaymentDate}" Margin="{StaticResource GridMargin}"/>
+                    <Control Grid.Row="2" Grid.Column="1" Template="{StaticResource ValueControl}" DataContext="{Binding Payment.PrePaymentValue}" Margin="{StaticResource GridMargin}"/>
+                    <Button  Grid.Row="3" Grid.Column="2" Style="{StaticResource SaveButton}" Margin="{StaticResource GridMargin}"/>
+                </Grid>
+            </ControlTemplate>
+
+            <ControlTemplate x:Key="DiscountBlock">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="{StaticResource Info}"/>
+                        <ColumnDefinition Width="{StaticResource Control}"/>
+                        <ColumnDefinition Width="{StaticResource Button}"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="{StaticResource RowHeight}"/>
+                        <RowDefinition Height="{StaticResource RowHeight}"/>
+                    </Grid.RowDefinitions>
+
+                    <Control Grid.Row="0" Grid.Column="0" Template="{StaticResource ValueInfo}" DataContext="{Binding Discount.DiscountValue}"/>
+                    <Border Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Grid.RowSpan="2" Background="BurlyWood"/>
+                    <Control Grid.Row="0" Grid.Column="1" Template="{StaticResource ValueControl}" DataContext="{Binding Discount.DiscountValue}" Margin="{StaticResource GridMargin}"/>
+                    <Button  Grid.Row="1" Grid.Column="2" Style="{StaticResource SaveButton}" Margin="{StaticResource GridMargin}"/>
+                </Grid>
+            </ControlTemplate>
+
+            <ControlTemplate x:Key="StatusBlock">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="{StaticResource Info}"/>
+                        <ColumnDefinition Width="{StaticResource Control}"/>
+                        <ColumnDefinition Width="{StaticResource Button}"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="{StaticResource RowHeight}"/>
+                        <RowDefinition Height="{StaticResource RowHeight}"/>
+                    </Grid.RowDefinitions>
+
+                    <Control Grid.Row="0" Grid.Column="0" Template="{StaticResource ValueInfo}" DataContext="{Binding Discount.DiscountValue}"/>
+
+                    <Border Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Grid.RowSpan="2" Background="BurlyWood"/>
+
+                    <ComboBox Grid.Row="0" Grid.Column="1"  Margin="{StaticResource GridMargin}"/>
+                    <Button  Grid.Row="1" Grid.Column="2" Style="{StaticResource SaveButton}" Margin="{StaticResource GridMargin}"/>
+                </Grid>
+            </ControlTemplate>
+
+        </UserControl.Resources>
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <Border Grid.Row="0" Background="BurlyWood" Padding="5">
+                <TextBlock Text="{Binding ServiceTitle}"/>
+            </Border>
+
+            <GroupBox Grid.Row="1" Header="Оплата/предоплата по круизу">
+                <Control Template="{StaticResource PaymentBlock}"/>
+            </GroupBox>
+
+            <GroupBox Grid.Row="2" Header="Скидки по круизу">
+                <Control Template="{StaticResource DiscountBlock}"/>
+            </GroupBox>
+
+            <GroupBox Grid.Row="3" Header="Статусы по круизу">
+                <Control Template="{StaticResource StatusBlock}"/>
+            </GroupBox>
+        </Grid>
+    </UserControl>

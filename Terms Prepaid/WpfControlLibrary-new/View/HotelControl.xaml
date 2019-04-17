@@ -1,0 +1,67 @@
+﻿<UserControl x:Class="WpfControlLibrary.View.HotelControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:util="clr-namespace:WpfControlLibrary.Util"
+             mc:Ignorable="d" 
+             d:DesignHeight="600" d:DesignWidth="300">
+    <UserControl.Resources>
+        <ResourceDictionary>
+
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/WpfControlLibrary;component/Resources/Resources.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+            <Style TargetType="TextBox" BasedOn="{StaticResource TbNoEdit}">
+                <Setter Property="VerticalAlignment" Value="Center"></Setter>
+            </Style>
+
+            <Style TargetType="TextBlock" BasedOn="{StaticResource TblNoEdit}">
+            </Style>
+
+            
+
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid Background="{StaticResource ActiveServiceBackground}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Control Template="{StaticResource ServiceTabHeader}"></Control>
+
+        <Border Grid.Row="1" Style="{StaticResource ActiveServiceBorder}">
+            <ScrollViewer Grid.Row="1" VerticalAlignment="Stretch" VerticalScrollBarVisibility="Auto">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Border Grid.Row="0" Style="{StaticResource BorderHeader}">
+                        <TextBlock Style="{StaticResource TblCenter}" Text="Данные по отелю"/>
+                    </Border>
+                    <ListView Grid.Row="1" x:Name="LbFligthsTo" ItemsSource="{Binding Service.TuristList, Mode=OneWay}"
+                        ItemContainerStyle="{StaticResource LvItemStyle}" ItemTemplate="{StaticResource TouristData}"
+                            ItemsPanel="{StaticResource IpTemplate}"/>
+                    <Border Grid.Row="2" Style="{StaticResource BorderHeader}">
+                        <TextBlock Style="{StaticResource TblCenter}" Text="Данные по бронированию"/>
+                    </Border>
+                    <Grid Grid.Row="3" Margin="5,5,5,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="1*"/>
+                        </Grid.ColumnDefinitions>
+                        <CheckBox VerticalAlignment="Center" Grid.Column="0" Content="Отель подтвержден" IsChecked="{Binding HotelConfirmed}"/>
+                        <Button Height="25" Grid.Column="1" Content="Ok" Command="{Binding HotelOkCommand}"/>
+                    </Grid>
+                </Grid>
+            </ScrollViewer>
+        </Border>
+    </Grid>
+</UserControl>

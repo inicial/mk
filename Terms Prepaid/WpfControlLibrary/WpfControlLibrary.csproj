@@ -1,0 +1,1516 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{1310B855-3C06-4356-B1BF-D37842F8A35D}</ProjectGuid>
+    <OutputType>library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>WpfControlLibrary</RootNamespace>
+    <AssemblyName>WpfControlLibrary</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <TargetFrameworkProfile />
+    <ExpressionBlendVersion>5.0.40218.0</ExpressionBlendVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="ActiveSharp, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ActiveSharp.1.2.0.0\lib\net20\ActiveSharp.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="AttachedCommandBehavior, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\AttachedCommandBehavior.2.0.0.0\lib\net35\AttachedCommandBehavior.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Awesomium.Core, Version=1.7.5.0, Culture=neutral, PublicKeyToken=e1a0d7c8071a5214, processorArchitecture=x86" />
+    <Reference Include="Awesomium.Windows.Controls, Version=1.7.5.0, Culture=neutral, PublicKeyToken=7a34e179b8b61c39, processorArchitecture=x86" />
+    <Reference Include="Batman.Core">
+      <HintPath>..\packages\Batman.Core.1.0.0071\lib\net40\Batman.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Batman.Core.Communication.SMTP">
+      <HintPath>..\packages\Batman.Core.Communication.SMTP.1.0.0071\lib\net40\Batman.Core.Communication.SMTP.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="BouncyCastle.Crypto, Version=1.8.1.0, Culture=neutral, PublicKeyToken=0e99375e54769942">
+      <HintPath>..\packages\BouncyCastle.1.8.1\lib\BouncyCastle.Crypto.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net40\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net40\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="FastColoredTextBox, Version=2.16.21.0, Culture=neutral, PublicKeyToken=fb8aa12b994ef61b, processorArchitecture=MSIL">
+      <HintPath>..\packages\FCTB.2.16.21.0\lib\FastColoredTextBox.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="GalaSoft.MvvmLight, Version=5.3.0.19038, Culture=neutral, PublicKeyToken=0e453835af4ee6ce, processorArchitecture=MSIL">
+      <HintPath>..\packages\MvvmLightLibs.5.3.0.0\lib\net40\GalaSoft.MvvmLight.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="GalaSoft.MvvmLight.Extras">
+      <HintPath>..\packages\MvvmLightLibs.5.3.0.0\lib\net40\GalaSoft.MvvmLight.Extras.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Geckofx-Core, Version=45.0.19.0, Culture=neutral, PublicKeyToken=3209ac31600d1857, processorArchitecture=x86">
+      <HintPath>..\packages\Geckofx45.45.0.19.0\lib\net40\Geckofx-Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Geckofx-Winforms, Version=45.0.19.0, Culture=neutral, PublicKeyToken=3209ac31600d1857, processorArchitecture=MSIL">
+      <HintPath>..\packages\Geckofx45.45.0.19.0\lib\net40\Geckofx-Winforms.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="GemBox.Email, Version=11.3.30.1002, Culture=neutral, PublicKeyToken=b1b72c69714d4847, processorArchitecture=MSIL">
+      <HintPath>..\packages\GemBox.Email.11.3.30.1002\lib\net30\GemBox.Email.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="HtmlAgilityPack, Version=1.4.9.5, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
+      <HintPath>..\packages\HtmlAgilityPack.1.4.9.5\lib\Net40\HtmlAgilityPack.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="ImapX, Version=2.0.0.18, Culture=neutral, PublicKeyToken=5992873d65130d1f, processorArchitecture=MSIL">
+      <HintPath>..\packages\ImapX.2.0.0.18\lib\net40\ImapX.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Lanta.SQLConfig">
+      <HintPath>..\terms prepaid\lib\Lanta.SQLConfig.dll</HintPath>
+    </Reference>
+    <Reference Include="Mail, Version=3.0.16265.2302, Culture=neutral, PublicKeyToken=6dc438ab78a525b3, processorArchitecture=MSIL">
+      <HintPath>..\packages\Mail.dll.3.0.16265.2302\lib\Net20\Mail.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MailKit, Version=1.8.0.0, Culture=neutral, PublicKeyToken=4e064fe7c44a8f1b, processorArchitecture=MSIL">
+      <HintPath>..\packages\MailKit.1.8.1\lib\net40\MailKit.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.mshtml, Version=7.0.3300.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\CommonServiceLocator.1.3\lib\portable-net4+sl5+netcore45+wpa81+wp8\Microsoft.Practices.ServiceLocation.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MimeKit, Version=1.8.0.0, Culture=neutral, PublicKeyToken=bede1c8a46c66814, processorArchitecture=MSIL">
+      <HintPath>..\packages\MimeKit.1.8.0\lib\net40\MimeKit.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MimeTypeMap.List, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MimeTypeMap.List.1.1.0\lib\MimeTypeMap.List.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MSDN.HtmlEditorControl">
+      <HintPath>..\terms prepaid\lib\MSDN.HtmlEditorControl.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net40\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\packages\NLog.4.3.5\lib\net40\NLog.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="OpaqueMail, Version=2.2.4.0, Culture=neutral, PublicKeyToken=455c946c2e2ca7ef, processorArchitecture=MSIL">
+      <HintPath>..\packages\OpaqueMail.2.2.4\lib\OpaqueMail.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PresentationFramework.Aero" />
+    <Reference Include="S22.Imap, Version=3.6.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\S22.ImapWithUTF8.3.6.1\lib\net40\S22.Imap.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="SgmlReaderDll, Version=1.8.11.0, Culture=neutral, PublicKeyToken=46b2db9ca481831b, processorArchitecture=MSIL">
+      <HintPath>..\packages\SgmlReader.1.8.11\lib\4.0\SgmlReaderDll.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Smith.WPF.HtmlEditor">
+      <HintPath>..\terms prepaid\lib\Smith.WPF.HtmlEditor.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Printing" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Windows" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Interactivity">
+      <HintPath>..\packages\MvvmLightLibs.5.3.0.0\lib\net40\System.Windows.Interactivity.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="Utilities.DataTypes, Version=1.0.0.0, Culture=neutral, PublicKeyToken=1a9f1ce8fe69b437, processorArchitecture=MSIL">
+      <HintPath>..\packages\CraigsUtilityLibrary-DataTypes.3.4.0199\lib\net40\Utilities.DataTypes.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Utilities.IO">
+      <HintPath>..\packages\CraigsUtilityLibrary-IO.3.4.0199\lib\net40\Utilities.IO.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Utilities.Reflection">
+      <HintPath>..\packages\CraigsUtilityLibrary-Reflection.3.4.0199\lib\net40\Utilities.Reflection.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="WebKitBrowser">
+      <HintPath>..\terms prepaid\lib\WebKit.NET-0.5-bin-cairo\WebKitBrowser.dll</HintPath>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="WindowsFormsIntegration" />
+    <Reference Include="WPF_WYSIWYG_HTML_Editor">
+      <HintPath>..\terms prepaid\lib\WPF_WYSIWYG_HTML_Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock, Version=2.8.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.2.8\lib\net40\Xceed.Wpf.AvalonDock.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Aero, Version=2.8.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.2.8\lib\net40\Xceed.Wpf.AvalonDock.Themes.Aero.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Metro, Version=2.8.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.2.8\lib\net40\Xceed.Wpf.AvalonDock.Themes.Metro.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.VS2010, Version=2.8.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.2.8\lib\net40\Xceed.Wpf.AvalonDock.Themes.VS2010.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Xceed.Wpf.DataGrid, Version=2.8.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.2.8\lib\net40\Xceed.Wpf.DataGrid.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Xceed.Wpf.Toolkit, Version=2.8.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.2.8\lib\net40\Xceed.Wpf.Toolkit.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Behaviors\FlowDocumentScrollViewerBehavior.cs" />
+    <Compile Include="Buttons\AdditionalServiceButton.xaml.cs">
+      <DependentUpon>AdditionalServiceButton.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Buttons\AddServiceButton.xaml.cs">
+      <DependentUpon>AddServiceButton.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Buttons\ArrivalsButton.xaml.cs">
+      <DependentUpon>ArrivalsButton.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Buttons\BackButton.xaml.cs">
+      <DependentUpon>BackButton.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Buttons\CloseButton.xaml.cs">
+      <DependentUpon>CloseButton.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Buttons\ColoredButton.xaml.cs">
+      <DependentUpon>ColoredButton.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Buttons\FlightInfoButton.xaml.cs">
+      <DependentUpon>FlightInfoButton.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Buttons\GotoLkButton.xaml.cs">
+      <DependentUpon>GotoLkButton.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Buttons\LockableToggleButton.cs" />
+    <Compile Include="Buttons\LoupeButton.xaml.cs">
+      <DependentUpon>LoupeButton.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Buttons\OrderTaskButton.xaml.cs">
+      <DependentUpon>OrderTaskButton.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Buttons\PostponeOrderButton.xaml.cs">
+      <DependentUpon>PostponeOrderButton.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Buttons\RequestJournalButton.xaml.cs">
+      <DependentUpon>RequestJournalButton.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Buttons\RequestJournalButton2.xaml.cs">
+      <DependentUpon>RequestJournalButton2.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Buttons\RequestMessageButton.xaml.cs">
+      <DependentUpon>RequestMessageButton.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Buttons\ReservationButton.xaml.cs">
+      <DependentUpon>ReservationButton.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Buttons\ShowRulesButton.xaml.cs">
+      <DependentUpon>ShowRulesButton.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Buttons\SimpleWpfButton.cs" />
+    <Compile Include="Buttons\UserControl1.xaml.cs">
+      <DependentUpon>UserControl1.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Common\CaruselData.cs" />
+    <Compile Include="Common\Data.cs" />
+    <Compile Include="Common\DopServiceItem.cs" />
+    <Compile Include="Common\Filter.cs" />
+    <Compile Include="Common\FilterBase.cs" />
+    <Compile Include="Common\GroupGridItem.cs" />
+    <Compile Include="Common\IAviaCardsService.cs" />
+    <Compile Include="Common\IBillSetting.cs" />
+    <Compile Include="Common\IBillSetting2.cs" />
+    <Compile Include="Common\IButton.cs" />
+    <Compile Include="Common\ICallRecordService.cs" />
+    <Compile Include="Common\ICollectingLowcostAirlinesService.cs" />
+    <Compile Include="Common\ICollectingLowcostAirlinesViewModel.cs" />
+    <Compile Include="Common\IContractService.cs" />
+    <Compile Include="Common\ICorrespondenceService.cs" />
+    <Compile Include="Common\IDialog.cs" />
+    <Compile Include="Common\IDogovorSetting.cs" />
+    <Compile Include="Common\IMessageBox.cs" />
+    <Compile Include="Common\IMilesAirlineListViewModel.cs" />
+    <Compile Include="Common\IRequestJournalButton.cs" />
+    <Compile Include="Common\IRequestJournalButtonViewModel.cs" />
+    <Compile Include="Common\IRequestJournalService.cs" />
+    <Compile Include="Common\IRequestMessageButton.cs" />
+    <Compile Include="Common\IServiceView.cs" />
+    <Compile Include="Common\ISession.cs" />
+    <Compile Include="Common\ISessionService.cs" />
+    <Compile Include="Common\IUnansweredRequestsService.cs" />
+    <Compile Include="Common\IUnseenRequestMessageService.cs" />
+    <Compile Include="Common\IVoucherService.cs" />
+    <Compile Include="Common\Messages.cs" />
+    <Compile Include="Common\ServiceEditItem.cs" />
+    <Compile Include="Common\Session.cs" />
+    <Compile Include="Common\SimpleMenu.cs" />
+    <Compile Include="Common\NameValue.cs" />
+    <Compile Include="Common\NameValueManagerDate.cs" />
+    <Compile Include="Common\PopupWindow.cs" />
+    <Compile Include="Common\ISimpleWindows.cs" />
+    <Compile Include="Common\WpfAdapter.cs" />
+    <Compile Include="Controls\Carousel.cs" />
+    <Compile Include="Buttons\GoButton.xaml.cs">
+      <DependentUpon>GoButton.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Helpers\BrowserBehavior.cs" />
+    <Compile Include="Helpers\DataGridBehavior2.cs" />
+    <Compile Include="Helpers\FileHelper.cs" />
+    <Compile Include="Helpers\HtmlHelper.cs" />
+    <Compile Include="Helpers\HtmlToXaml.cs" />
+    <Compile Include="Helpers\MailAddressHelper.cs" />
+    <Compile Include="Helpers\PrivateFiledGetter.cs" />
+    <Compile Include="Helpers\RequestJournalHelper.cs" />
+    <Compile Include="Helpers\RequestProblemHelper.cs" />
+    <Compile Include="Helpers\RichTextboxAssistant.cs" />
+    <Compile Include="Helpers\ScrollHelper.cs" />
+    <Compile Include="Helpers\SignatureHelper.cs" />
+    <Compile Include="Helpers\SkEditorHelper.cs" />
+    <Compile Include="Helpers\WindowExtensions.cs" />
+    <Compile Include="Helpers\WindowsHelper.cs" />
+    <Compile Include="Messages\DgCodeInfo.cs" />
+    <Compile Include="Messages\DlKeyInfo.cs" />
+    <Compile Include="Messages\RequestsJournalMessages.cs" />
+    <Compile Include="Messages\VoucherMessages.cs" />
+    <Compile Include="Model\CallRecordJournal\CallRecord.cs" />
+    <Compile Include="Model\CallRecordJournal\CallRecordCreator.cs" />
+    <Compile Include="Model\CallRecordJournal\CallRecordFilter.cs" />
+    <Compile Include="Model\CallRecordJournal\CallRecordFilterCreator.cs" />
+    <Compile Include="Model\Common\AsyncRelayCommand.cs" />
+    <Compile Include="Model\Common\Person.cs" />
+    <Compile Include="Model\Common\User.cs" />
+    <Compile Include="Model\Contract\Status.cs" />
+    <Compile Include="Model\Contract\StatusService.cs" />
+    <Compile Include="Model\Flight\BookingAvia.cs" />
+    <Compile Include="Model\Flight\Flight.cs" />
+    <Compile Include="Model\Flight\FlightInfo.cs" />
+    <Compile Include="Model\Flight\Passenger.cs" />
+    <Compile Include="Model\Flight\Rules.cs" />
+    <Compile Include="Model\Messages\Correspondence.cs" />
+    <Compile Include="Model\Messages\Message.cs" />
+    <Compile Include="Model\Messages\MessageBase.cs" />
+    <Compile Include="Model\Messages\MessageBlock.cs" />
+    <Compile Include="Model\RequestJournal\IMailConfig.cs" />
+    <Compile Include="Model\RequestJournal\ImapXMailLoaderBase.cs" />
+    <Compile Include="Model\RequestJournal\ImapXRequestMessageLoader.cs" />
+    <Compile Include="Model\RequestJournal\ImapXRequestMessageLoaderBase.cs" />
+    <Compile Include="Model\RequestJournal\InlineImgHelper.cs" />
+    <Compile Include="Model\RequestJournal\IRequestJournalLoader.cs" />
+    <Compile Include="Model\RequestJournal\IRequestJournalSender.cs" />
+    <Compile Include="Model\RequestJournal\IRequestMessageBinder.cs" />
+    <Compile Include="Model\RequestJournal\MailConfig.cs" />
+    <Compile Include="Model\RequestJournal\ManagerHelper.cs" />
+    <Compile Include="Model\RequestJournal\MyMail.cs" />
+    <Compile Include="Model\RequestJournal\MyWorkMail.cs" />
+    <Compile Include="Model\RequestJournal\MyWorkMailOld.cs" />
+    <Compile Include="Model\RequestJournal\Request.cs" />
+    <Compile Include="Model\RequestJournal\RequestAttachment.cs" />
+    <Compile Include="Model\RequestJournal\RequestBase.cs" />
+    <Compile Include="Model\RequestJournal\RequestConverters.cs" />
+    <Compile Include="Model\RequestJournal\RequestJournal.cs" />
+    <Compile Include="Model\RequestJournal\RequestJournalFilter.cs" />
+    <Compile Include="Model\RequestJournal\RequestJournalSender.cs" />
+    <Compile Include="Model\RequestJournal\RequestMessage.cs" />
+    <Compile Include="Model\RequestJournal\RequestMessageBinder.cs" />
+    <Compile Include="Model\RequestJournal\RequestMessageBuilder.cs" />
+    <Compile Include="Model\RequestJournal\RequestMessageInfo.cs" />
+    <Compile Include="Model\RequestJournal\RequestMessagesHelper.cs" />
+    <Compile Include="Model\RequestJournal\RequestMessageThread.cs" />
+    <Compile Include="Model\RequestJournal\RequestMessagInfoFactory.cs" />
+    <Compile Include="Model\RequestJournal\RequestProblem.cs" />
+    <Compile Include="Model\RequestJournal\RequestProblemGroup.cs" />
+    <Compile Include="Model\RequestJournal\RequestStatus.cs" />
+    <Compile Include="Model\RequestJournal\RequestSubStatus.cs" />
+    <Compile Include="Model\RequestJournal\RequestType.cs" />
+    <Compile Include="Model\RequestJournal\TestMailLoader2.cs" />
+    <Compile Include="Model\RequestJournal\UserFactory.cs" />
+    <Compile Include="Model\Tourist\Tourist.cs" />
+    <Compile Include="Model\Tourist\TouristService.cs" />
+    <Compile Include="Model\Voucher\AviaService.cs" />
+    <Compile Include="Model\Voucher\BonusAndService.cs" />
+    <Compile Include="Model\Voucher\CruiseLoader.cs" />
+    <Compile Include="Model\Voucher\CruiseService.cs" />
+    <Compile Include="Model\Voucher\HotelService.cs" />
+    <Compile Include="Model\Voucher\ICruiseLoader.cs" />
+    <Compile Include="Model\Voucher\IInsurLoader.cs" />
+    <Compile Include="Model\Voucher\InshurService.cs" />
+    <Compile Include="Model\Voucher\InsurLoader.cs" />
+    <Compile Include="Model\Voucher\OtherService.cs" />
+    <Compile Include="Model\Voucher\Payment.cs" />
+    <Compile Include="Model\Voucher\ProblemServiceInfo.cs" />
+    <Compile Include="Model\Voucher\ServiceGroup.cs" />
+    <Compile Include="Model\Voucher\ServiceInfo.cs" />
+    <Compile Include="Model\Voucher\ServiceSettingInfo.cs" />
+    <Compile Include="Model\Voucher\ServiceWithTouristData.cs" />
+    <Compile Include="Model\Voucher\TouristForInshur.cs" />
+    <Compile Include="Model\Voucher\Transaction.cs" />
+    <Compile Include="Model\Voucher\TransferService.cs" />
+    <Compile Include="Model\Voucher\VaucherServicePayment.cs" />
+    <Compile Include="Model\Voucher\VisaService.cs" />
+    <Compile Include="Model\Voucher\Voucher.cs" />
+    <Compile Include="Model\Voucher\VoucherSettingInfo.cs" />
+    <Compile Include="Util\AppendPostfixConverter.cs" />
+    <Compile Include="Util\Base64Serialization.cs" />
+    <Compile Include="Util\BooleanConverters.cs" />
+    <Compile Include="Util\BooleanToStyleConverter.cs" />
+    <Compile Include="Util\BoolToFontWeightConverter.cs" />
+    <Compile Include="Util\BoolToInvertedBoolConverter.cs" />
+    <Compile Include="Util\BrightConverter.cs" />
+    <Compile Include="Util\BronNumberConverter.cs" />
+    <Compile Include="Util\CityCountryConverter.cs" />
+    <Compile Include="Util\CloneCollection.cs" />
+    <Compile Include="Util\CollapsedIfNotNullConverter.cs" />
+    <Compile Include="Util\CompareExtension.cs" />
+    <Compile Include="Util\CustomHeader.cs" />
+    <Compile Include="Util\DataGridBehavior.cs" />
+    <Compile Include="Util\DataGridSelectedItemsBlendBehavior.cs" />
+    <Compile Include="Util\DateConverter.cs" />
+    <Compile Include="Util\DurationConverter.cs" />
+    <Compile Include="Util\EmptyStringIfNullConverter.cs" />
+    <Compile Include="Util\GridHelpers.cs" />
+    <Compile Include="Util\GridLengthConverter.cs" />
+    <Compile Include="Util\Inverter.cs" />
+    <Compile Include="Util\ListViewCountConverter.cs" />
+    <Compile Include="Util\LongestListObjectToIntConverter .cs" />
+    <Compile Include="Util\MultiBooleanConverter.cs" />
+    <Compile Include="Util\NameValueParams.cs" />
+    <Compile Include="Util\NullValueConverter.cs" />
+    <Compile Include="Util\NumberConverter.cs" />
+    <Compile Include="Util\NumEnding.cs" />
+    <Compile Include="Util\OrdinalConverter.cs" />
+    <Compile Include="Util\Parser.cs" />
+    <Compile Include="Util\PayamentDateConverter.cs" />
+    <Compile Include="Util\PriceConverter.cs" />
+    <Compile Include="Util\PriceConverter2.cs" />
+    <Compile Include="Util\ProblemRequestTabConverter.cs" />
+    <Compile Include="Util\ProcentAndNumericValueConverter.cs" />
+    <Compile Include="Util\ReplaceSomeValuesConverter.cs" />
+    <Compile Include="Util\RequestJournalButtonFlashConverter.cs" />
+    <Compile Include="Util\RequestMessagesHistoryConverter.cs" />
+    <Compile Include="Util\RequestMessagesHistoryConverter2.cs" />
+    <Compile Include="Util\RequestMessagesSeenStatusConvertor.cs" />
+    <Compile Include="Util\RequestMessagesSeenStatusConvertor2.cs" />
+    <Compile Include="Util\RequestMessagesSeenStatusConvertor3.cs" />
+    <Compile Include="Util\RequestMessagesSeenStatusConvertor4.cs" />
+    <Compile Include="Util\RequestMessagesSeenStatusConvertor5.cs" />
+    <Compile Include="Util\RequestMessageThemeConverter.cs" />
+    <Compile Include="Util\RequestNumberConverter.cs" />
+    <Compile Include="Util\RequestProblemGroupConverter.cs" />
+    <Compile Include="Util\RequestSenderAddressColorConverter.cs" />
+    <Compile Include="Util\RequestStatusConverter.cs" />
+    <Compile Include="Util\ScrollHelper.cs" />
+    <Compile Include="Util\SegmentNumberConverter.cs" />
+    <Compile Include="Util\SepiaEffect.cs" />
+    <Compile Include="Util\ServiceTabHeaderConverter.cs" />
+    <Compile Include="Util\SingleValueConverter.cs" />
+    <Compile Include="Util\SuperviserCheckedConverter.cs" />
+    <Compile Include="Util\SuperviserCheckedStatusConverter.cs" />
+    <Compile Include="Util\TabContentSelector.cs" />
+    <Compile Include="Util\TemplateEventHandler.cs" />
+    <Compile Include="Util\TextChangedStyleSelector.cs" />
+    <Compile Include="Util\TextFormat.cs" />
+    <Compile Include="Util\TpLogger.cs" />
+    <Compile Include="Util\TransferDirectionConverter.cs" />
+    <Compile Include="Util\TwoDateEqualsConverter.cs" />
+    <Compile Include="Util\TwoValueEqualsConverter.cs" />
+    <Compile Include="Util\VisibilityConverters.cs" />
+    <Compile Include="Util\VoucherViewGroupStatusConverter.cs" />
+    <Compile Include="Util\WinApiHelper.cs" />
+    <Compile Include="ViewModel\ArrivalsButtonViewModel.cs" />
+    <Compile Include="ViewModel\ArrivalsViewModel.cs" />
+    <Compile Include="ViewModel\AttachmentViewModel.cs" />
+    <Compile Include="ViewModel\BillSettingViewModel.cs" />
+    <Compile Include="ViewModel\CallRecordsViewModel.cs" />
+    <Compile Include="ViewModel\ChangeSenderAddress2ViewModel.cs" />
+    <Compile Include="ViewModel\ChangeSenderAddressBaseViewModel.cs" />
+    <Compile Include="ViewModel\ChangeSenderAddressViewModel.cs" />
+    <Compile Include="ViewModel\CollectingLowcostAirlinesViewModel.cs" />
+    <Compile Include="ViewModel\CorrespondenceBaseViewModel.cs" />
+    <Compile Include="ViewModel\CorrespondenceRequestViewModel.cs" />
+    <Compile Include="ViewModel\CorrespondenceRequestViewModelBase.cs" />
+    <Compile Include="ViewModel\CorrespondenceViewModel.cs" />
+    <Compile Include="ViewModel\CruiseViewModel.cs" />
+    <Compile Include="ViewModel\DogovorSettingViewModel.cs" />
+    <Compile Include="ViewModel\FlightViewModel.cs" />
+    <Compile Include="Model\Voucher\Service.cs" />
+    <Compile Include="Util\RelayCommand.cs" />
+    <Compile Include="Util\ViewModelBase.cs" />
+    <Compile Include="ViewModel\HotelViewModel.cs" />
+    <Compile Include="ViewModel\HtmlControlViewModel.cs" />
+    <Compile Include="ViewModel\ICorrespondenceBaseViewModel.cs" />
+    <Compile Include="ViewModel\ICorrespondenceRequestBaseViewModel.cs" />
+    <Compile Include="ViewModel\InshurControlViewModel.cs" />
+    <Compile Include="ViewModel\InshurViewModel.cs" />
+    <Compile Include="ViewModel\InsuranceViewModel.cs" />
+    <Compile Include="ViewModel\IRequestMessagesViewModel.cs" />
+    <Compile Include="ViewModel\IRequestsJournalViewModel.cs" />
+    <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="ViewModel\CorrespondenceTabViewModel.cs" />
+    <Compile Include="ViewModel\MilesAirlineListViewModel.cs" />
+    <Compile Include="ViewModel\OtherServiceViewModel.cs" />
+    <Compile Include="ViewModel\ProblemRequestsViewModel.cs" />
+    <Compile Include="ViewModel\ProblemViewModel.cs" />
+    <Compile Include="ViewModel\RequestDetailViewModel.cs" />
+    <Compile Include="ViewModel\RequestJournalButtonViewModel.cs" />
+    <Compile Include="ViewModel\RequestMessageMod.cs" />
+    <Compile Include="ViewModel\RequestMessagesViewModel.cs" />
+    <Compile Include="ViewModel\RequestMessagesViewModelMtC.cs" />
+    <Compile Include="ViewModel\RequestMessagesViewModelMtM.cs" />
+    <Compile Include="ViewModel\RequestMessageViewModel.cs" />
+    <Compile Include="ViewModel\RequestNewMessageViewModel.cs" />
+    <Compile Include="ViewModel\RequestsJournalHostViewModel.cs" />
+    <Compile Include="ViewModel\RequestsJournalViewModel.cs" />
+    <Compile Include="ViewModel\RequestsJournalViewModelBase.cs" />
+    <Compile Include="ViewModel\SampleUserControlHostViewModel.cs" />
+    <Compile Include="ViewModel\ScrollRulesButtonViewModel.cs" />
+    <Compile Include="ViewModel\SelectCancelationReasonViewModel.cs" />
+    <Compile Include="ViewModel\SelectManagerViewModel.cs" />
+    <Compile Include="ViewModel\ServiceTabSelectorViewModel.cs" />
+    <Compile Include="ViewModel\ServiceTabViewModel.cs" />
+    <Compile Include="ViewModel\ServiceViewModel.cs" />
+    <Compile Include="ViewModel\TabAbstractViewModel.cs" />
+    <Compile Include="ViewModel\TaskerViewModel.cs" />
+    <Compile Include="ViewModel\TouristViewModel.cs" />
+    <Compile Include="ViewModel\TranfserViewModel.cs" />
+    <Compile Include="ViewModel\VoucherViewModel.cs" />
+    <Compile Include="ViewModel\ViewModelLocator.cs" />
+    <Compile Include="ViewModel\VisaViewModel.cs" />
+    <Compile Include="View\AddTaskControl.xaml.cs">
+      <DependentUpon>AddTaskControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ArrivalsView.xaml.cs">
+      <DependentUpon>ArrivalsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\BillSettingView.xaml.cs">
+      <DependentUpon>BillSettingView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\CalendarView.xaml.cs">
+      <DependentUpon>CalendarView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\CallRecordsView.xaml.cs">
+      <DependentUpon>CallRecordsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ChangeSenderAddressView.xaml.cs">
+      <DependentUpon>ChangeSenderAddressView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\CkEditorView.xaml.cs">
+      <DependentUpon>CkEditorView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\CollectingLowcostAirlinesView.xaml.cs">
+      <DependentUpon>CollectingLowcostAirlinesView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ContactsControl.xaml.cs">
+      <DependentUpon>ContactsControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Converters\BooleanConverter.cs" />
+    <Compile Include="View\CallRecordsMkView.xaml.cs">
+      <DependentUpon>CallRecordsMkView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\InshurControlView.xaml.cs">
+      <DependentUpon>InshurControlView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ServiceEditorInsurance.xaml.cs">
+      <DependentUpon>ServiceEditorInsurance.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ServiceEditorInsuranceList.xaml.cs">
+      <DependentUpon>ServiceEditorInsuranceList.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ServiceListView.xaml.cs">
+      <DependentUpon>ServiceListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\TaskerControl.xaml.cs">
+      <DependentUpon>TaskerControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\TaskListControl.xaml.cs">
+      <DependentUpon>TaskListControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\TouristsControl.xaml.cs">
+      <DependentUpon>TouristsControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\TransferControl_static.xaml.cs">
+      <DependentUpon>TransferControl_static.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\DialogView.xaml.cs">
+      <DependentUpon>DialogView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\RequestNewMessageView.xaml.cs">
+      <DependentUpon>RequestNewMessageView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ProblemRequestsView.xaml.cs">
+      <DependentUpon>ProblemRequestsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\RequestMessageView.xaml.cs">
+      <DependentUpon>RequestMessageView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\RequestsJournalView.xaml.cs">
+      <DependentUpon>RequestsJournalView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\CorrespondenceControl.xaml.cs">
+      <DependentUpon>CorrespondenceControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\CorrespondenceView.xaml.cs">
+      <DependentUpon>CorrespondenceView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\CorresponednceTabView2.xaml.cs">
+      <DependentUpon>CorresponednceTabView2.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\CruiseControl.xaml.cs">
+      <DependentUpon>CruiseControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\DogovorSettingView.xaml.cs">
+      <DependentUpon>DogovorSettingView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\DogovorSetting\Row4.xaml.cs">
+      <DependentUpon>Row4.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\FlightControl.xaml.cs">
+      <DependentUpon>FlightControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Util\FlightInfoConverter.cs" />
+    <Compile Include="View\FlowDocumentTest.xaml.cs">
+      <DependentUpon>FlowDocumentTest.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\HotelControl.xaml.cs">
+      <DependentUpon>HotelControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\HtmlControlView.xaml.cs">
+      <DependentUpon>HtmlControlView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\InshurControl.xaml.cs">
+      <DependentUpon>InshurControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MilesAirlineListView.xaml.cs">
+      <DependentUpon>MilesAirlineListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\OtherServiceControl.xaml.cs">
+      <DependentUpon>OtherServiceControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ProblemView.xaml.cs">
+      <DependentUpon>ProblemView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\RequestDetailView.xaml.cs">
+      <DependentUpon>RequestDetailView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\RequestJournalHostView.xaml.cs">
+      <DependentUpon>RequestJournalHostView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\RequestMessagesView.xaml.cs">
+      <DependentUpon>RequestMessagesView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SampleUserControlHostView.xaml.cs">
+      <DependentUpon>SampleUserControlHostView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SelectCancelationReasonView.xaml.cs">
+      <DependentUpon>SelectCancelationReasonView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SelectManagerView.xaml.cs">
+      <DependentUpon>SelectManagerView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ServiceTabView.xaml.cs">
+      <DependentUpon>ServiceTabView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ServiceTabWrapper.cs" />
+    <Compile Include="View\ServiceTypeSelectorView.xaml.cs">
+      <DependentUpon>ServiceTypeSelectorView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\TouristView.xaml.cs">
+      <DependentUpon>TouristView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\TransferControl.xaml.cs">
+      <DependentUpon>TransferControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\BonusesControl.xaml.cs">
+      <DependentUpon>BonusesControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ServiceEditorCruise.xaml.cs">
+      <DependentUpon>ServiceEditorCruise.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\VoucherNewView.xaml.cs">
+      <DependentUpon>VoucherNewView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\VoucherView.xaml.cs">
+      <DependentUpon>VoucherView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\VisaControl.xaml.cs">
+      <DependentUpon>VisaControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\VoucherInfoView.xaml.cs">
+      <DependentUpon>VoucherInfoView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\VoucherStatusView.xaml.cs">
+      <DependentUpon>VoucherStatusView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\VoucherTabView.xaml.cs">
+      <DependentUpon>VoucherTabView.xaml</DependentUpon>
+    </Compile>
+    <Page Include="Buttons\AdditionalServiceButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Buttons\AddServiceButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Buttons\ArrivalsButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Buttons\BackButton.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Buttons\CloseButton.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Buttons\ColoredButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Buttons\FlightInfoButton.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Buttons\GotoLkButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Buttons\LoupeButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Buttons\OrderTaskButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Buttons\PostponeOrderButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Buttons\RequestJournalButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Buttons\RequestJournalButton2.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Buttons\RequestMessageButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Buttons\ReservationButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Buttons\ShowRulesButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Buttons\UserControl1.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Buttons\GoButton.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Buttons\AddServiceButtonSimple.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="Buttons\AddServiceButtonSimple.xaml.cs">
+      <DependentUpon>AddServiceButtonSimple.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="Resources\ButtonResources.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\ComboBoxResourses.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\Resources.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\AddTaskControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ArrivalsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\BillSettingView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\CalendarView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\CallRecordsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ChangeSenderAddressView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\CkEditorView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\CollectingLowcostAirlinesView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\CallRecordsMkView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\ContactsControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\InshurControlView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ServiceEditorInsurance.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ServiceEditorInsuranceList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ServiceListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\TaskerControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\TaskListControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\TouristsControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\TransferControl_static.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\DialogView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\RequestNewMessageView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\ProblemRequestsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\RequestMessageView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\RequestsJournalView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\CorrespondenceControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\CorrespondenceView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\CorresponednceTabView2.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\CruiseControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\DogovorSettingView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\DogovorSetting\Row4.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\FlightControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\FlowDocumentTest.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\HotelControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\HtmlControlView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\InshurControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\MilesAirlineListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\OtherServiceControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ProblemView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\RequestDetailView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\RequestJournalHostView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\RequestMessagesView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\SampleUserControlHostView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\SelectCancelationReasonView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\SelectManagerView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ServiceTabView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ServiceTypeSelectorView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\TouristView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\TransferControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\BonusesControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ServiceEditorCruise.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\VoucherNewView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\VoucherView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\VisaControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\VoucherInfoView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\VoucherStatusView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\VoucherTabView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <BlendEmbeddedFont Include="Fonts\arial.ttf">
+      <IsSystemFont>True</IsSystemFont>
+      <All>True</All>
+      <AutoFill>True</AutoFill>
+    </BlendEmbeddedFont>
+    <BlendEmbeddedFont Include="Fonts\arialbd.ttf">
+      <IsSystemFont>True</IsSystemFont>
+      <All>True</All>
+      <AutoFill>True</AutoFill>
+    </BlendEmbeddedFont>
+    <BlendEmbeddedFont Include="Fonts\arialbi.ttf">
+      <IsSystemFont>True</IsSystemFont>
+      <All>True</All>
+      <AutoFill>True</AutoFill>
+    </BlendEmbeddedFont>
+    <BlendEmbeddedFont Include="Fonts\ariali.ttf">
+      <IsSystemFont>True</IsSystemFont>
+      <All>True</All>
+      <AutoFill>True</AutoFill>
+    </BlendEmbeddedFont>
+    <Resource Include="img\gear.png" />
+    <Resource Include="img\attention.png" />
+    <Resource Include="img\gear_red.png" />
+    <Resource Include="Buttons\img\transfer_for_btn.png" />
+    <Resource Include="Buttons\img\plane_for_btn.png" />
+    <Resource Include="img\arrow_drop.bmp" />
+    <Resource Include="img\drop_arrow.png" />
+    <Resource Include="Buttons\img\warning_1.ico" />
+    <Resource Include="Buttons\img\warning_2.ico" />
+    <Resource Include="img\ico_empty.ico" />
+    <Resource Include="img\ico_warning_1.ico" />
+    <Resource Include="img\ico_warning_2.ico" />
+    <Resource Include="img\ico_warning_3.ico" />
+    <Resource Include="Buttons\img\warning_3.ico" />
+    <Resource Include="img\delete_red.ico" />
+    <Resource Include="img\delete_grey.ico" />
+    <Resource Include="img\edit.ico" />
+    <Resource Include="img\delete.ico" />
+    <Resource Include="img\delete_black.ico" />
+    <Resource Include="img\edit_black.ico" />
+    <Resource Include="img\edit_grey.ico" />
+    <Resource Include="img\basket.png" />
+    <Resource Include="img\basket_red.png" />
+    <Resource Include="img\gear_green.png" />
+    <Resource Include="img\number.png" />
+    <Resource Include="img\number_green.png" />
+    <Resource Include="img\nomber.png" />
+    <Resource Include="img\nomber_green.png" />
+    <Resource Include="img\insurance.png" />
+    <Resource Include="img\copy.png" />
+    <Resource Include="img\copy_green.png" />
+    <Resource Include="img\copy_blue.png" />
+    <Resource Include="img\edit_desc.png" />
+    <Resource Include="img\edit_desc_green.png" />
+    <Resource Include="img\list.png" />
+    <Resource Include="img\list_blue.png" />
+    <Resource Include="Buttons\img\ins_for_btn.png" />
+    <Content Include="Scripts\ckeditor\build-config.js" />
+    <Content Include="Scripts\ckeditor\ckeditor.js" />
+    <Content Include="Scripts\ckeditor\config.js" />
+    <Content Include="Scripts\ckeditor\contents.css" />
+    <Content Include="Scripts\ckeditor\lang\af.js" />
+    <Content Include="Scripts\ckeditor\lang\ar.js" />
+    <Content Include="Scripts\ckeditor\lang\bg.js" />
+    <Content Include="Scripts\ckeditor\lang\bn.js" />
+    <Content Include="Scripts\ckeditor\lang\bs.js" />
+    <Content Include="Scripts\ckeditor\lang\ca.js" />
+    <Content Include="Scripts\ckeditor\lang\cs.js" />
+    <Content Include="Scripts\ckeditor\lang\cy.js" />
+    <Content Include="Scripts\ckeditor\lang\da.js" />
+    <Content Include="Scripts\ckeditor\lang\de.js" />
+    <Content Include="Scripts\ckeditor\lang\el.js" />
+    <Content Include="Scripts\ckeditor\lang\en-au.js" />
+    <Content Include="Scripts\ckeditor\lang\en-ca.js" />
+    <Content Include="Scripts\ckeditor\lang\en-gb.js" />
+    <Content Include="Scripts\ckeditor\lang\en.js" />
+    <Content Include="Scripts\ckeditor\lang\eo.js" />
+    <Content Include="Scripts\ckeditor\lang\es.js" />
+    <Content Include="Scripts\ckeditor\lang\et.js" />
+    <Content Include="Scripts\ckeditor\lang\eu.js" />
+    <Content Include="Scripts\ckeditor\lang\fa.js" />
+    <Content Include="Scripts\ckeditor\lang\fi.js" />
+    <Content Include="Scripts\ckeditor\lang\fo.js" />
+    <Content Include="Scripts\ckeditor\lang\fr-ca.js" />
+    <Content Include="Scripts\ckeditor\lang\fr.js" />
+    <Content Include="Scripts\ckeditor\lang\gl.js" />
+    <Content Include="Scripts\ckeditor\lang\gu.js" />
+    <Content Include="Scripts\ckeditor\lang\he.js" />
+    <Content Include="Scripts\ckeditor\lang\hi.js" />
+    <Content Include="Scripts\ckeditor\lang\hr.js" />
+    <Content Include="Scripts\ckeditor\lang\hu.js" />
+    <Content Include="Scripts\ckeditor\lang\is.js" />
+    <Content Include="Scripts\ckeditor\lang\it.js" />
+    <Content Include="Scripts\ckeditor\lang\ja.js" />
+    <Content Include="Scripts\ckeditor\lang\ka.js" />
+    <Content Include="Scripts\ckeditor\lang\km.js" />
+    <Content Include="Scripts\ckeditor\lang\ko.js" />
+    <Content Include="Scripts\ckeditor\lang\ku.js" />
+    <Content Include="Scripts\ckeditor\lang\lt.js" />
+    <Content Include="Scripts\ckeditor\lang\lv.js" />
+    <Content Include="Scripts\ckeditor\lang\mk.js" />
+    <Content Include="Scripts\ckeditor\lang\mn.js" />
+    <Content Include="Scripts\ckeditor\lang\ms.js" />
+    <Content Include="Scripts\ckeditor\lang\nb.js" />
+    <Content Include="Scripts\ckeditor\lang\nl.js" />
+    <Content Include="Scripts\ckeditor\lang\no.js" />
+    <Content Include="Scripts\ckeditor\lang\pl.js" />
+    <Content Include="Scripts\ckeditor\lang\pt-br.js" />
+    <Content Include="Scripts\ckeditor\lang\pt.js" />
+    <Content Include="Scripts\ckeditor\lang\ro.js" />
+    <Content Include="Scripts\ckeditor\lang\ru.js" />
+    <Content Include="Scripts\ckeditor\lang\sk.js" />
+    <Content Include="Scripts\ckeditor\lang\sl.js" />
+    <Content Include="Scripts\ckeditor\lang\sr-latn.js" />
+    <Content Include="Scripts\ckeditor\lang\sr.js" />
+    <Content Include="Scripts\ckeditor\lang\sv.js" />
+    <Content Include="Scripts\ckeditor\lang\th.js" />
+    <Content Include="Scripts\ckeditor\lang\tr.js" />
+    <Content Include="Scripts\ckeditor\lang\ug.js" />
+    <Content Include="Scripts\ckeditor\lang\uk.js" />
+    <Content Include="Scripts\ckeditor\lang\vi.js" />
+    <Content Include="Scripts\ckeditor\lang\zh-cn.js" />
+    <Content Include="Scripts\ckeditor\lang\zh.js" />
+    <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\a11yhelp.js" />
+    <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\ar.js" />
+    <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\bg.js" />
+    <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\ca.js" />
+    <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\cs.js" />
+    <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\cy.js" />
+    <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\da.js" />
+    <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\de.js" />
+    <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\el.js" />
+    <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\en.js" />
+    <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\eo.js" />
+    <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\es.js" />
+    <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\et.js" />
+    <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\fa.js" />
+    <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\fi.js" />
+    <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\fr.js" />
+    <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\gu.js" />
+    <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\he.js" />
+    <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\hi.js" />
+    <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\hr.js" />
+    <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\hu.js" />
+    <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\it.js" />
+    <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\ja.js" />
+    <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\ku.js" />
+    <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\lt.js" />
+    <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\lv.js" />
+    <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\mk.js" />
+    <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\mn.js" />
+    <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\nb.js" />
+    <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\nl.js" />
+    <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\no.js" />
+    <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\pl.js" />
+    <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\pt-br.js" />
+    <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\pt.js" />
+    <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\ro.js" />
+    <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\ru.js" />
+    <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\sk.js" />
+    <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\sl.js" />
+    <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\sv.js" />
+    <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\tr.js" />
+    <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\ug.js" />
+    <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\uk.js" />
+    <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\vi.js" />
+    <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\zh-cn.js" />
+    <Content Include="CkEditor.html" />
+    <Resource Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\_translationstatus.txt" />
+    <Content Include="Scripts\ckeditor\plugins\about\dialogs\about.js" />
+    <Resource Include="Scripts\ckeditor\plugins\about\dialogs\logo_ckeditor.png" />
+    <Content Include="Scripts\ckeditor\plugins\clipboard\dialogs\paste.js" />
+    <Content Include="Scripts\ckeditor\plugins\dialog\dialogDefinition.js" />
+    <Resource Include="Scripts\ckeditor\plugins\fakeobjects\images\spacer.gif" />
+    <Resource Include="Scripts\ckeditor\plugins\icons.png" />
+    <Content Include="Scripts\ckeditor\plugins\image\dialogs\image.js" />
+    <Resource Include="Scripts\ckeditor\plugins\image\images\noimage.png" />
+    <Content Include="Scripts\ckeditor\plugins\link\dialogs\anchor.js" />
+    <Content Include="Scripts\ckeditor\plugins\link\dialogs\link.js" />
+    <Resource Include="Scripts\ckeditor\plugins\link\images\anchor.png" />
+    <Resource Include="Scripts\ckeditor\plugins\magicline\images\icon.png" />
+    <Content Include="Scripts\ckeditor\plugins\pastefromword\filter\default.js" />
+    <Content Include="Scripts\ckeditor\plugins\scayt\dialogs\options.js" />
+    <Content Include="Scripts\ckeditor\plugins\scayt\dialogs\toolbar.css" />
+    <Content Include="Scripts\ckeditor\plugins\specialchar\dialogs\lang\ca.js" />
+    <Content Include="Scripts\ckeditor\plugins\specialchar\dialogs\lang\cs.js" />
+    <Content Include="Scripts\ckeditor\plugins\specialchar\dialogs\lang\cy.js" />
+    <Content Include="Scripts\ckeditor\plugins\specialchar\dialogs\lang\de.js" />
+    <Content Include="Scripts\ckeditor\plugins\specialchar\dialogs\lang\el.js" />
+    <Content Include="Scripts\ckeditor\plugins\specialchar\dialogs\lang\en.js" />
+    <Content Include="Scripts\ckeditor\plugins\specialchar\dialogs\lang\eo.js" />
+    <Content Include="Scripts\ckeditor\plugins\specialchar\dialogs\lang\et.js" />
+    <Content Include="Scripts\ckeditor\plugins\specialchar\dialogs\lang\fa.js" />
+    <Content Include="Scripts\ckeditor\plugins\specialchar\dialogs\lang\fi.js" />
+    <Content Include="Scripts\ckeditor\plugins\specialchar\dialogs\lang\fr.js" />
+    <Content Include="Scripts\ckeditor\plugins\specialchar\dialogs\lang\he.js" />
+    <Content Include="Scripts\ckeditor\plugins\specialchar\dialogs\lang\hr.js" />
+    <Content Include="Scripts\ckeditor\plugins\specialchar\dialogs\lang\it.js" />
+    <Content Include="Scripts\ckeditor\plugins\specialchar\dialogs\lang\ku.js" />
+    <Content Include="Scripts\ckeditor\plugins\specialchar\dialogs\lang\lv.js" />
+    <Content Include="Scripts\ckeditor\plugins\specialchar\dialogs\lang\nb.js" />
+    <Content Include="Scripts\ckeditor\plugins\specialchar\dialogs\lang\nl.js" />
+    <Content Include="Scripts\ckeditor\plugins\specialchar\dialogs\lang\no.js" />
+    <Content Include="Scripts\ckeditor\plugins\specialchar\dialogs\lang\pt-br.js" />
+    <Content Include="Scripts\ckeditor\plugins\specialchar\dialogs\lang\sk.js" />
+    <Content Include="Scripts\ckeditor\plugins\specialchar\dialogs\lang\sv.js" />
+    <Content Include="Scripts\ckeditor\plugins\specialchar\dialogs\lang\tr.js" />
+    <Content Include="Scripts\ckeditor\plugins\specialchar\dialogs\lang\ug.js" />
+    <Content Include="Scripts\ckeditor\plugins\specialchar\dialogs\lang\zh-cn.js" />
+    <Resource Include="Scripts\ckeditor\plugins\specialchar\dialogs\lang\_translationstatus.txt" />
+    <Content Include="Scripts\ckeditor\plugins\specialchar\dialogs\specialchar.js" />
+    <Content Include="Scripts\ckeditor\plugins\tabletools\dialogs\tableCell.js" />
+    <Content Include="Scripts\ckeditor\plugins\table\dialogs\table.js" />
+    <Content Include="Scripts\ckeditor\plugins\wsc\dialogs\ciframe.html" />
+    <Content Include="Scripts\ckeditor\plugins\wsc\dialogs\tmpFrameset.html" />
+    <Content Include="Scripts\ckeditor\plugins\wsc\dialogs\wsc.css" />
+    <Content Include="Scripts\ckeditor\plugins\wsc\dialogs\wsc.js" />
+    <Content Include="Scripts\ckeditor\samples\ajax.html" />
+    <Content Include="Scripts\ckeditor\samples\api.html" />
+    <Content Include="Scripts\ckeditor\samples\appendto.html" />
+    <Resource Include="Scripts\ckeditor\samples\assets\inlineall\logo.png" />
+    <Content Include="Scripts\ckeditor\samples\assets\outputxhtml\outputxhtml.css" />
+    <Content Include="Scripts\ckeditor\samples\assets\sample.css" />
+    <Resource Include="Scripts\ckeditor\samples\assets\sample.jpg" />
+    <Content Include="Scripts\ckeditor\samples\assets\uilanguages\languages.js" />
+    <Content Include="Scripts\ckeditor\samples\divreplace.html" />
+    <Content Include="Scripts\ckeditor\samples\index.html" />
+    <Content Include="Scripts\ckeditor\samples\inlineall.html" />
+    <Content Include="Scripts\ckeditor\samples\inlinebycode.html" />
+    <Content Include="Scripts\ckeditor\samples\plugins\dialog\assets\my_dialog.js" />
+    <Content Include="Scripts\ckeditor\samples\plugins\dialog\dialog.html" />
+    <Content Include="Scripts\ckeditor\samples\plugins\enterkey\enterkey.html" />
+    <Content Include="Scripts\ckeditor\samples\plugins\htmlwriter\assets\outputforflash\outputforflash.swf" />
+    <Content Include="Scripts\ckeditor\samples\plugins\htmlwriter\assets\outputforflash\swfobject.js" />
+    <Content Include="Scripts\ckeditor\samples\plugins\htmlwriter\outputforflash.html" />
+    <Content Include="Scripts\ckeditor\samples\plugins\htmlwriter\outputhtml.html" />
+    <Content Include="Scripts\ckeditor\samples\plugins\magicline\magicline.html" />
+    <Content Include="Scripts\ckeditor\samples\plugins\toolbar\toolbar.html" />
+    <Content Include="Scripts\ckeditor\samples\plugins\wysiwygarea\fullpage.html" />
+    <Content Include="Scripts\ckeditor\samples\readonly.html" />
+    <Content Include="Scripts\ckeditor\samples\replacebyclass.html" />
+    <Content Include="Scripts\ckeditor\samples\replacebycode.html" />
+    <Content Include="Scripts\ckeditor\samples\sample.css" />
+    <Content Include="Scripts\ckeditor\samples\sample.js" />
+    <Content Include="Scripts\ckeditor\samples\tabindex.html" />
+    <Content Include="Scripts\ckeditor\samples\uicolor.html" />
+    <Content Include="Scripts\ckeditor\samples\uilanguages.html" />
+    <Content Include="Scripts\ckeditor\samples\xhtmlstyle.html" />
+    <Content Include="Scripts\ckeditor\skins\moono\dialog.css" />
+    <Content Include="Scripts\ckeditor\skins\moono\dialog_ie.css" />
+    <Content Include="Scripts\ckeditor\skins\moono\dialog_ie7.css" />
+    <Content Include="Scripts\ckeditor\skins\moono\dialog_ie8.css" />
+    <Content Include="Scripts\ckeditor\skins\moono\dialog_iequirks.css" />
+    <Content Include="Scripts\ckeditor\skins\moono\dialog_opera.css" />
+    <Content Include="Scripts\ckeditor\skins\moono\editor.css" />
+    <Content Include="Scripts\ckeditor\skins\moono\editor_gecko.css" />
+    <Content Include="Scripts\ckeditor\skins\moono\editor_ie.css" />
+    <Content Include="Scripts\ckeditor\skins\moono\editor_ie7.css" />
+    <Content Include="Scripts\ckeditor\skins\moono\editor_ie8.css" />
+    <Content Include="Scripts\ckeditor\skins\moono\editor_iequirks.css" />
+    <Resource Include="Scripts\ckeditor\skins\moono\icons.png" />
+    <Resource Include="Scripts\ckeditor\skins\moono\images\arrow.png" />
+    <Resource Include="Scripts\ckeditor\skins\moono\images\close.png" />
+    <Resource Include="Scripts\ckeditor\skins\moono\images\mini.png" />
+    <Content Include="Scripts\ckeditor\styles.js" />
+    <None Include="Scripts\ckeditor\CHANGES.md" />
+    <None Include="Scripts\ckeditor\LICENSE.md" />
+    <None Include="Scripts\ckeditor\plugins\scayt\LICENSE.md" />
+    <None Include="Scripts\ckeditor\plugins\scayt\README.md" />
+    <None Include="Scripts\ckeditor\plugins\wsc\LICENSE.md" />
+    <None Include="Scripts\ckeditor\plugins\wsc\README.md" />
+    <None Include="Scripts\ckeditor\README.md" />
+    <None Include="Scripts\ckeditor\samples\assets\posteddata.php" />
+    <None Include="Scripts\ckeditor\samples\plugins\htmlwriter\assets\outputforflash\outputforflash.fla" />
+    <None Include="Scripts\ckeditor\samples\sample_posteddata.php" />
+    <None Include="Scripts\ckeditor\skins\moono\readme.md" />
+    <Resource Include="img\play_img.png" />
+    <Resource Include="img\rec_img.png" />
+    <Resource Include="img\comment3.png" />
+    <Resource Include="img\comment2.png" />
+    <Resource Include="img\history3.png" />
+    <Resource Include="img\history4.png" />
+    <Resource Include="img\history5.png" />
+    <Content Include="Resources\Templates\rus-v2.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Resource Include="Shaders\Sepia.ps">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="img\CloseButton_active.png" />
+    <Resource Include="img\CloseButton_default.png" />
+    <Resource Include="img\Refresh_small.png" />
+    <Resource Include="img\tourist_small.png" />
+    <Resource Include="img\statement_small.png" />
+    <Resource Include="img\journal_small.png" />
+    <Resource Include="img\journal_2_small.png" />
+    <Resource Include="img\journal_3_small.png" />
+    <Resource Include="img\close_icon.png" />
+    <Resource Include="img\bonus_miles.png" />
+    <Resource Include="img\bonus_miles_2.jpg" />
+    <Resource Include="img\StarAlliance_logo.png" />
+    <Resource Include="img\Oneworld_logo.png" />
+    <Resource Include="img\Skyteam_logo.png" />
+    <Resource Include="img\Skyteam_logo_horizontal.png" />
+    <Resource Include="img\close_icon_white.png" />
+    <Resource Include="img\OneWorldLogo.png" />
+    <Resource Include="img\OneWorld.png" />
+    <Resource Include="img\Skyteam.png" />
+    <Resource Include="img\StarAlliance.png" />
+    <Resource Include="img\OneWorldTransparent.png" />
+    <Resource Include="img\SkyteamTransparent.png" />
+    <Resource Include="img\StarAllianceTransparent.png" />
+    <Resource Include="img\BlueHeader.jpg" />
+    <Resource Include="img\BlueHeader2.jpg" />
+    <Resource Include="img\BlueHeader3.jpg" />
+    <Resource Include="img\BlueHeader4.jpg" />
+    <Resource Include="img\DarkHeader.jpg" />
+    <Resource Include="img\GoldHeader.jpg" />
+    <Resource Include="img\GoldHeader2.jpg" />
+    <Resource Include="img\BlueHeader5.jpg" />
+    <Resource Include="img\Cruise5.png" />
+    <Resource Include="img\handshake.png" />
+    <Resource Include="img\handshake2.png" />
+    <Resource Include="img\manager1.png" />
+    <Resource Include="img\manager2.png" />
+    <Resource Include="img\history1.png" />
+    <Resource Include="img\history2.png" />
+    <Resource Include="img\attachment.png" />
+    <Resource Include="img\bind.png" />
+    <Resource Include="img\adding2.png" />
+    <Resource Include="img\star_active.png" />
+    <Resource Include="img\star_deactive.png" />
+    <Resource Include="img\attachment_small.png" />
+    <Resource Include="img\star_header.png" />
+    <Resource Include="img\attachment_2.png" />
+    <Resource Include="img\green_arrow.png" />
+    <Resource Include="img\red_arrow.png" />
+    <Resource Include="img\arrows.png" />
+    <Resource Include="img\new_doc.png" />
+    <Resource Include="img\save_doc.png" />
+    <Resource Include="img\accept_icon.png" />
+    <Content Include="Resources\RulesExample.html" />
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="app.config" />
+    <None Include="Firefox\omni.ja" />
+    <Content Include="NLog.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="NLog.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DataService\DataService.csproj">
+      <Project>{0f658145-c78b-433f-bee5-75eca080d943}</Project>
+      <Name>DataService</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WPF.Bootstrap\WPF.Bootstrap.csproj">
+      <Project>{734839c0-6fa8-4514-bd97-eabd72b35246}</Project>
+      <Name>WPF.Bootstrap</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\plane.jpg" />
+    <Resource Include="img\plane_for_btn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\plane_32x32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\plane_white.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\backarrowgreen.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\black_arrow_back.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\button_back.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\back_btn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Firefox\AccessibleMarshal.dll" />
+    <Content Include="Firefox\breakpadinjector.dll" />
+    <Content Include="Firefox\D3DCompiler_43.dll" />
+    <Content Include="Firefox\d3dcompiler_47.dll" />
+    <Content Include="Firefox\freebl3.dll" />
+    <Content Include="Firefox\icudt56.dll" />
+    <Content Include="Firefox\icuin56.dll" />
+    <Content Include="Firefox\icuuc56.dll" />
+    <Content Include="Firefox\lgpllibs.dll" />
+    <Content Include="Firefox\libEGL.dll" />
+    <Content Include="Firefox\libGLESv2.dll" />
+    <Content Include="Firefox\mozglue.dll" />
+    <Content Include="Firefox\msvcp120.dll" />
+    <Content Include="Firefox\msvcr120.dll" />
+    <Content Include="Firefox\nss3.dll" />
+    <Content Include="Firefox\nssckbi.dll" />
+    <Content Include="Firefox\nssdbm3.dll" />
+    <Content Include="Firefox\plugin-container.exe" />
+    <Content Include="Firefox\plugin-hang-ui.exe" />
+    <Content Include="Firefox\sandboxbroker.dll" />
+    <Content Include="Firefox\softokn3.dll" />
+    <Content Include="Firefox\xul.dll" />
+    <Resource Include="img\loupe_small.png" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\packages\Geckofx45.45.0.19.0\build\Geckofx45.targets" Condition="Exists('..\packages\Geckofx45.45.0.19.0\build\Geckofx45.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Geckofx45.45.0.19.0\build\Geckofx45.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Geckofx45.45.0.19.0\build\Geckofx45.targets'))" />
+  </Target>
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\Expression\Blend\.NETFramework\v4.5\Microsoft.Expression.Blend.WPF.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

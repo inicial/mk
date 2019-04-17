@@ -1,0 +1,41 @@
+﻿<UserControl x:Class="WpfControlLibrary.AweWebControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:awe="http://schemas.awesomium.com/winfx"
+             xmlns:core="clr-namespace:Awesomium.Core;assembly=Awesomium.Core"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <awe:WebSessionProvider x:Key="webSession" DataPath=".\Cache">
+            <core:WebPreferences 
+                CanScriptsAccessClipboard="True"
+                CanScriptsOpenWindows="True"
+                CanScriptsCloseWindows="True"
+                Databases="True"
+                Javascript="True"
+                JavascriptApplicationInfo="True"
+                JavascriptGlobalEvents="True"
+                JavascriptViewChangeSource="True"
+                JavascriptViewEvents="True"
+                JavascriptViewExecute="True"
+                JavascriptViews="True"
+                
+                ShrinkStandaloneImagesToFit="False"
+                SmoothScrolling="True" />
+        </awe:WebSessionProvider>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Margin="3,3,3,3" Grid.Row="0" Orientation="Horizontal">
+            <TextBox Width="920" Name="Url"></TextBox>
+            <Button Click="ButtonBase_OnClick" Width="80">Перейти</Button>
+        </StackPanel>
+        <WebBrowser Grid.Row="1" Name="Broser"></WebBrowser>
+        <!--<awe:WebControl WebSession="{Binding Source={StaticResource webSession}}" Name="webControl"/> -->       
+    </Grid>
+</UserControl>

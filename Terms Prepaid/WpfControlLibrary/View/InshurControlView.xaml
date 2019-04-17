@@ -1,0 +1,1775 @@
+﻿<UserControl x:Class="WpfControlLibrary.View.InshurControlView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:util="clr-namespace:WpfControlLibrary.Util"
+             mc:Ignorable="d" 
+             d:DesignWidth="1350" d:DesignHeight="700">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+
+            <!--====================================================================================================-->
+
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/WpfControlLibrary;component/Resources/Resources.xaml"/>
+                <ResourceDictionary Source="/WPF.Bootstrap;component/Themes/Default.xaml" />
+                <!--
+                <ResourceDictionary Source="pack://application:,,,/WPF.Bootstrap;component/Themes/Default.xaml" />
+                -->
+            </ResourceDictionary.MergedDictionaries>
+
+            <util:EmptyStringIfNullConverter x:Key="EmptyStringIfNullConverter" />
+
+            <!--====================================================================================================-->
+
+            <SolidColorBrush x:Key="PanelBorderBrush" Color="#ffe0e0e0" />
+            <SolidColorBrush x:Key="HeaderLineBrush" Color="#A9A9A9" />
+            <SolidColorBrush x:Key="EditBrush" Color="#E0F0FF" />
+            <SolidColorBrush x:Key="CopyBrush" Color="#D0FFE0" />
+
+            <!--====================================================================================================-->
+
+            <Style x:Key="HeaderLine" TargetType="{x:Type Line}">
+                <Setter Property="Width" Value="1"/>
+                <Setter Property="Stretch" Value="Fill"/>
+                <Setter Property="Stroke" Value="{StaticResource HeaderLineBrush}" />
+                <Setter Property="Margin" Value="0,0,0,0"/>
+                <Setter Property="Y2" Value="1"/>
+            </Style>
+
+            <Style x:Key="ServiceHeaderTextBlock" TargetType="{x:Type TextBlock}">
+                <Setter Property="Padding" Value="1,0,1,0"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
+                <Setter Property="TextAlignment" Value="Center"/>
+                <Setter Property="TextWrapping" Value="Wrap"/>
+                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="FontWeight" Value="Normal"/>
+                <Setter Property="Foreground" Value="Black"/>
+            </Style>
+
+            <Style x:Key="ListBorder" TargetType="{x:Type Border}">
+                <Setter Property="Background" Value="{StaticResource PanelBorderBrush}" />
+                <Setter Property="BorderBrush" Value="DarkGray" />
+                <Setter Property="BorderThickness" Value="1 1 1 1" />
+            </Style>
+
+            <Style x:Key="ServiceItemTextBlock" TargetType="{x:Type TextBlock}">
+                <Setter Property="Margin" Value="0,0,0,0"/>
+                <Setter Property="VerticalAlignment" Value="Top"/>
+                <Setter Property="HorizontalAlignment" Value="Center"/>
+                <Setter Property="FontFamily" Value="Arial Narrow"/>
+                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="FontWeight" Value="Normal"/>
+            </Style>
+
+            <Style x:Key="ServiceItemTextBox" TargetType="{x:Type TextBox}">
+                <Setter Property="Margin" Value="0,0,0,0"/>
+                <Setter Property="Padding" Value="0,0,0,0"/>
+                <Setter Property="BorderThickness" Value="0,0,0,0"/>
+                <Setter Property="VerticalAlignment" Value="Top"/>
+                <Setter Property="HorizontalAlignment" Value="Center"/>
+                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="FontWeight" Value="Normal"/>
+                <Setter Property="TextAlignment" Value="Center"/>
+                <Setter Property="IsReadOnly" Value="True"/>
+                <Setter Property="Visibility" Value="Collapsed"/>
+
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding Path=EditFlag, Mode=OneWay}" Value="True">
+                        <Setter Property="Background" Value="{StaticResource EditBrush}" />
+                        <Setter Property="Visibility" Value="Visible"/>
+                        <Setter Property="IsReadOnly" Value="false"/>
+                    </DataTrigger>
+                </Style.Triggers>
+
+            </Style>
+
+            <Style x:Key="ServiceItemEditTextBox" TargetType="{x:Type TextBox}">
+                <Setter Property="Margin" Value="0,0,0,0"/>
+                <Setter Property="Padding" Value="0,0,0,0"/>
+                <Setter Property="BorderThickness" Value="0,0,0,0"/>
+                <Setter Property="VerticalAlignment" Value="Top"/>
+                <Setter Property="HorizontalAlignment" Value="Center"/>
+                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="FontWeight" Value="Normal"/>
+                <Setter Property="TextAlignment" Value="Center"/>
+                <Setter Property="IsReadOnly" Value="True"/>
+                
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding Path=EditFlag, Mode=OneWay}" Value="True">
+                        <Setter Property="Background" Value="{StaticResource EditBrush}" />
+                        <Setter Property="IsReadOnly" Value="false"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding Path=CopyFlag, Mode=OneWay}" Value="True">
+                        <Setter Property="Background" Value="{StaticResource CopyBrush}" />
+                    </DataTrigger>
+                </Style.Triggers>
+                
+            </Style>
+
+            <Style x:Key="ServiceItemEditComboBox" TargetType="{x:Type ComboBox}">
+                <Setter Property="Margin" Value="6,0,1,0"/>
+                <Setter Property="Padding" Value="2,0,0,0"/>
+                <!--
+                <Setter Property="Height" Value="20"/>
+                -->
+                <Setter Property="BorderThickness" Value="0,0,0,0"/>
+                <Setter Property="VerticalAlignment" Value="Top"/>
+                <Setter Property="HorizontalAlignment" Value="Left"/>
+                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="FontWeight" Value="Normal"/>
+                <!--
+                <Setter Property="IsReadOnly" Value="True"/>
+                -->
+                <Setter Property="IsEnabled" Value="False"/>
+                <Setter Property="Visibility" Value="Collapsed"/>
+
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding Path=EditFlag, Mode=OneWay}" Value="True">
+                        <Setter Property="Background" Value="{StaticResource EditBrush}" />
+                        <!--
+                        <Setter Property="IsReadOnly" Value="False"/>
+                        -->
+                        <Setter Property="IsEnabled" Value="True"/>
+                        <Setter Property="Visibility" Value="Visible"/>
+                    </DataTrigger>
+                </Style.Triggers>
+
+            </Style>
+
+            <Style x:Key="ServiceItemEditPeriodComboBox" TargetType="{x:Type ComboBox}">
+                <Setter Property="Margin" Value="6,0,1,0"/>
+                <Setter Property="Padding" Value="2,0,0,0"/>
+                <Setter Property="BorderThickness" Value="0,0,0,0"/>
+                <Setter Property="VerticalAlignment" Value="Top"/>
+                <Setter Property="HorizontalAlignment" Value="Left"/>
+                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="FontWeight" Value="Normal"/>
+                <Setter Property="IsEnabled" Value="False"/>
+                <Setter Property="Visibility" Value="Collapsed"/>
+
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding Path=EditFlag, Mode=OneWay}" Value="True">
+                        <Setter Property="Background" Value="{StaticResource EditBrush}" />
+                        <Setter Property="IsEnabled" Value="True"/>
+                        <Setter Property="Visibility" Value="Visible"/>
+                    </DataTrigger>
+                </Style.Triggers>
+
+            </Style>
+
+            <Style x:Key="ServiceListViewStyle" TargetType="ListView">
+                <Setter Property="BorderBrush" Value="#F0F0F0"></Setter>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="ListBox">
+                            <Border BorderThickness="{TemplateBinding BorderThickness}" 
+                                    BorderBrush="{TemplateBinding BorderBrush}" 
+                                    Background="{TemplateBinding Background}">
+                                <ScrollViewer CanContentScroll="False" Padding="0" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+                                    <ItemsPresenter ClipToBounds="True"></ItemsPresenter>
+                                </ScrollViewer>
+                            </Border>
+                            <!--
+                            <ControlTemplate.Triggers>
+                                <DataTrigger Binding="{Binding Path=EdittingFlag, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Value="True">
+                                    <Setter Property="Background" Value="SkyBlue"/>
+                                </DataTrigger>
+                            </ControlTemplate.Triggers>
+                            -->
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <Style x:Key="ServiceBaseItemStyle" TargetType="ListViewItem">
+                <Setter Property="Margin" Value="0"/>
+                <Setter Property="Padding" Value="0,0"/>
+                <Setter Property="BorderBrush" Value="#D0D0D0"/>
+                <Setter Property="BorderThickness" Value="0"/>
+                <!--
+                <Setter Property="BorderThickness" Value="0,0,0,1"/>
+                <Setter Property="Height" Value="20"/>
+                <Setter Property="Cursor" Value="Hand"/>
+                -->
+
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="ListBoxItem">
+                            <Border Name="bd" 
+                                    Background="{TemplateBinding Background}" 
+                                    BorderBrush="{TemplateBinding BorderBrush}" 
+                                    BorderThickness="{TemplateBinding BorderThickness}">
+                                <ContentPresenter Name="content" Margin="{TemplateBinding Padding}"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <!--
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="bd" Property="Background" Value="#f5f5f5" />
+                                </Trigger>
+                                <Trigger Property="IsSelected" Value="True">
+                                    <Setter TargetName="bd" Property="Background" Value="#AFC8E2" />
+                                </Trigger>
+                                <Trigger Property="IsEnabled" Value="false">
+                                    <Setter TargetName="bd" Property="Background" Value="#f5f5f5"/>
+                                    <Setter Property="Foreground" Value="#777"/>
+                                    <Setter Property="Opacity" Value="0.7"/>
+                                </Trigger>
+                                -->
+                                <!--
+                                <DataTrigger Binding="{Binding Path=ColorIndex, Mode=OneWay}" Value="0">
+                                    <Setter Property="Background" Value="White"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Path=ColorIndex, Mode=OneWay}" Value="1">
+                                    <Setter Property="Background" Value="LightGray"/>
+                                </DataTrigger>
+                                -->
+                                <!--
+                                <DataTrigger Binding="{Binding Path=LockFlag, Mode=OneWay}" Value="True">
+                                    <Setter TargetName="bd" Property="Background" Value="Transparent" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Path=FilterFlag, Mode=OneWay}" Value="True">
+                                    <Setter Property="Background" Value="Pink"/>
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                </DataTrigger>
+                                -->
+                                <DataTrigger Binding="{Binding Path=EditFlag, Mode=OneWay}" Value="True">
+                                    <Setter TargetName="bd" Property="Background" Value="{StaticResource EditBrush}" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Path=CopyFlag, Mode=OneWay}" Value="True">
+                                    <Setter TargetName="bd" Property="Background" Value="{StaticResource CopyBrush}" />
+                                </DataTrigger>
+
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <Style x:Key="ServiceItemStyle" TargetType="ListViewItem" BasedOn="{StaticResource ServiceBaseItemStyle}">
+                <Setter Property="BorderThickness" Value="0,0,0,0"/>
+            </Style>
+
+            <Style x:Key="ServiceBaseBorderStyle" TargetType="Border">
+                <Setter Property="Margin" Value="0"/>
+                <Setter Property="Padding" Value="1,1"/>
+                <Setter Property="Height" Value="26"/>
+                <Setter Property="VerticalAlignment" Value="Top"/>
+                <Setter Property="BorderBrush" Value="Gray"/>
+                <Setter Property="BorderThickness" Value="0"/>
+            </Style>
+
+            <!--
+            <Style x:Key="ServiceItemBorderStyle" TargetType="Border" BasedOn="{StaticResource ServiceBaseBorderStyle}">
+                <Setter Property="BorderThickness" Value="0,0,1,1"/>
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding Path=BeginClass, Mode=OneWay}" Value="true">
+                        <Setter Property="BorderThickness" Value="0,0,1,1"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding Path=MidClass, Mode=OneWay}" Value="true">
+                        <Setter Property="BorderThickness" Value="0,0,1,1"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding Path=EndClass, Mode=OneWay}" Value="true">
+                        <Setter Property="BorderThickness" Value="0,0,1,1"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding Path=EmptyRowFlag, Mode=OneWay}" Value="true">
+                        <Setter Property="BorderThickness" Value="0,0,0,0"/>
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+            -->
+            <Style x:Key="ServiceItemBorderStyle" TargetType="Border">
+                <Setter Property="Margin" Value="0,0,0,0"/>
+                <Setter Property="Padding" Value="1,1"/>
+                <Setter Property="Height" Value="40"/>
+                <Setter Property="VerticalAlignment" Value="Top"/>
+                <Setter Property="BorderBrush" Value="Gray"/>
+                <Setter Property="BorderThickness" Value="0,0,1,1"/>
+            </Style>
+
+            <Style x:Key="ServiceDescImageStyle" TargetType="Image">
+                <Setter Property="Margin" Value="0"/>
+                <Setter Property="VerticalAlignment" Value="Top"/>
+                <Setter Property="Source" Value="/WpfControlLibrary;component/img/edit_desc.png"/>
+                <Setter Property="Cursor" Value="Hand"/>
+                <Setter Property="Width" Value="16"/>
+                <Setter Property="Height" Value="16"/>
+                <!--
+                <Setter Property="Visibility" Value="Collapsed"/>
+                -->
+                <Style.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="Source" Value="/WpfControlLibrary;component/img/edit_desc_green.png"/>
+                    </Trigger>
+                    <!--
+                    <DataTrigger Binding="{Binding Path=EditFlag, Mode=OneWay}" Value="True">
+                        <Setter Property="Visibility" Value="Visible"/>
+                    </DataTrigger>
+                    -->
+                </Style.Triggers>
+            </Style>
+
+            <Style x:Key="ServiceEditImageStyle" TargetType="Image">
+                <Setter Property="Margin" Value="0"/>
+                <Setter Property="VerticalAlignment" Value="Top"/>
+                <Setter Property="Source" Value="/WpfControlLibrary;component/img/gear.png"/>
+                <Setter Property="Cursor" Value="Hand"/>
+                <Setter Property="Width" Value="16"/>
+                <Setter Property="Height" Value="16"/>
+                <Setter Property="Visibility" Value="Visible"/>
+
+                <Style.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="Source" Value="/WpfControlLibrary;component/img/gear_red.png"/>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+
+            <Style x:Key="ServiceCopyImageStyle" TargetType="Image">
+                <Setter Property="Margin" Value="0"/>
+                <Setter Property="VerticalAlignment" Value="Top"/>
+                <Setter Property="Source" Value="/WpfControlLibrary;component/img/copy.png"/>
+                <Setter Property="Cursor" Value="Hand"/>
+                <Setter Property="Width" Value="16"/>
+                <Setter Property="Height" Value="16"/>
+                <Setter Property="Visibility" Value="Visible"/>
+
+                <Style.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="Source" Value="/WpfControlLibrary;component/img/copy_blue.png"/>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+
+            <Style x:Key="ServiceDeleteImageStyle" TargetType="Image">
+                <Setter Property="Margin" Value="0"/>
+                <Setter Property="VerticalAlignment" Value="Top"/>
+                <Setter Property="Source" Value="/WpfControlLibrary;component/img/basket.png"/>
+                <Setter Property="Cursor" Value="Hand"/>
+                <Setter Property="Width" Value="16"/>
+                <Setter Property="Height" Value="16"/>
+                <Setter Property="Visibility" Value="Visible"/>
+
+                <Style.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="Source" Value="/WpfControlLibrary;component/img/basket_red.png"/>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+
+            <Style x:Key="ServiceEditTextBlock" TargetType="{x:Type TextBlock}">
+                <Setter Property="Margin" Value="5,3,10,2"/>
+                <Setter Property="VerticalAlignment" Value="Top"/>
+                <Setter Property="TextAlignment" Value="Left"/>
+                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="FontWeight" Value="Normal"/>
+                <Setter Property="Foreground" Value="Black"/>
+            </Style>
+
+            <Style x:Key="ServiceEditTextBox" TargetType="{x:Type TextBox}">
+                <Setter Property="Padding" Value="1,1,1,1"/>
+                <Setter Property="VerticalAlignment" Value="Top"/>
+                <Setter Property="TextAlignment" Value="Left"/>
+                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="FontWeight" Value="Normal"/>
+                <Setter Property="Foreground" Value="Black"/>
+            </Style>
+
+            <Style x:Key="ServiceItemDate" TargetType="{x:Type DatePicker}">
+                <Setter Property="Margin" Value="0,0,0,0"/>
+                <Setter Property="Padding" Value="0,0,0,0"/>
+                <Setter Property="VerticalAlignment" Value="Top"/>
+                <Setter Property="FontFamily" Value="Arial Narrow"/>
+                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="FontWeight" Value="Normal"/>
+                <Setter Property="Foreground" Value="Black"/>
+                <Setter Property="BorderThickness" Value="0"/>
+                <Setter Property="IsEnabled" Value="False"/>
+                <Setter Property="Visibility" Value="Collapsed"/>
+
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding Path=EditFlag, Mode=OneWay}" Value="True">
+                        <Setter Property="Background" Value="{StaticResource EditBrush}"/>
+                        <Setter Property="IsEnabled" Value="True"/>
+                        <Setter Property="Visibility" Value="Visible"/>
+                    </DataTrigger>
+                </Style.Triggers>
+
+            </Style>
+
+            <Style x:Key="ServiceEditDate" TargetType="{x:Type DatePicker}">
+                <Setter Property="Margin" Value="0,3,0,0"/>
+                <Setter Property="Padding" Value="0,0,0,0"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
+                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="FontWeight" Value="Normal"/>
+                <Setter Property="Foreground" Value="Black"/>
+                <Setter Property="BorderThickness" Value="0"/>
+            </Style>
+
+            <!--====================================================================================================-->
+
+            <ControlTemplate x:Key="EditButton1">
+                <Button Style="{StaticResource PrimaryButton2}" Width="100" Height="25"
+                        Click="EditButton1_Click">
+                    <StackPanel Orientation="Horizontal">
+                        <!--
+                        <Image Width="16" Height="16" Source="img/plane_for_btn.png"/>
+                        -->
+                        <TextBlock Width="90" FontSize="14" FontFamily="Arial" Foreground="DarkBlue"
+                                   VerticalAlignment="Center" Margin="5,1,0,0"><Run Text="Изменить"/></TextBlock>
+                    </StackPanel>
+                </Button>
+            </ControlTemplate>
+
+            <ControlTemplate x:Key="EditButton2">
+                <Button Style="{StaticResource PrimaryButton2}" Width="100" Height="25"
+                        Click="EditButton2_Click">
+                    <StackPanel Orientation="Horizontal">
+                        <!--
+                        <Image Width="16" Height="16" Source="img/transfer_for_btn.png"/>
+                        -->
+                        <TextBlock Width="90" FontSize="14" FontFamily="Arial" Foreground="DarkBlue"
+                                   VerticalAlignment="Center" Margin="5,1,0,0"><Run Text="Скопировать"/></TextBlock>
+                    </StackPanel>
+                </Button>
+            </ControlTemplate>
+
+            <DataTemplate x:Key="_ServiceItemTemplate">
+                <Grid x:Name="Grid">
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="488"></ColumnDefinition>
+                        
+                        <ColumnDefinition Width="91"></ColumnDefinition>
+                        <ColumnDefinition Width="91"></ColumnDefinition>
+                        <!--
+                        <ColumnDefinition Width="131"></ColumnDefinition>
+                        -->
+                        <ColumnDefinition Width="50"></ColumnDefinition>
+                        <ColumnDefinition Width="40"></ColumnDefinition>
+                        <ColumnDefinition Width="40"></ColumnDefinition>
+
+                        <ColumnDefinition Width="41"></ColumnDefinition>
+                        <ColumnDefinition Width="51"></ColumnDefinition>
+
+                        <ColumnDefinition Width="65"></ColumnDefinition>
+                        <ColumnDefinition Width="65"></ColumnDefinition>
+                        <ColumnDefinition Width="100"></ColumnDefinition>
+                        <ColumnDefinition Width="90"></ColumnDefinition>
+
+                        <!--
+                        <ColumnDefinition Width="81"></ColumnDefinition>
+                        -->
+                        <ColumnDefinition Width="36"></ColumnDefinition>
+                        <ColumnDefinition Width="36"></ColumnDefinition>
+                        <ColumnDefinition Width="36"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+
+                    <!--
+                    <Border Grid.Column="0" Style="{StaticResource ServiceItemBorderStyle}">
+                        <TextBlock Margin="5,0,0,0"
+                               Style="{StaticResource ServiceItemTextBlock}" 
+                               HorizontalAlignment="Left"
+                               Text="{Binding ServiceName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    </Border>
+                    -->
+                    <Border Grid.Column="0" Style="{StaticResource ServiceItemBorderStyle}" HorizontalAlignment="Left">
+                        <TextBox Style="{StaticResource ServiceItemEditTextBox}" 
+                                 Margin="2,0,0,0"
+                                 TextAlignment="Left"
+                                 Width="483"
+                                 Text="{Binding ServiceName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    </Border>
+
+                    <Border Grid.Column="1" Style="{StaticResource ServiceItemBorderStyle}">
+                        <TextBlock Style="{StaticResource ServiceItemTextBlock}" 
+                                   Margin="2,0,0,0" 
+                                   HorizontalAlignment="Left"
+                                   Text="{Binding DateFromString}"/>
+                    </Border>
+                    <Border Grid.Column="1" Style="{StaticResource ServiceItemBorderStyle}">
+                        <DatePicker Name="DateFrom" Width="88" Margin="0,0,0,0" 
+                                Style="{StaticResource ServiceItemDate}" 
+                                FirstDayOfWeek="Monday" 
+                                SelectedDate="{Binding Path=DateFrom, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    </Border>
+                    <Border Grid.Column="2" Style="{StaticResource ServiceItemBorderStyle}">
+                        <TextBlock Style="{StaticResource ServiceItemTextBlock}" 
+                                   Margin="2,0,0,0" 
+                                   HorizontalAlignment="Left"
+                                   Text="{Binding DateTillString}"/>
+                    </Border>
+                    <Border Grid.Column="2" Style="{StaticResource ServiceItemBorderStyle}">
+                        <DatePicker Name="DateTill" Width="88" Margin="0,0,0,0" 
+                                Style="{StaticResource ServiceItemDate}" 
+                                FirstDayOfWeek="Monday" 
+                                SelectedDate="{Binding Path=DateTill, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    </Border>
+                    
+                    <!--
+                    <Border Grid.Column="1" Style="{StaticResource ServiceItemBorderStyle}">
+                        <TextBlock Style="{StaticResource ServiceItemTextBlock}" 
+                                   Margin="0,0,0,0" 
+                                   HorizontalAlignment="Center"
+                                   Text="{Binding ActPeriodString}"/>
+                    </Border>
+                    -->
+                    <!--
+                    <Border Grid.Column="2" Style="{StaticResource ServiceItemBorderStyle}">
+                        <TextBlock Style="{StaticResource ServiceItemTextBlock}" 
+                                   Margin="0,0,4,0" 
+                                   Text="{Binding NettoString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    </Border>
+                    -->
+                    <Border Grid.Column="3" Style="{StaticResource ServiceItemBorderStyle}">
+                        <TextBox Style="{StaticResource ServiceItemEditTextBox}" 
+                                 Margin="0,0,0,0"
+                                 Width="50"
+                                 Text="{Binding СostRateString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    </Border>
+                    <Border Grid.Column="4" Style="{StaticResource ServiceItemBorderStyle}">
+                        <TextBox Style="{StaticResource ServiceItemEditTextBox}" 
+                                 Margin="0,0,0,0"
+                                 Width="40"
+                                 Text="{Binding NettoString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    </Border>
+                    <!--
+                    <Border Grid.Column="3" Style="{StaticResource ServiceItemBorderStyle}">
+                        <TextBlock Style="{StaticResource ServiceItemTextBlock}" 
+                                   Margin="0,0,4,0" 
+                                   Text="{Binding BruttoString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    </Border>
+                    -->
+                    <Border Grid.Column="5" Style="{StaticResource ServiceItemBorderStyle}">
+                        <TextBox Style="{StaticResource ServiceItemEditTextBox}" 
+                                 Margin="0,0,0,0"
+                                 Width="40"
+                                 Text="{Binding BruttoString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    </Border>
+                    <!--
+                    <Border Grid.Column="4" Style="{StaticResource ServiceItemBorderStyle}">
+                        <TextBlock Style="{StaticResource ServiceItemTextBlock}" 
+                               Text="{Binding PercentString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    </Border>
+                    -->
+                    <Border Grid.Column="6" Style="{StaticResource ServiceItemBorderStyle}">
+                        <TextBox Style="{StaticResource ServiceItemEditTextBox}" 
+                                 Margin="0,0,0,0"
+                                 Width="40"
+                                 Text="{Binding PercentString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    </Border>
+                    <!--
+                    <Border Grid.Column="5" Style="{StaticResource ServiceItemBorderStyle}">
+                        <TextBlock Style="{StaticResource ServiceItemTextBlock}" 
+                               Text="{Binding SummaString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    </Border>
+                    -->
+                    <Border Grid.Column="7" Style="{StaticResource ServiceItemBorderStyle}">
+                        <TextBox Style="{StaticResource ServiceItemEditTextBox}" 
+                                 Margin="0,0,0,0"
+                                 Width="50"
+                                 Text="{Binding SummaString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    </Border>
+                    <!--
+                    <Border Grid.Column="6" Style="{StaticResource ServiceItemBorderStyle}">
+                        <TextBlock Style="{StaticResource ServiceItemTextBlock}" 
+                               Text="{Binding PricingString}"/>
+                    </Border>
+                    -->
+                    <Border Grid.Column="8" Style="{StaticResource ServiceItemBorderStyle}">
+                        <TextBox Style="{StaticResource ServiceItemEditTextBox}" 
+                                 Margin="0,0,0,0"
+                                 Width="65"
+                                 Text="{Binding PricingString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    </Border>
+                    <!--
+                    <Border Grid.Column="7" Style="{StaticResource ServiceItemBorderStyle}">
+                        <TextBlock Style="{StaticResource ServiceItemTextBlock}" 
+                               Text="{Binding PeriodString}"/>
+                    </Border>
+                    -->
+                    <Border Grid.Column="9" Style="{StaticResource ServiceItemBorderStyle}">
+                        <TextBox Style="{StaticResource ServiceItemEditTextBox}" 
+                                 Margin="0,0,0,0"
+                                 Width="65"
+                                 Text="{Binding PeriodString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    </Border>
+                    <!--
+                    <Border Grid.Column="8" Style="{StaticResource ServiceItemBorderStyle}">
+                        <TextBlock Style="{StaticResource ServiceItemTextBlock}" 
+                                   Margin="5,0,0,0" HorizontalAlignment="Left"                                   
+                                   Text="{Binding KoefString}"/>
+                    </Border>
+                    -->
+                    <Border Grid.Column="10" Style="{StaticResource ServiceItemBorderStyle}">
+                        <TextBox Style="{StaticResource ServiceItemEditTextBox}" 
+                                 Margin="0,0,0,0"
+                                 Width="100"
+                                 Text="{Binding KoefString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    </Border>
+                    <Border Grid.Column="11" Style="{StaticResource ServiceItemBorderStyle}">
+                        <TextBox Style="{StaticResource ServiceItemEditTextBox}" 
+                                 Margin="0,0,0,0"
+                                 Width="90"
+                                 Text="{Binding DescriptionString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    </Border>
+                    <!--
+                    <Border Grid.Column="11" Style="{StaticResource ServiceItemBorderStyle}">
+                        <Button Name="UpdateButton" Tag="{Binding RowNumber}" 
+                                Margin="5,1,5,1" 
+                                Style="{StaticResource SuccessButton}" 
+                                Click="UpdateButton_Click">
+                            <TextBlock Style="{StaticResource ServiceItemTextBlock}" 
+                                       Margin="0,0,0,0"
+                                       FontWeight="Normal" FontSize="12"
+                                       TextAlignment="Center"
+                                       Text="{Binding UpdateString}"/>
+                        </Button>
+                    </Border>
+                    -->
+                    <Border Grid.Column="12" Style="{StaticResource ServiceItemBorderStyle}">
+                        <Image x:Name="EditImage" Tag="{Binding RowNumber}" 
+                               Margin="3,0,4,0" 
+                               VerticalAlignment="Top" HorizontalAlignment="Center"
+                               MouseDown="EditImage_MouseDown" 
+                               MouseUp="EditImage_MouseUp"
+                               Style="{StaticResource ServiceEditImageStyle}" />
+                    </Border>
+                    <Border Grid.Column="13" Style="{StaticResource ServiceItemBorderStyle}">
+                        <Image x:Name="CopyImage" Tag="{Binding RowNumber}" 
+                               Margin="3,1,4,0" 
+                               VerticalAlignment="Top" HorizontalAlignment="Center"
+                               MouseDown="CopyImage_MouseDown" 
+                               MouseUp="CopyImage_MouseUp"
+                               Style="{StaticResource ServiceCopyImageStyle}" />
+                    </Border>
+                    <Border Grid.Column="14" Style="{StaticResource ServiceItemBorderStyle}">
+                        <Image x:Name="DeleteImage" Tag="{Binding RowNumber}" 
+                               Margin="3,1,4,0" 
+                               VerticalAlignment="Top" HorizontalAlignment="Center"
+                               MouseDown="DeleteImage_MouseDown" 
+                               MouseUp="DeleteImage_MouseUp"
+                               Style="{StaticResource ServiceDeleteImageStyle}" />
+                    </Border>
+                    <Border Grid.Column="15" Style="{StaticResource ServiceItemBorderStyle}">
+                        <TextBlock Style="{StaticResource ServiceItemTextBlock}" 
+                               Text=""/>
+                    </Border>
+
+                </Grid>
+
+                <DataTemplate.Triggers>
+                    <!--
+                    <DataTrigger Binding="{Binding Path=LockFlag, Mode=OneWay}" Value="True">
+                        <Setter TargetName="UpdateButton" Property="IsEnabled" Value="False"/>
+                    </DataTrigger>
+                    -->
+                    <!--
+                    <DataTrigger Binding="{Binding Path=FirstRowFlag, Mode=OneWay}" Value="False">
+                        <Setter TargetName="EditImage" Property="Visibility" Value="Hidden"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding Path=FirstRowFlag, Mode=OneWay}" Value="False">
+                        <Setter TargetName="AnnulateImage" Property="Visibility" Value="Hidden"/>
+                    </DataTrigger>
+                    -->
+                </DataTemplate.Triggers>
+
+            </DataTemplate>
+
+            <DataTemplate x:Key="ServiceItemTemplate">
+                <Grid x:Name="Grid">
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="408"></ColumnDefinition>
+
+                        <ColumnDefinition Width="91"></ColumnDefinition>
+                        <ColumnDefinition Width="91"></ColumnDefinition>
+
+                        <ColumnDefinition Width="50"></ColumnDefinition>
+                        <ColumnDefinition Width="65"></ColumnDefinition>
+                        <ColumnDefinition Width="40"></ColumnDefinition>
+                        <ColumnDefinition Width="40"></ColumnDefinition>
+
+                        <ColumnDefinition Width="135"></ColumnDefinition>
+                        <ColumnDefinition Width="41"></ColumnDefinition>
+                        <ColumnDefinition Width="51"></ColumnDefinition>
+
+                        <ColumnDefinition Width="65"></ColumnDefinition>
+                        <ColumnDefinition Width="100"></ColumnDefinition>
+
+                        <ColumnDefinition Width="36"></ColumnDefinition>
+                        <ColumnDefinition Width="36"></ColumnDefinition>
+                        <ColumnDefinition Width="36"></ColumnDefinition>
+                        <ColumnDefinition Width="36"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+
+                    <Border Grid.Column="0" Style="{StaticResource ServiceItemBorderStyle}" HorizontalAlignment="Left">
+                        <TextBox Style="{StaticResource ServiceItemEditTextBox}" 
+                                 Margin="2,0,0,0"
+                                 TextAlignment="Left"
+                                 Width="403" Height="35"
+                                 TextWrapping="Wrap"
+                                 AcceptsReturn="True"
+                                 HorizontalScrollBarVisibility="Disabled"
+                                 VerticalScrollBarVisibility="Disabled"
+                                 PreviewTextInput="PreviewTextInput"
+                                 Text="{Binding ServiceName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    </Border>
+
+                    <Border Grid.Column="1" Style="{StaticResource ServiceItemBorderStyle}">
+                        <TextBlock Style="{StaticResource ServiceItemTextBlock}" 
+                                   Margin="2,0,0,0" 
+                                   HorizontalAlignment="Left"
+                                   Text="{Binding DateFromString}"/>
+                    </Border>
+                    <Border Grid.Column="1" Style="{StaticResource ServiceItemBorderStyle}">
+                        <DatePicker Name="DateFrom" Width="88" Margin="0,0,0,0" 
+                                Style="{StaticResource ServiceItemDate}" 
+                                FirstDayOfWeek="Monday" 
+                                SelectedDate="{Binding Path=DateFrom, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    </Border>
+                    <Border Grid.Column="2" Style="{StaticResource ServiceItemBorderStyle}">
+                        <TextBlock Style="{StaticResource ServiceItemTextBlock}" 
+                                   Margin="2,0,0,0" 
+                                   HorizontalAlignment="Left"
+                                   Text="{Binding DateTillString}"/>
+                    </Border>
+                    <Border Grid.Column="2" Style="{StaticResource ServiceItemBorderStyle}">
+                        <DatePicker Name="DateTill" Width="88" Margin="0,0,0,0" 
+                                Style="{StaticResource ServiceItemDate}" 
+                                FirstDayOfWeek="Monday" 
+                                SelectedDate="{Binding Path=DateTill, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    </Border>
+
+                    <Border Grid.Column="3" Style="{StaticResource ServiceItemBorderStyle}">
+                        <TextBox Style="{StaticResource ServiceItemEditTextBox}" 
+                                 Margin="5,0,0,0" Width="40"
+                                 TextAlignment="Left"
+                                 Text="{Binding СostRateString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    </Border>
+                    <Border Grid.Column="3" Style="{StaticResource ServiceItemBorderStyle}">
+                            <ComboBox Name="CostRateComboBox" Style="{StaticResource ServiceItemEditComboBox}" 
+                                  Width="40" 
+                                  ItemsSource="{Binding CurrencyList}"
+                                  SelectedValue="{Binding CurrencySelectedValue}"
+                                  SelectedIndex="{Binding CurrencyIndex}"/>
+                    </Border>
+                    <Border Grid.Column="4" Style="{StaticResource ServiceItemBorderStyle}">
+                        <TextBox Style="{StaticResource ServiceItemEditTextBox}" 
+                                 Margin="5,0,0,0" 
+                                 Width="55"
+                                 TextAlignment="Left"
+                                 Text="{Binding СostPeriodString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    </Border>
+                    <Border Grid.Column="4" Style="{StaticResource ServiceItemBorderStyle}">
+                        <ComboBox Name="CostPeriodComboBox" Style="{StaticResource ServiceItemEditPeriodComboBox}" 
+                                  Width="55" 
+                                  ItemsSource="{Binding PeriodList}"
+                                  SelectedValue="{Binding PeriodSelectedValue}"
+                                  SelectedIndex="{Binding PeriodIndex}"/>
+                    </Border>
+                    <Border Grid.Column="5" Style="{StaticResource ServiceItemBorderStyle}">
+                        <TextBox Style="{StaticResource ServiceItemEditTextBox}" 
+                                 Margin="0,0,0,0"
+                                 Width="40"
+                                 Text="{Binding NettoString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    </Border>
+                    <Border Grid.Column="6" Style="{StaticResource ServiceItemBorderStyle}">
+                        <TextBox Style="{StaticResource ServiceItemEditTextBox}" 
+                                 Margin="0,0,0,0"
+                                 Width="40"
+                                 Text="{Binding BruttoString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    </Border>
+                    <Border Grid.Column="7" Style="{StaticResource ServiceItemBorderStyle}">
+                        <TextBox Style="{StaticResource ServiceItemEditTextBox}" 
+                                 Margin="5,0,0,0"
+                                 Width="125"
+                                 TextAlignment="Left"
+                                 Text="{Binding PartnerString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    </Border>
+                    <Border Grid.Column="7" Style="{StaticResource ServiceItemBorderStyle}">
+                        <ComboBox Name="CostPartnerComboBox" Style="{StaticResource ServiceItemEditPeriodComboBox}" 
+                                  Width="125" 
+                                  ItemsSource="{Binding PartnerList}"
+                                  SelectedValue="{Binding PartnerSelectedValue}"
+                                  SelectedIndex="{Binding PartnerIndex}"/>
+                    </Border>
+                    <Border Grid.Column="8" Style="{StaticResource ServiceItemBorderStyle}">
+                        <TextBox Style="{StaticResource ServiceItemEditTextBox}" 
+                                 Margin="0,0,0,0"
+                                 Width="40"
+                                 IsReadOnly="True"
+                                 Text="{Binding PercentString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    </Border>
+                    <Border Grid.Column="9" Style="{StaticResource ServiceItemBorderStyle}">
+                        <TextBox Style="{StaticResource ServiceItemEditTextBox}" 
+                                 Margin="0,0,0,0"
+                                 Width="50"
+                                 IsReadOnly="True"
+                                 Text="{Binding SummaString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    </Border>
+                    <Border Grid.Column="10" Style="{StaticResource ServiceItemBorderStyle}">
+                        <TextBox Style="{StaticResource ServiceItemEditTextBox}" 
+                                 Margin="0,0,0,0"
+                                 Width="65"
+                                 Text="{Binding PricingString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    </Border>
+                    <Border Grid.Column="11" Style="{StaticResource ServiceItemBorderStyle}">
+                        <!--
+                        <TextBox Style="{StaticResource ServiceItemEditTextBox}" 
+                                 Margin="0,0,0,0"
+                                 Width="100"
+                                 Text="{Binding KoefString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        -->
+                    </Border>
+                    <Border Grid.Column="12" Style="{StaticResource ServiceItemBorderStyle}">
+                        <Image x:Name="DescImage" Tag="{Binding RowNumber}" 
+                               Margin="3,1,4,0" 
+                               VerticalAlignment="Center" HorizontalAlignment="Center"
+                               MouseDown="DescImage_MouseDown" 
+                               MouseUp="DescImage_MouseUp"
+                               Style="{StaticResource ServiceDescImageStyle}" />
+                    </Border>
+                    <Border Grid.Column="13" Style="{StaticResource ServiceItemBorderStyle}">
+                        <Image x:Name="EditImage" Tag="{Binding RowNumber}" 
+                               Margin="3,0,4,0" 
+                               VerticalAlignment="Center" HorizontalAlignment="Center"
+                               MouseDown="EditImage_MouseDown" 
+                               MouseUp="EditImage_MouseUp"
+                               Style="{StaticResource ServiceEditImageStyle}" />
+                    </Border>
+                    <Border Grid.Column="14" Style="{StaticResource ServiceItemBorderStyle}">
+                        <Image x:Name="CopyImage" Tag="{Binding RowNumber}" 
+                               Margin="3,1,4,0" 
+                               VerticalAlignment="Center" HorizontalAlignment="Center"
+                               MouseDown="CopyImage_MouseDown" 
+                               MouseUp="CopyImage_MouseUp"
+                               Style="{StaticResource ServiceCopyImageStyle}" />
+                    </Border>
+                    <Border Grid.Column="15" Style="{StaticResource ServiceItemBorderStyle}">
+                        <Image x:Name="DeleteImage" Tag="{Binding RowNumber}" 
+                               Margin="3,1,4,0" 
+                               VerticalAlignment="Center" HorizontalAlignment="Center"
+                               MouseDown="DeleteImage_MouseDown" 
+                               MouseUp="DeleteImage_MouseUp"
+                               Style="{StaticResource ServiceDeleteImageStyle}" />
+                    </Border>
+                    <Border Grid.Column="16" Style="{StaticResource ServiceItemBorderStyle}">
+                        <TextBlock Style="{StaticResource ServiceItemTextBlock}" 
+                               Text=""/>
+                    </Border>
+
+                </Grid>
+
+            </DataTemplate>
+
+            <!--====================================================================================================-->
+
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <!--####################################################################################################-->
+
+    <Grid Name="WindowGrid">
+
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>            <!-- Label -->
+            <RowDefinition Height="1"/>             <!-- Separator -->
+            <RowDefinition Height="70"/>            <!-- Column headers -->
+            <RowDefinition Height="0"/>             <!-- Separator -->
+            <RowDefinition Height="*"/>             <!-- Service list -->
+            <RowDefinition Height="0"/>             <!-- Separator -->
+            <RowDefinition Height="0"/>           <!-- Control -->
+            <RowDefinition Height="0"/>             <!-- Separator -->
+            <RowDefinition Height="0"/>            <!-- Bottom -->
+            <RowDefinition Height="50"/>            <!-- Bottom -->
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />            
+        </Grid.ColumnDefinitions>
+
+
+        <!--....................................................................................................-->
+        <Grid Name="TitleGrid" Grid.Row="0" Grid.Column="0">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="310" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="200" />
+                <ColumnDefinition Width="110" />
+            </Grid.ColumnDefinitions>
+
+            <!--
+            <StackPanel Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <ToggleButton Name="GearButton" 
+                                  Height="16" Width="23" Margin="0,0,0,0" 
+                                  Style="{StaticResource InlineToggleButton}" 
+                                  Unchecked="GearButton_Unchecked" Checked="GearButton_Checked">
+                    <Image x:Name="EditImage" Tag="{Binding RowNumber}" Margin="3,0,4,0" 
+                               VerticalAlignment="Center" HorizontalAlignment="Center"
+                               Style="{StaticResource ServiceEditImageStyle}" />
+                </ToggleButton>
+                <Popup AllowsTransparency="True" PopupAnimation="Slide" StaysOpen="False" 
+                           x:Name="GearPopup" PlacementTarget="{Binding ElementName=GearButton}" Margin="0,0,0,0">
+                    <StackPanel HorizontalAlignment="Left" Orientation="Vertical">
+                        <Control Template="{StaticResource EditButton1}" x:Name="MenuItemEdit" />
+                        <Control Template="{StaticResource EditButton2}" x:Name="MenuItemCopy" />
+                    </StackPanel>
+                </Popup>
+            </StackPanel>
+            -->
+
+            <Border Name="ServiceListLabelBorder" Grid.Row="0" Grid.Column="1">
+                <TextBlock Name="tblServiceListLabel" 
+                       Margin="10,0,10,0" 
+                       VerticalAlignment="Center" 
+                           HorizontalAlignment="Center"
+                       FontSize="20" FontWeight="Normal"
+                       Text="СТРАХОВАНИЕ.  БАЗА  ДАННЫХ  ЦЕН." />
+            </Border>
+            <!--
+            <Border Name="BackButtonBorder" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Right">
+                <Button Height="24" Width="80" Margin="0,0,5,0"
+                            FontFamily="Arial" FontWeight="Bold" 
+                            Style="{StaticResource InfoButton}" Click="CreateButton_Click">
+                    <TextBlock Margin="0,0,0,0" VerticalAlignment="Center" TextAlignment="Center"
+                               FontSize="14" FontFamily="Arial" FontWeight="Normal" 
+                               Text="Создать"/>
+                </Button>
+            </Border>
+            -->
+            <!--
+            <Border Name="BackButtonBorder" Grid.Row="0" Grid.Column="3" HorizontalAlignment="Right">
+                <Button Height="24" Width="100" Margin="0,0,10,0"
+                            FontFamily="Arial" FontWeight="Bold" 
+                            Style="{StaticResource SuccessButton}" Click="BackButton_Click">
+                    <StackPanel Orientation="Horizontal" >
+                        <Image Margin="0,0,0,0" Width="12" Height="12" Source="..\img\back_btn.png" />
+                        <TextBlock Margin="13,0,0,0" FontSize="14" FontFamily="Arial" FontWeight="Normal" VerticalAlignment="Center"><Run Text="Назад"/></TextBlock>
+                    </StackPanel>
+                </Button>
+            </Border>
+            -->
+
+        </Grid>
+
+        <!--====================================================================================================-->
+
+        <Line Grid.Row="1" Grid.Column="0" Height="1" X2="1" Stretch="Fill" Margin="0,0,0,0" Stroke="{StaticResource HeaderLineBrush}"/>
+
+        <Border Name="ServiceListHeaderBorder" Grid.Row="2" Grid.Column="0" Background="#E0E0E0" >
+            <StackPanel Orientation="Horizontal">
+                <!--
+                <TextBlock Name="tblHeaderName2" Grid.Row="0" Grid.Column="0" 
+                           Style="{StaticResource ServiceHeaderTextBlock}" 
+                           Width="399" Margin="10,0,0,0" TextAlignment="Left" 
+                           Text="Описание  страховки" />
+                -->
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="36"/>
+                        <RowDefinition Height="1"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="409" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Name="tblHeaderName" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3"
+                               Style="{StaticResource ServiceHeaderTextBlock}" 
+                               Width="170" Margin="10,15,0,0" 
+                               HorizontalAlignment="Left"
+                               TextAlignment="Left" 
+                               Cursor="Hand"
+                               TextDecorations="Underline"
+                               Foreground="DodgerBlue"
+                               MouseUp="tblHeaderName_MouseUp"
+                               Text="{Binding SortNameTitle}" />
+                    <!--
+                    <Line Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Height="1" X2="1" 
+                          Stretch="Fill" Margin="0,0,0,0" Stroke="{StaticResource HeaderLineBrush}"/>
+                    -->
+                    <TextBlock Name="tblHeaderName_2" Grid.Row="2" Grid.Column="0" 
+                               Style="{StaticResource ServiceHeaderTextBlock}" 
+                               Width="300" Margin="10,0,0,10" 
+                               HorizontalAlignment="Left"
+                               TextAlignment="Left" 
+                               FontSize="12"
+                               Text="Название услуги (60)  /  параметр (40)" />
+                </Grid>                
+                <Line Style="{StaticResource HeaderLine}"/>
+                <!--
+                <TextBlock Name="tblHeaderPax" 
+                           Style="{StaticResource ServiceHeaderTextBlock}" 
+                           Width="45"
+                           Height="25"
+                           Padding="1,3,1,0"
+                           VerticalAlignment="Center" 
+                           HorizontalAlignment="Center"
+                           Text="Pax" >
+                    <TextBlock.LayoutTransform>
+                        <TransformGroup>
+                            <RotateTransform Angle="90"/>
+                            <ScaleTransform ScaleX="-1" ScaleY="-1"/>
+                        </TransformGroup>
+                    </TextBlock.LayoutTransform>
+                </TextBlock>
+                <Line Style="{StaticResource HeaderLine}"/>
+                 -->
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="36"/>
+                        <RowDefinition Height="1"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="90" />
+                        <ColumnDefinition Width="1" />
+                        <ColumnDefinition Width="90" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Name="tblHeaderActPeriod" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3"
+                               Style="{StaticResource ServiceHeaderTextBlock}" 
+                               Width="150"
+                               Text="Период  действия" />
+                    <Line Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Height="1" X2="1" 
+                          Stretch="Fill" Margin="0,0,0,0" Stroke="{StaticResource HeaderLineBrush}"/>
+                    <TextBlock Name="tblHeaderDateFrom" Grid.Row="2" Grid.Column="0" 
+                               Style="{StaticResource ServiceHeaderTextBlock}" 
+                               Width="80"
+                               Margin="0,-2,0,0"
+                               Cursor="Hand"
+                               TextDecorations="Underline"
+                               Foreground="DodgerBlue"
+                               MouseUp="tblHeaderDateFrom_MouseUp"
+                               Text="{Binding SortDateFromTitle}" />
+                    <Line Grid.Row="2" Grid.Column="1" Style="{StaticResource HeaderLine}"/>
+                    <TextBlock Name="tblHeaderDateTill" Grid.Row="2" Grid.Column="2" 
+                               Style="{StaticResource ServiceHeaderTextBlock}" 
+                               Width="80"
+                               Margin="0,-2,0,0"
+                               Cursor="Hand"
+                               TextDecorations="Underline"
+                               Foreground="DodgerBlue"
+                               MouseUp="tblHeaderDateTill_MouseUp"
+                               Text="{Binding SortDateTillTitle}" />
+                </Grid>
+                <!--
+                <TextBlock Name="tblHeaderActPeriod" 
+                           Style="{StaticResource ServiceHeaderTextBlock}" 
+                           Width="130" TextAlignment="Center" 
+                           Text="Период  действия" />
+                -->
+                <Line Style="{StaticResource HeaderLine}"/>
+                <TextBlock Name="tblHeaderCurrency" 
+                           Style="{StaticResource ServiceHeaderTextBlock}" 
+                           Width="60"
+                           Height="49"
+                           Padding="0,15,0,0"
+                           VerticalAlignment="Center" 
+                           HorizontalAlignment="Center"
+                           Cursor="Hand"
+                           TextDecorations="Underline"
+                           Foreground="DodgerBlue"
+                           MouseUp="tblHeaderCurrency_MouseUp"
+                           Text="{Binding SortCurrencyTitle}">
+                    <TextBlock.LayoutTransform>
+                        <TransformGroup>
+                            <RotateTransform Angle="90"/>
+                            <ScaleTransform ScaleX="-1" ScaleY="-1"/>
+                        </TransformGroup>
+                    </TextBlock.LayoutTransform>
+                </TextBlock>
+                <Line Style="{StaticResource HeaderLine}"/>
+                <TextBlock Name="tblHeaderPricingPeriod" 
+                           Style="{StaticResource ServiceHeaderTextBlock}" 
+                           Width="64"
+                           Text="Цена  за  период/день" />
+                <Line Style="{StaticResource HeaderLine}"/>
+                <TextBlock Name="tblHeaderNetto" 
+                           Style="{StaticResource ServiceHeaderTextBlock}" 
+                           Width="60"
+                           Height="39"
+                           Padding="0,10,0,0"
+                           VerticalAlignment="Center" 
+                           HorizontalAlignment="Center"
+                           Text="Нетто" >
+                    <TextBlock.LayoutTransform>
+                        <TransformGroup>
+                            <RotateTransform Angle="90"/>
+                            <ScaleTransform ScaleX="-1" ScaleY="-1"/>
+                        </TransformGroup>
+                    </TextBlock.LayoutTransform>
+                </TextBlock>
+                <Line Style="{StaticResource HeaderLine}"/>
+                <TextBlock Name="tblHeaderBrutto" 
+                           Style="{StaticResource ServiceHeaderTextBlock}" 
+                           Width="60"
+                           Height="39"
+                           Padding="0,10,0,0"
+                           VerticalAlignment="Center" 
+                           HorizontalAlignment="Center"
+                           Text="Брутто" >
+                    <TextBlock.LayoutTransform>
+                        <TransformGroup>
+                            <RotateTransform Angle="90"/>
+                            <ScaleTransform ScaleX="-1" ScaleY="-1"/>
+                        </TransformGroup>
+                    </TextBlock.LayoutTransform>
+                </TextBlock>
+                <Line Style="{StaticResource HeaderLine}"/>
+                <TextBlock Name="tblHeaderPartner" 
+                           Style="{StaticResource ServiceHeaderTextBlock}" 
+                           Width="134" TextAlignment="Center" 
+                           Text="Партнер" />
+                <Line Style="{StaticResource HeaderLine}"/>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="18"/>
+                        <RowDefinition Height="18"/>
+                        <RowDefinition Height="1"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="40" />
+                        <ColumnDefinition Width="1" />
+                        <ColumnDefinition Width="50" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Name="tblHeaderCommision" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3"
+                               Style="{StaticResource ServiceHeaderTextBlock}" 
+                               Width="90"
+                               Text="Комиссия" />
+                    <TextBlock Name="tblHeaderFrom" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3"
+                               Style="{StaticResource ServiceHeaderTextBlock}" 
+                               Width="90"
+                               Margin="0,-4,0,0"
+                           Text="от  партнера" />
+                    <Line Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Height="1" X2="1" 
+                          Stretch="Fill" Margin="0,0,0,0" Stroke="{StaticResource HeaderLineBrush}"/>
+                    <TextBlock Name="tblHeaderPercent" Grid.Row="3" Grid.Column="0" 
+                               Style="{StaticResource ServiceHeaderTextBlock}" 
+                               Width="40"
+                               Margin="0,-2,0,0"
+                               Text="%" />
+                    <Line Grid.Row="3" Grid.Column="1" Style="{StaticResource HeaderLine}"/>
+                    <TextBlock Name="tblHeaderSumma" Grid.Row="3" Grid.Column="2" 
+                               Style="{StaticResource ServiceHeaderTextBlock}" 
+                               Width="50"
+                               Margin="0,-2,0,0"
+                               Text="сумма" />
+                </Grid>
+                <Line Style="{StaticResource HeaderLine}"/>
+                <TextBlock Name="tblHeaderPricing" 
+                           Style="{StaticResource ServiceHeaderTextBlock}" 
+                           Width="64"
+                           Text="Наша наценка" />
+                <Line Style="{StaticResource HeaderLine}"/>
+                <TextBlock Name="tblHeaderStatus" 
+                           Style="{StaticResource ServiceHeaderTextBlock}" 
+                           Width="99" TextAlignment="Center" 
+                           Text="Применение коэф-тов" />
+                <Line Style="{StaticResource HeaderLine}"/>
+                <!--
+                <TextBlock Name="tblHeaderState" 
+                           Style="{StaticResource ServiceHeaderTextBlock}" 
+                           Width="80"
+                           Padding="1,0,1,0"
+                           TextAlignment="Center"
+                           Text="Изменить   (обновить)" />
+                <Line Style="{StaticResource HeaderLine}"/>
+                -->
+                <TextBlock Name="tblHeaderDescription" 
+                           Style="{StaticResource ServiceHeaderTextBlock}" 
+                           Width="70"
+                           Height="35"
+                           Padding="0,8,0,0"
+                           VerticalAlignment="Center" 
+                           HorizontalAlignment="Center"
+                           Text="Описание" >
+                    <TextBlock.LayoutTransform>
+                        <TransformGroup>
+                            <RotateTransform Angle="90"/>
+                            <ScaleTransform ScaleX="-1" ScaleY="-1"/>
+                        </TransformGroup>
+                    </TextBlock.LayoutTransform>
+                </TextBlock>
+                <Line Style="{StaticResource HeaderLine}"/>
+                <TextBlock Name="tblHeaderEdit" 
+                           Style="{StaticResource ServiceHeaderTextBlock}" 
+                           Width="65"
+                           Height="35"
+                           Padding="0,8,0,0"
+                           VerticalAlignment="Center" 
+                           HorizontalAlignment="Center"
+                           Text="Изменить" >
+                    <TextBlock.LayoutTransform>
+                        <TransformGroup>
+                            <RotateTransform Angle="90"/>
+                            <ScaleTransform ScaleX="-1" ScaleY="-1"/>
+                        </TransformGroup>
+                    </TextBlock.LayoutTransform>
+                </TextBlock>
+                <Line Style="{StaticResource HeaderLine}"/>
+                <TextBlock Name="tblHeaderCopy" 
+                           Style="{StaticResource ServiceHeaderTextBlock}" 
+                           Width="65"
+                           Height="35"
+                           Padding="0,8,0,0"
+                           VerticalAlignment="Center" 
+                           HorizontalAlignment="Center"
+                           Text="Скопир." >
+                    <TextBlock.LayoutTransform>
+                        <TransformGroup>
+                            <RotateTransform Angle="90"/>
+                            <ScaleTransform ScaleX="-1" ScaleY="-1"/>
+                        </TransformGroup>
+                    </TextBlock.LayoutTransform>
+                </TextBlock>
+                <Line Style="{StaticResource HeaderLine}"/>
+                <TextBlock Name="tblHeaderAnnul" 
+                           Style="{StaticResource ServiceHeaderTextBlock}" 
+                           Width="65"
+                           Height="35"
+                           Padding="0,8,0,0"
+                           VerticalAlignment="Center" 
+                           HorizontalAlignment="Center"
+                           Text="Удалить" >
+                    <TextBlock.LayoutTransform>
+                        <TransformGroup>
+                            <RotateTransform Angle="90"/>
+                            <ScaleTransform ScaleX="-1" ScaleY="-1"/>
+                        </TransformGroup>
+                    </TextBlock.LayoutTransform>
+                </TextBlock>
+                <Line Style="{StaticResource HeaderLine}"/>
+            </StackPanel>
+        </Border>
+
+        <!--....................................................................................................-->
+        <Border Name="ServiceListBorder" Grid.Row="4" Grid.Column="0" Style="{StaticResource ListBorder}">
+
+            <ListView Name="ServiceListView" MinHeight="100"
+                      SelectionChanged="ServiceList_SelectionChanged"
+                      Style="{StaticResource ServiceListViewStyle}" 
+                      ItemContainerStyle="{StaticResource ServiceItemStyle}"
+                      ItemTemplate="{StaticResource ServiceItemTemplate}"
+                      ItemsSource="{Binding Path=InsControlServiceList, UpdateSourceTrigger=PropertyChanged}">
+
+                <ListView.Resources>
+                    <Style TargetType="GridViewColumnHeader">
+                        <Setter Property="Visibility" Value="Collapsed" />
+                    </Style>
+                </ListView.Resources>
+
+            </ListView>
+
+        </Border>
+
+        <!--====================================================================================================-->
+        
+        <Grid Name="EditorPanel" Grid.Row="6">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="10"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="10"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="10"/>
+                <ColumnDefinition Width="400"/>
+                <ColumnDefinition Width="20"/>
+                <ColumnDefinition Width="370"/>
+                <ColumnDefinition Width="20"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="20"/>
+                <ColumnDefinition Width="130"/>
+                <ColumnDefinition Width="20"/>
+            </Grid.ColumnDefinitions>
+
+            <!--....................................................................................................-->
+            <Grid Name="DecriptionPanel" Grid.Row="1" Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="5"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="5"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="5"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="5"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <!--....................................................................................................-->
+                <TextBlock Grid.Row="0" Grid.Column="0" 
+                           Style="{StaticResource ServiceEditTextBlock}" 
+                           Text="Описание  страховки"/>
+                <TextBox Grid.Row="1" Grid.Column="0" 
+                         Style="{StaticResource ServiceEditTextBox}" 
+                         Text="{Binding EditService.ServiceName}"/>
+
+                <!--....................................................................................................-->
+                <StackPanel Grid.Row="3" Grid.Column="0" 
+                            Orientation="Horizontal" HorizontalAlignment="Left">
+                    <TextBlock Width="170"
+                               Style="{StaticResource ServiceEditTextBlock}" 
+                               Text="Тип  страхования  (риски)"/>
+                    <TextBox Width="215" 
+                             Style="{StaticResource ServiceEditTextBox}" 
+                             Text="..."/>
+                </StackPanel>
+
+                <!--....................................................................................................-->
+                <TextBlock Grid.Row="5" Grid.Column="0" 
+                           Style="{StaticResource ServiceEditTextBlock}" 
+                           Text="Вариант  страхования  (территория, сумма покрытия)"/>
+                <TextBox Grid.Row="6" Grid.Column="0" 
+                         Style="{StaticResource ServiceEditTextBox}" 
+                         Text="..."/>
+
+                <!--....................................................................................................-->
+                <StackPanel Grid.Row="8" Grid.Column="0" 
+                            Orientation="Horizontal" HorizontalAlignment="Left">
+                    <TextBlock Style="{StaticResource ServiceEditTextBlock}" 
+                               Text="Период действия:     с"/>
+                    <!--
+                    <TextBox Style="{StaticResource ServiceEditTextBox}"
+                             Width="75" Margin="0,2,0,0" 
+                             Text="{Binding Path=EditService.DateFromString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    <DatePicker Name="DateFrom" Width="22" 
+                                Style="{StaticResource ServiceEditDate}" 
+                                FirstDayOfWeek="Monday" 
+                                Text="date..."
+                                SelectedDate="{Binding Path=EditService.DateFrom, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    -->
+                    <!--
+                                Text="{Binding Path=EditService.DateFromString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                SelectedDate="{Binding Path=EditService.DateFrom, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    -->
+                    <DatePicker Name="DateFrom" Width="100" 
+                                Style="{StaticResource ServiceEditDate}" 
+                                FirstDayOfWeek="Monday" 
+                                SelectedDate="{Binding Path=EditService.DateFrom, Mode=TwoWay}"/>
+                    <TextBlock 
+                           Style="{StaticResource ServiceEditTextBlock}" 
+                           Text="   по"/>
+                    <DatePicker Name="DateTill" Width="100" 
+                                Style="{StaticResource ServiceEditDate}" 
+                                FirstDayOfWeek="Monday"
+                                SelectedDate="{Binding Path=EditService.DateTill, Mode=TwoWay}"/>
+                </StackPanel>
+
+                <!--....................................................................................................-->
+                <TextBlock Grid.Row="10" Grid.Column="0" 
+                           Style="{StaticResource ServiceEditTextBlock}" 
+                           Text="Краткое  описание  для  сайта"/>
+                <TextBox Grid.Row="11" Grid.Column="0" 
+                         Height="90"
+                         Style="{StaticResource ServiceEditTextBox}" 
+                         Text="..."/>
+
+                <!--....................................................................................................-->
+
+            </Grid>
+            <!--....................................................................................................-->
+            <Grid Name="PlanPanel" Grid.Row="1" Grid.Column="3">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="21"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <!--....................................................................................................-->
+                <Grid Name="EditParamsPanel" Grid.Row="2" Grid.Column="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="170"/>
+                        <ColumnDefinition Width="20"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!--....................................................................................................-->
+                    <Grid Name="ParamPanel" Grid.Row="0" Grid.Column="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="0"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="5"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="5"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="5"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="5"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="5"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="5"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="70"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <!--....................................................................................................-->
+                        <Border Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Top">
+                            <TextBlock
+                               Style="{StaticResource ServiceEditTextBlock}" 
+                               Text="Цена за"/>
+                        </Border>
+                        <Border Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top">
+                            <TextBox Width="100" 
+                             Style="{StaticResource ServiceEditTextBox}" 
+                             Text="..."/>
+                        </Border>
+                        <!--....................................................................................................-->
+                        <Border Grid.Row="3" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Top">
+                            <TextBlock
+                               Style="{StaticResource ServiceEditTextBlock}" 
+                               Text="Нетто"/>
+                        </Border>
+                        <Border Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top">
+                            <TextBox Width="50" 
+                             Style="{StaticResource ServiceEditTextBox}" 
+                             Text="..."/>
+                        </Border>
+                        <!--....................................................................................................-->
+                        <Border Grid.Row="5" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Top">
+                            <TextBlock
+                               Style="{StaticResource ServiceEditTextBlock}" 
+                               Text="Брутто"/>
+                        </Border>
+                        <Border Grid.Row="5" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top">
+                            <TextBox Width="50" 
+                             Style="{StaticResource ServiceEditTextBox}" 
+                             Text="..."/>
+                        </Border>
+                        <!--....................................................................................................-->
+                        <Border Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Left" VerticalAlignment="Top">
+                            <TextBlock
+                               Style="{StaticResource ServiceEditTextBlock}" 
+                               Text="Комиссия  от  партнера"/>
+                        </Border>
+                        <Border Grid.Row="8" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Top">
+                            <TextBlock
+                               Style="{StaticResource ServiceEditTextBlock}" 
+                               Text="процент"/>
+                        </Border>
+                        <Border Grid.Row="8" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top">
+                            <TextBox Width="50" 
+                             Style="{StaticResource ServiceEditTextBox}" 
+                             Text="..."/>
+                        </Border>
+                        <Border Grid.Row="10" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Top">
+                            <TextBlock 
+                               Style="{StaticResource ServiceEditTextBlock}" 
+                               Text="сумма"/>
+                        </Border>
+                        <Border Grid.Row="10" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top">
+                            <TextBox Width="50" 
+                             Style="{StaticResource ServiceEditTextBox}" 
+                             Text="..."/>
+                        </Border>
+                        <!--....................................................................................................-->
+                        <Border Grid.Row="12" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Top">
+                            <TextBlock 
+                               Style="{StaticResource ServiceEditTextBlock}" 
+                               Text="Наценка"/>
+                        </Border>
+                        <Border Grid.Row="12" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top">
+                            <TextBox Width="50" 
+                             Style="{StaticResource ServiceEditTextBox}" 
+                             Text="..."/>
+                        </Border>
+                        <!--....................................................................................................-->
+
+                    </Grid>
+                    <!--....................................................................................................-->
+                    <Grid Name="KoefPanel" Grid.Row="0" Grid.Column="2">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="22"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="1"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="1"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="1"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="1"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="1"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="1"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="90"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <!--....................................................................................................-->
+                        <Border Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Left" VerticalAlignment="Top">
+                            <TextBlock Grid.Row="0" Grid.Column="0" 
+                               Style="{StaticResource ServiceEditTextBlock}" 
+                               Text="Коэффициенты"/>
+                        </Border>
+                        <!--....................................................................................................-->
+                        <Border Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Left" VerticalAlignment="Top">
+                            <TextBlock Grid.Row="0" Grid.Column="0" 
+                               Style="{StaticResource ServiceEditTextBlock}" 
+                               Text="Возраст  от  0  до  3"/>
+                        </Border>
+                        <!--....................................................................................................-->
+                        <Border Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Left" VerticalAlignment="Top">
+                            <TextBlock Grid.Row="0" Grid.Column="0" 
+                               Style="{StaticResource ServiceEditTextBlock}" 
+                               Text="Возраст  от  70  до  74"/>
+                        </Border>
+                        <!--....................................................................................................-->
+                        <Border Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Left" VerticalAlignment="Top">
+                            <TextBlock Grid.Row="0" Grid.Column="0" 
+                               Style="{StaticResource ServiceEditTextBlock}" 
+                               Text="Возраст  от  75  до  79"/>
+                        </Border>
+                        <!--....................................................................................................-->
+                        <Border Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Left" VerticalAlignment="Top">
+                            <TextBlock Grid.Row="0" Grid.Column="0" 
+                               Style="{StaticResource ServiceEditTextBlock}" 
+                               Text="Возраст  от  80"/>
+                        </Border>
+                        <!--....................................................................................................-->
+                        <Border Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Left" VerticalAlignment="Top">
+                            <TextBlock Grid.Row="0" Grid.Column="0" 
+                               Style="{StaticResource ServiceEditTextBlock}" 
+                               Text="Спорт"/>
+                        </Border>
+                        <!--....................................................................................................-->
+                        <Border Grid.Row="11" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Left" VerticalAlignment="Top">
+                            <TextBlock Grid.Row="0" Grid.Column="0" 
+                               Style="{StaticResource ServiceEditTextBlock}" 
+                               Text="Спорт  экстремальный"/>
+                        </Border>
+                        <!--....................................................................................................-->
+                        <Border Grid.Row="13" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Left" VerticalAlignment="Top">
+                            <TextBlock Grid.Row="0" Grid.Column="0" 
+                               Style="{StaticResource ServiceEditTextBlock}" 
+                               Text="Проф. обязанности"/>
+                        </Border>
+                        <!--....................................................................................................-->
+
+                    </Grid>
+                    <!--....................................................................................................-->
+
+                </Grid>
+                <!--....................................................................................................-->
+
+            </Grid>
+
+            <!--....................................................................................................-->
+            <StackPanel Grid.Row="1" Grid.Column="7" HorizontalAlignment="Center">
+                <Button Name="AddButton" 
+                        Command="{Binding AddCommand}" 
+                        Width="130" Height="27" 
+                        Margin="0,20,0,5" 
+                        VerticalAlignment="Center" 
+                        Style="{StaticResource InfoButton}">
+
+                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" 
+                                       Margin="10,0,10,1"
+                                       FontSize="14" FontWeight="Normal"
+                                       Text="Добавить"/>
+                </Button>
+                <Button Name="EditButton" 
+                        Command="{Binding EditCommand}" 
+                        Width="130" Height="27" 
+                        Margin="0,5,0,5" 
+                        VerticalAlignment="Center" 
+                        Style="{StaticResource InfoButton}">
+
+                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" 
+                                       Margin="10,0,10,1"
+                                       FontSize="14" FontWeight="Normal"
+                                       Text="Изменить"/>
+                </Button>
+                <Button Name="DeleteButton" 
+                        Command="{Binding DeleteCommand}" 
+                        Width="130" Height="27" 
+                        Margin="0,5,0,5" 
+                        VerticalAlignment="Center" 
+                        Style="{StaticResource PrimaryButton}">
+
+                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" 
+                                       Margin="10,0,10,1"
+                                       FontSize="14" FontWeight="Normal"
+                                       Text="Удалить"/>
+                </Button>
+                <Button Name="SaveButton" 
+                        Command="{Binding SaveCommand}" 
+                        Width="130" Height="27" 
+                        Margin="0,70,0,5" 
+                        VerticalAlignment="Center" 
+                        Style="{StaticResource SuccessButton}">
+
+                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" 
+                                       Margin="10,0,10,1"
+                                       FontSize="14" FontWeight="Normal"
+                                       Text="Сохранить"/>
+                </Button>
+                <Button Name="CancelButton" 
+                        Command="{Binding CancelCommand}" 
+                        Width="130" Height="27" 
+                        Margin="0,5,0,5" 
+                        VerticalAlignment="Center" 
+                        Style="{StaticResource PrimaryButton}">
+
+                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" 
+                                       Margin="10,0,10,1"
+                                       FontSize="14" FontWeight="Normal"
+                                       Text="Отменить"/>
+                </Button>
+
+            </StackPanel>
+            <!--....................................................................................................-->
+
+        </Grid>
+        
+        <!--====================================================================================================-->
+
+        <Grid Name="BottomPanel" Grid.Row="9">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="1"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="400"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="400"/>
+            </Grid.ColumnDefinitions>
+
+            <!--....................................................................................................-->
+
+            <!--....................................................................................................-->
+            <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center">
+                <!-- Command="{Binding AddCommand}" -->
+                <Button Name="MoreButton" 
+                        Click="AddButton_Click"
+                        Width="160" Height="27" 
+                        Margin="0,0,0,0" 
+                        VerticalAlignment="Center" 
+                        Style="{StaticResource InfoButton}">
+
+                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" 
+                                       Margin="10,0,10,1"
+                                       FontSize="14" FontWeight="Normal"
+                                       Text="Добавить  еще"/>
+                </Button>
+            </StackPanel>
+
+            <!--....................................................................................................-->
+            <StackPanel Grid.Row="1" Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button x:Name="EditSaveButton" 
+                        Click="EditSaveButton_Click"
+                        Width="160" Height="27" 
+                        Margin="10,0,10,0" 
+                        VerticalAlignment="Center" 
+                        Style="{StaticResource SuccessButton}">
+
+                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" 
+                                       Margin="10,0,10,1"
+                                       FontSize="14" FontWeight="Normal"
+                                       Text="Сохранить"/>
+                </Button>
+
+                <Button x:Name="EditCancelButton" 
+                        Click="EditCancelButton_Click"
+                        Width="160" Height="27" 
+                        Margin="10,0,10,0" 
+                        VerticalAlignment="Center" 
+                        Style="{StaticResource PrimaryButton}">
+
+                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" 
+                                       Margin="10,0,10,1"
+                                       FontSize="14" FontWeight="Normal"
+                                       Text="Отменить"/>
+                </Button>
+
+            </StackPanel>
+            <!--
+            <Grid.Triggers>
+                <DataTrigger Binding="{Binding Path=EdittingFlag, Mode=OneWay}" Value="True">
+                    <Setter TargetName="EditSaveButton" Property="IsEnabled" Value="True" />
+                    <Setter Property="Visibility" Value="Visible"/>
+                </DataTrigger>
+            </Grid.Triggers>
+            -->
+        </Grid>
+
+        <!--====================================================================================================-->
+        <!--
+        <StackPanel Grid.Row="8" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Center">
+            <Button Name="EditButton" Width="130" Height="27" 
+                            Margin="20,5,20,5" 
+                            VerticalAlignment="Center" 
+                            Style="{StaticResource InfoButton}"
+                            Click="EditButton_Click">
+
+                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" 
+                                       Margin="10,0,10,2"
+                                       FontSize="14" FontWeight="Normal"
+                                       Text="Изменить"/>
+            </Button>
+            <Button Name="SaveButton" Width="130" Height="27" 
+                            Margin="20,5,20,5" 
+                            VerticalAlignment="Center" 
+                            Style="{StaticResource SuccessButton}"
+                            Click="SaveButton_Click">
+
+                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" 
+                                       Margin="10,0,10,2"
+                                       FontSize="14" FontWeight="Normal"
+                                       Text="Сохранить"/>
+            </Button>
+            <Button Name="DdeleteButton" Width="130" Height="27" 
+                            Margin="20,5,20,5" 
+                            VerticalAlignment="Center" 
+                            Style="{StaticResource PrimaryButton}"
+                            Click="DeleteButton_Click">
+
+                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" 
+                                       Margin="10,0,10,2"
+                                       FontSize="14" FontWeight="Normal"
+                                       Text="Удалить"/>
+            </Button>
+
+        </StackPanel>
+        -->
+
+        <!--====================================================================================================-->
+
+    </Grid>
+    
+    
+</UserControl>

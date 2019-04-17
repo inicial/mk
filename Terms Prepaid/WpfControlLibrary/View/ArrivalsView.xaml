@@ -1,0 +1,201 @@
+﻿<UserControl x:Class="WpfControlLibrary.View.ArrivalsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="465" d:DesignWidth="400"
+             xmlns:local="clr-namespace:WpfControlLibrary.Model.Flight"
+             xmlns:col="clr-namespace:System.Collections;assembly=mscorlib"
+             xmlns:util="clr-namespace:WpfControlLibrary.Util"
+             xmlns:view="clr-namespace:WpfControlLibrary.View">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/WpfControlLibrary;component/Resources/Resources.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+			<Style x:Key="DataGridBaseCellStyle" TargetType="DataGridCell">
+                <Setter Property="FontSize" Value="12"></Setter>
+			</Style>
+            
+            <Style x:Key="TbHeader" TargetType="TextBlock">
+                <Setter Property="FontSize" Value="24"></Setter>
+            </Style>
+
+            <Style x:Key="TbClassHeader" TargetType="TextBox">
+                <Setter Property="FontSize" Value="14"></Setter>
+				<Setter Property="Height" Value="24"></Setter>
+                <Setter Property="Width" Value="91"></Setter>
+                <Setter Property="IsReadOnly" Value="true"></Setter>
+                <Setter Property="TextAlignment" Value="Center"></Setter>
+                <Setter Property="BorderBrush" Value="Black"></Setter>
+            </Style>
+
+            <Style x:Key="UpdateButtonStyle" TargetType="{x:Type ToggleButton}">
+                <!--<Style.Triggers>
+                    <Trigger Property="IsFocused" Value="false">
+                        <Setter Property="IsChecked" Value="false" />
+                    </Trigger>
+                </Style.Triggers>-->
+            </Style>
+
+            <util:FlightInfoConverter x:Key="FlightInfoConverter" />
+            <util:DateConverter x:Key="DateConverter" />
+
+            <col:ArrayList x:Key="arrivals1">
+                <local:FlightInfo Route="М - Барселона - М" Price="210000" Price2="400000" Currency="2" PriceType="1"/>
+                <local:FlightInfo Route="М - Рим - М" Price="17000" Price2="34000" Currency="2" PriceType="1"/>
+                <local:FlightInfo Route="М - Милан - М" Price="17000" Price2="32000" Currency="2" PriceType="1"/>
+                <local:FlightInfo Route="М - Генуя - М" Price="8000" Price2="15000" Currency="2" PriceType="1"/>
+                <local:FlightInfo Route="М - Венеция - М" Price="8200" Price2="13000" Currency="2" PriceType="1"/>
+                <local:FlightInfo Route="М - Амстердам - М" Price="9000" Price2="12000" Currency="2" PriceType="1"/>
+                <local:FlightInfo Route="М - Гамбург - М" Price="7500" Price2="12000" Currency="2" PriceType="1"/>
+                <local:FlightInfo Route="М - Копенгаген - М" Price="6000" Price2="14000" Currency="2" PriceType="1"/>
+                <local:FlightInfo Route="М - Нью-йорк - М" Price="11000" Price2="20000" Currency="2" PriceType="1"/>
+                <local:FlightInfo Route="М - Майами - М" Price="9500" Price2="16000" Currency="2" PriceType="1"/>
+                <local:FlightInfo Route="М - Пунта-Кана - М" Price="9000" Price2="15000" Currency="2" PriceType="1"/>
+                <local:FlightInfo Route="М - Гавана - М" Price="6000" Price2="11000" Currency="2" PriceType="1"/>
+                <local:FlightInfo Route="М - Сингапур - М" Price="5500" Price2="13000" Currency="2" PriceType="1"/>
+                <local:FlightInfo Route="М - Гонконг - М" Price="7300" Price2="15000" Currency="2" PriceType="1"/>
+                <local:FlightInfo Route="М - Сидней - М" Price="9700" Price2="22000" Currency="2" PriceType="1"/>
+                <local:FlightInfo Route="М - Рио-де-Жанейро - М" Price="10500" Price2="18000" Currency="2" PriceType="1"/>
+                <local:FlightInfo Route="М - Буэнос Айрес - М" Price="13000" Price2="25000" Currency="2" PriceType="1"/>
+            </col:ArrayList>
+            
+            <col:ArrayList x:Key="arrivals2">
+                <local:FlightInfo Route="М - Барселона" Price="210000" Price2="400000" Currency="2" PriceType="1"/>
+                <local:FlightInfo Route="М - Рим" Price="17000" Price2="34000" Currency="2" PriceType="1"/>
+                <local:FlightInfo Route="М - Милан" Price="17000" Price2="32000" Currency="2" PriceType="1"/>
+                <local:FlightInfo Route="М - Генуя" Price="8000" Price2="15000" Currency="2" PriceType="1"/>
+                <local:FlightInfo Route="М - Венеция" Price="8200" Price2="13000" Currency="2" PriceType="1"/>
+                <local:FlightInfo Route="М - Амстердам" Price="9000" Price2="12000" Currency="2" PriceType="1"/>
+                <local:FlightInfo Route="М - Гамбург" Price="7500" Price2="12000" Currency="2" PriceType="1"/>
+                <local:FlightInfo Route="М - Копенгаген" Price="6000" Price2="14000" Currency="2" PriceType="1"/>
+                <local:FlightInfo Route="М - Нью-йорк" Price="11000" Price2="20000" Currency="2" PriceType="1"/>
+                <local:FlightInfo Route="М - Майами" Price="9500" Price2="16000" Currency="2" PriceType="1"/>
+                <local:FlightInfo Route="М - Пунта-Кана" Price="9000" Price2="15000" Currency="2" PriceType="1"/>
+                <local:FlightInfo Route="М - Гавана" Price="6000" Price2="11000" Currency="2" PriceType="1"/>
+                <local:FlightInfo Route="М - Сингапур" Price="5500" Price2="13000" Currency="2" PriceType="1"/>
+                <local:FlightInfo Route="М - Гонконг" Price="7300" Price2="15000" Currency="2" PriceType="1"/>
+                <local:FlightInfo Route="М - Сидней" Price="9700" Price2="22000" Currency="2" PriceType="1"/>
+                <local:FlightInfo Route="М - Рио-де-Жанейро" Price="10500" Price2="18000" Currency="2" PriceType="1"/>
+                <local:FlightInfo Route="М - Буэнос Айрес" Price="13000" Price2="25000" Currency="2" PriceType="1"/>
+            </col:ArrayList>
+            
+            <DataGrid CanUserAddRows="false" x:Key="FlightsDataGrid" AutoGenerateColumns="False" 
+				HeadersVisibility="None" ItemsSource="{Binding .}" x:Shared="False" 
+				AlternatingRowBackground="LightGray" CellStyle="{StaticResource DataGridBaseCellStyle}">
+                <DataGrid.Columns>
+                    <DataGridTemplateColumn Width="23">
+                        <DataGridTemplateColumn.CellTemplate>
+							<DataTemplate>
+								<StackPanel>
+                                    <ToggleButton Style="{StaticResource UpdateButtonStyle}" x:Name="UpdateButton" Width="20" Margin="0,0,0,0">
+                                        <Image Width="14" Height="14" Source="../img/Refresh_small.png" />
+                                    </ToggleButton>
+                                    <Popup IsOpen="{Binding ElementName=UpdateButton, Path=IsChecked}" x:Name="popupOption"
+                                        AllowsTransparency="True" PopupAnimation="Slide" 
+										StaysOpen="False" PlacementTarget="{Binding ElementName=UpdateButton}">
+                                        <view:CalendarView/>
+                                    </Popup>
+								</StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Width="1*">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock VerticalAlignment="Center" Text="{Binding Path=Route, Mode=OneWay}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Width="90" Header="Эконом">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Margin="10,0,0,0" VerticalAlignment="Center" >
+                                    <TextBlock.Text>
+                                        <MultiBinding Converter="{StaticResource FlightInfoConverter}">
+                                            <Binding Path="Price" Mode="OneWay"></Binding>
+                                            <Binding Path="Currency" Mode="OneWay"></Binding>
+                                            <Binding Path="PriceType"  Mode="OneWay"></Binding>
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
+                            </DataTemplate>    
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Width="90" Header="Эконом">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Margin="10,0,0,0" VerticalAlignment="Center">
+                                    <TextBlock.Text>
+                                        <MultiBinding Converter="{StaticResource FlightInfoConverter}">
+                                            <Binding Path="Price2" Mode="OneWay"></Binding>
+                                            <Binding Path="Currency" Mode="OneWay"></Binding>
+                                            <Binding Path="PriceType"  Mode="OneWay"></Binding>
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <StackPanel Width="400" Background="Beige" Orientation="Vertical">
+        <Border Height="25" Background="DarkGray">
+            <Grid Height="22">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+					<ColumnDefinition Width="20"/>
+                    <ColumnDefinition Width="83"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Margin="0,-4,0,0" VerticalAlignment="Center" TextAlignment="Center" Grid.Column="0" Style="{StaticResource TbHeader}" Text="Табло перелетов"/>
+                <TextBlock Margin="0,0,0,0" FontSize="14" VerticalAlignment="Center" TextAlignment="Right" Grid.Column="1" Text="на "/>
+                <Border Background="White" Margin="0,0,5,0" BorderBrush="Black" BorderThickness="1" Grid.Column="2" >
+					<TextBlock VerticalAlignment="Center" Margin="0,0,6,0" TextAlignment="Center" Grid.Column="1" Text="30.06.2016"/>
+				</Border>
+            </Grid>
+        </Border>
+        <Canvas>
+			<TextBlock Canvas.Left="268" Canvas.Top="-3" >на 1 чел.</TextBlock>
+            <StackPanel Canvas.Left="213" Canvas.Top="13" Orientation="Horizontal">
+                <TextBox Style="{StaticResource TbClassHeader}">Эконом</TextBox>
+                <TextBox Margin="-1,0,0,0" Style="{StaticResource TbClassHeader}">Бизнес</TextBox>
+            </StackPanel>
+        </Canvas>
+        <TabControl>
+			<TabControl.ItemContainerStyle>
+				<Style TargetType="TabItem">
+					<Setter Property="Margin" Value="0,0,0,0" />
+					<Setter Property="Padding" Value="5,8,5,8" />
+				</Style>
+			</TabControl.ItemContainerStyle>
+            <TabItem>
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock>туда - обратно</TextBlock>
+                    </StackPanel>
+                </TabItem.Header>
+                <TabItem.Content>
+                    <ContentControl Content="{StaticResource FlightsDataGrid}" DataContext="{DynamicResource arrivals1}" 
+                        HorizontalAlignment="Right" Width="390"></ContentControl>
+					<!--<ContentControl Content="{StaticResource FlightsDataGrid}" DataContext="{Binding ThereAndBackFlights}" HorizontalAlignment="Right" Width="290"></ContentControl>-->
+                </TabItem.Content>
+            </TabItem>
+            <TabItem>
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                    	<TextBlock>только туда</TextBlock>
+                    </StackPanel>
+                </TabItem.Header>
+                <TabItem.Content>
+                    <ContentControl Content="{StaticResource FlightsDataGrid}" DataContext="{DynamicResource arrivals2}"></ContentControl>
+                </TabItem.Content>
+            </TabItem>
+        </TabControl>
+    </StackPanel>
+</UserControl>

@@ -1,0 +1,365 @@
+﻿<Window x:Class="terms_prepaid.Windows.WorkWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:terms_prepaid"
+        Title="WorkWindow" 
+        Width="800" Height="400" 
+        MinHeight="200" MinWidth="400"         
+        MaxWidth="1600" MaxHeight="1000" 
+        WindowStyle="None" ResizeMode="NoResize">
+
+    <!--####################################################################################################-->
+
+    <Window.Resources>
+
+        <ResourceDictionary>
+
+            <!--====================================================================================================-->
+
+            <SolidColorBrush x:Key="WindowBorderBrush" Color="#FFEFEFF2" />
+            <SolidColorBrush x:Key="PanelBorderBrush" Color="#ffe0e0e0" />
+            <SolidColorBrush x:Key="TabItemBrush" Color="WhiteSmoke" />
+            <!-- #FFE5E5E5 -->
+
+            <FontFamily x:Key="DefaultFont">Segoe UI Symbol</FontFamily>
+            <!--Calibri-->
+
+            <!--....................................................................................................-->
+
+            <Style x:Key="WindowBorder" TargetType="{x:Type Border}">
+                <Setter Property="Background" Value="{DynamicResource WindowBorderBrush}" />
+                <Setter Property="BorderBrush" Value="LightGray" />
+                <Setter Property="BorderThickness" Value="0 0 0 0" />
+            </Style>
+
+            <Style x:Key="WindowFrameBorder" TargetType="{x:Type Border}">
+                <Setter Property="Background" Value="{DynamicResource WindowBorderBrush}" />
+                <Setter Property="BorderBrush" Value="LightGray" />
+                <Setter Property="BorderThickness" Value="1 1 1 1" />
+            </Style>
+
+            <Style x:Key="WindowSpace" TargetType="{x:Type Border}">
+                <Setter Property="Background" Value="White" />
+                <Setter Property="BorderThickness" Value="0 0 0 0" />
+            </Style>
+
+            <Style x:Key="WindowTitle" TargetType="{x:Type Border}">
+                <Setter Property="Background" Value="{DynamicResource WindowBorderBrush}" />
+                <Setter Property="BorderThickness" Value="0 0 0 0" />
+            </Style>
+
+            <Style x:Key="MenuBarBorder" TargetType="{x:Type Border}">
+                <Setter Property="Background" Value="{DynamicResource WindowBorderBrush}" />
+                <Setter Property="BorderBrush" Value="LightGray" />
+                <Setter Property="BorderThickness" Value="0 0 0 0" />
+            </Style>
+
+            <Style x:Key="ToolbarBorder" TargetType="{x:Type Border}">
+                <Setter Property="Background" Value="{DynamicResource WindowBorderBrush}" />
+                <Setter Property="BorderThickness" Value="0 0 0 0" />
+            </Style>
+
+            <Style x:Key="StatusBarBorder" TargetType="{x:Type Border}">
+                <Setter Property="Background" Value="{DynamicResource WindowBorderBrush}" />
+                <Setter Property="BorderThickness" Value="0 0 0 0" />
+            </Style>
+
+            <Style x:Key="WindowContentBorder" TargetType="{x:Type Border}">
+                <Setter Property="Background" Value="{DynamicResource WindowBorderBrush}" />
+                <Setter Property="BorderBrush" Value="LightGray" />
+                <Setter Property="BorderThickness" Value="0 0 0 0" />
+            </Style>
+
+            <!--====================================================================================================-->
+
+            <Style x:Key="TextBlockHeader" TargetType="{x:Type TextBlock}">
+                <Setter Property="FontFamily" Value="Times New Roman"/>
+                <Setter Property="FontWeight" Value="Bold"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
+                <!--<Setter Property="Margin" Value="1,0,0,0"/>-->
+            </Style>
+
+            <Style x:Key="TextBoxNoEdit" TargetType="{x:Type TextBox}">
+                <Setter Property="VerticalAlignment" Value="Bottom"/>
+                <Setter Property="Background" Value="Transparent"/>
+                <Setter Property="BorderThickness" Value="0"/>
+                <Setter Property="IsReadOnly" Value="True"/>
+                <Setter Property="FontFamily" Value="{StaticResource DefaultFont}"/>
+            </Style>
+
+            <Style x:Key="ListItem"  TargetType="{x:Type ListViewItem}">
+                <Setter Property="Focusable" Value="false"/>
+                <Setter Property="BorderThickness" Value="1"/>
+                <Setter Property="Background" Value="#00000000"/>
+                <Setter Property="Margin" Value="-3,0,0,-3"/>
+            </Style>
+
+            <DataTemplate x:Key="ListItemValue">
+                <Grid x:Name="Grid">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100"></ColumnDefinition>
+                        <ColumnDefinition Width="200"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Style="{StaticResource TextBlockHeader}" VerticalAlignment="Center" Grid.Column="0" Text="{Binding ItemName, StringFormat={}{0}:}"/>
+                    <TextBox Style="{StaticResource TextBoxNoEdit}" Grid.Column="1" VerticalAlignment="Center" Text="{Binding ItemValue}"/>
+                </Grid>
+            </DataTemplate>
+
+            <!--====================================================================================================-->
+
+        </ResourceDictionary>
+
+    </Window.Resources>
+
+    <!--####################################################################################################-->
+
+    <Grid>
+
+        <!--****************************************************************************************************-->
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="6"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="6"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="6" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="6" />
+        </Grid.ColumnDefinitions>
+
+        <!--****************************************************************************************************-->
+        <Border Name="BorderTopLeft" Grid.Row="0" Grid.Column="0" Style="{StaticResource WindowBorder}" BorderThickness="1, 1, 0, 0" Cursor="SizeNWSE"></Border>
+        <Border Name="BorderTop" Grid.Row="0" Grid.Column="1" Style="{StaticResource WindowBorder}" BorderThickness="0, 1, 0, 0" Cursor="SizeNS"></Border>
+        <Border Name="BorderTopRight" Grid.Row="0" Grid.Column="2" Style="{StaticResource WindowBorder}" BorderThickness="0, 1, 1, 0" Cursor="SizeNESW"></Border>
+
+        <Border Name="BorderLeft" Grid.Row="1" Grid.Column="0" Style="{StaticResource WindowBorder}" BorderThickness="1, 0, 0, 0" Cursor="SizeWE"></Border>
+        <Border Name="WindowSpaceBorder" Grid.Row="1" Grid.Column="1" Style="{StaticResource WindowSpace}" BorderThickness="0, 0, 0, 0"></Border>
+        <Border Name="BorderRight" Grid.Row="1" Grid.Column="2" Style="{StaticResource WindowBorder}" BorderThickness="0, 0, 1, 0" Cursor="SizeWE"></Border>
+
+        <Border Name="BorderBottomLeft" Grid.Row="2" Grid.Column="0" Style="{StaticResource WindowBorder}" BorderThickness="1, 0, 0, 1" Cursor="SizeNESW"></Border>
+        <Border Name="BorderBottom" Grid.Row="2" Grid.Column="1" Style="{StaticResource WindowBorder}" BorderThickness="0, 0, 0, 1" Cursor="SizeNS"></Border>
+        <Border Name="BorderBottomRight" Grid.Row="2" Grid.Column="2" Style="{StaticResource WindowBorder}" BorderThickness="0, 0, 1, 1" Cursor="SizeNWSE"></Border>
+
+        <!--****************************************************************************************************-->
+        <!-- WINDOW SPACE -->
+
+        <Grid Grid.Row="1" Grid.Column="1">
+
+            <!--====================================================================================================-->
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <!-- Window title -->
+                <RowDefinition Height="*"/>
+                <!-- Space -->
+                <RowDefinition Height="Auto"/>
+                <!-- Status bar -->
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <!--====================================================================================================-->
+            <!-- WINDOW TITLE -->
+
+            <Border Grid.Row="0" MinHeight="24" Height="Auto" Style="{StaticResource WindowTitle}">
+
+                <Grid Margin="0,0,0,0">
+
+                    <!--::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::-->
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="0"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="1"></RowDefinition>
+                    </Grid.RowDefinitions>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="16" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <!--::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::-->
+                    <Border Name="WindowIconBorder" 
+                            Grid.Row="1" 
+                            Grid.Column="0" 
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Top" 
+                            Background="Transparent">
+
+                        <Image  Name="WindowIconImage" 
+                                Width="16" 
+                                Height="16" 
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Top"
+                                Source="../Resources/ico_w_app.ico" 
+                                Stretch="None"/>
+
+                    </Border>
+                    <!--....................................................................................................-->
+                    <Border Name="WindowTitleBorder"
+                            Grid.Row="1" 
+                            Grid.Column="1" 
+                            MinHeight="23"
+                            VerticalAlignment="Bottom" 
+                            Background="Transparent">
+
+                        <TextBlock Name="WindowTitleTextBlock" 
+                                   Margin="10,0,20,0" 
+                                   Text="Application"/>
+
+                    </Border>
+                    <!--....................................................................................................-->
+                    <Border Name="WindowMinimizeButtonBorder" 
+                            Grid.Row="1" 
+                            Grid.Column="2" 
+                            VerticalAlignment="Top" 
+                            Margin="0,0,0,0"
+                            ToolTip="Свернуть">
+
+                        <Image Name="WindowMinimizeButtonImage" 
+                               Height="20" 
+                               Width="32" 
+                               Source="../Resources/png_w_minimize.png" 
+                               Stretch="None"/>
+
+                    </Border>
+                    <!--....................................................................................................-->
+                    <Border Name="WindowMaximizeButtonBorder" 
+                            Grid.Row="1" 
+                            Grid.Column="3" 
+                            VerticalAlignment="Top" 
+                            Margin="0,0,0,0"
+                            ToolTip="Развернуть">
+
+                        <Image Name="WindowMaximizeButtonImage" 
+                               Height="20" 
+                               Width="32" 
+                               Source="../Resources/png_w_maximize.png" 
+                               Stretch="None"/>
+
+                    </Border>
+                    <!--....................................................................................................-->
+                    <Border Name="WindowCloseButtonBorder" 
+                            Grid.Row="1" 
+                            Grid.Column="4" 
+                            VerticalAlignment="Top" 
+                            Margin="0,0,0,0"
+                            ToolTip="Закрыть">
+
+                        <Image Name="WindowCloseButtonImage" 
+                               Height="20" 
+                               Width="32" 
+                               Source="../Resources/png_w_close.png" 
+                               Stretch="None"/>
+
+                    </Border>
+                    <!--::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::-->
+
+                </Grid>
+
+            </Border>
+
+            <!--====================================================================================================-->
+            <!-- WINDOW CONTENT -->
+
+            <Border Grid.Row="1" Style="{StaticResource WindowContentBorder}">
+
+
+            </Border>
+
+            <UserControl Name="WindowContentControl" Grid.Row="1">
+
+            </UserControl>
+
+            <!--====================================================================================================-->
+            <!-- STATUS BAR -->
+
+            <Border Name="StatusBarBorder" Grid.Row="2" Style="{StaticResource StatusBarBorder}">
+
+                <Grid>
+
+                    <!--::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::-->
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="2"></RowDefinition>
+                        <RowDefinition Height="auto"></RowDefinition>
+                    </Grid.RowDefinitions>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="16"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+
+                    <!--::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::-->
+                    <Border Grid.Row="1" 
+                        Grid.Column="0" 
+                        Style="{StaticResource StatusBarBorder}"                            
+                        VerticalAlignment="Bottom">
+
+                        <TextBlock Name="StatusBarTextBlock" 
+                                   Margin="5,0,10,0" 
+                                   Text="Status bar..."/>
+
+                    </Border>
+                    <!--                    
+                    <StatusBar Grid.Row="1" Grid.Column="0">
+                        <StatusBar.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"></ColumnDefinition>
+                                        <ColumnDefinition Width="auto"></ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
+                                </Grid>
+                            </ItemsPanelTemplate>
+                        </StatusBar.ItemsPanel>
+                        <StatusBarItem Grid.Column="0">
+                            <TextBlock Name="StatusBarTextBlock">Текст слева</TextBlock>
+                        </StatusBarItem>
+                        <StatusBarItem Grid.Column="1">
+                            <TextBlock Name="StateTextBlock">Текст справа</TextBlock>
+                        </StatusBarItem>
+                    </StatusBar>
+-->
+                    <!--....................................................................................................-->
+                    <Border Name="WindowGripBorder" 
+                            Grid.Row="1" 
+                            Grid.Column="1" 
+                            Cursor="SizeNWSE" 
+                            Style="{StaticResource StatusBarBorder}"                            
+                            VerticalAlignment="Bottom">
+
+                        <Image Name="WindowGripImage" 
+                               Height="16" 
+                               Width="16" 
+                               VerticalAlignment="Bottom" 
+                               ToolTip="Изменение размеров окна" 
+                               Source="../Resources/ico_w_grip.ico" 
+                               Stretch="None"/>
+
+                    </Border>
+                    <!--::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::-->
+
+                </Grid>
+
+            </Border>
+
+            <!--====================================================================================================-->
+
+        </Grid>
+
+        <!--****************************************************************************************************-->
+
+    </Grid>
+
+    <!--####################################################################################################-->
+
+</Window>
+

@@ -1,0 +1,3 @@
+syntax: glob
+terms prepaid/bin/
+terms prepaid/obj/

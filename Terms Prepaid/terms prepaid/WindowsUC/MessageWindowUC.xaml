@@ -1,0 +1,116 @@
+﻿<UserControl x:Class="terms_prepaid.WindowsUC.MessageWindowUC"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="200" d:DesignWidth="600">
+
+    <!--****************************************************************************************************-->
+    <!-- RESOURCES -->
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+
+            <!--====================================================================================================-->
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Themes/Default.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <!--====================================================================================================-->
+
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <!--****************************************************************************************************-->
+    <!-- WINDOW WORKSPACE -->
+
+    <Grid x:Name="WindowGrid">
+
+        <!--::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::-->
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10"/>            <!-- Separator -->
+            <RowDefinition Height="*"/>             <!-- Content -->
+            <RowDefinition Height="10"/>            <!-- Separator -->
+            <RowDefinition Height="30"/>            <!-- Buttons -->
+            <RowDefinition Height="20"/>            <!-- Separator -->
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="30" />            <!-- Separator -->
+            <ColumnDefinition Width="*" />             <!-- Content -->
+            <ColumnDefinition Width="30" />            <!-- Separator -->
+        </Grid.ColumnDefinitions>
+
+        <!--====================================================================================================-->
+        <!-- MESSAGE -->
+
+        <Border Name="MessageBorder" Grid.Row="1" Grid.Column="1" BorderThickness="0">
+            <TextBlock Name="tblMessage" 
+                       TextWrapping="Wrap"
+                       HorizontalAlignment="Center"  
+                       VerticalAlignment="Center" 
+                       FontSize="16" FontWeight="Normal"
+                                  
+                                   Text="Message text..."/>
+        </Border>
+
+        <!--====================================================================================================-->
+        <!-- BUTTONS -->
+
+        <StackPanel Grid.Row="3" Grid.Column="1" 
+                                Orientation="Horizontal"
+                                HorizontalAlignment="Center">
+            <!--....................................................................................................-->
+            <Button x:Name="btnYes" 
+                                Margin="15,0,15,0" 
+                                Width="120"
+                                VerticalAlignment="Center" 
+                                Click="btnYes_Click"
+                                Style="{StaticResource PrimaryButton}">
+                <TextBlock x:Name="tblYes" 
+                                       HorizontalAlignment="Center" VerticalAlignment="Center" 
+                                       Margin="15,0,15,2"
+                                       FontSize="14" FontWeight="Normal"
+                                       Text="Да"/>
+            </Button>
+
+            <!--....................................................................................................-->
+            <Button Name="btnNo" 
+                                Margin="15,0,15,0" 
+                                Width="120"
+                                VerticalAlignment="Center" 
+                                Click="btnNo_Click"
+                                Style="{StaticResource WarningButton}">
+                <TextBlock x:Name="tblNo"
+                                       HorizontalAlignment="Center" VerticalAlignment="Center" 
+                                       Margin="10,0,10,2"
+                                       FontSize="14" FontWeight="Normal"
+                                       Text="Нет"/>
+            </Button>
+
+            <!--....................................................................................................-->
+            <Button Name="btnCancel" 
+                                Margin="15,0,15,0" 
+                                Width="120"
+                                VerticalAlignment="Center" 
+                                Click="btnCancel_Click"
+                                Style="{StaticResource SuccessButton}">
+                <TextBlock x:Name="tblCancel"
+                                       HorizontalAlignment="Center" VerticalAlignment="Center" 
+                                       Margin="10,0,10,2"
+                                       FontSize="14" FontWeight="Normal"
+                                       Text="Отменить"/>
+            </Button>
+
+            <!--....................................................................................................-->
+        </StackPanel>
+
+        <!--::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::-->
+
+    </Grid>
+
+    <!--****************************************************************************************************-->
+
+</UserControl>

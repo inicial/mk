@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 11.375" name="TouristData">
+  <DataContextMoniker Name="/TouristDataDataContext" />
+  <nestedChildShapes>
+    <classShape Id="58b27455-807e-4586-bc90-f00eb7414e1a" absoluteBounds="1.875, 1.625, 2, 2.5401025390625">
+      <DataClassMoniker Name="/TouristDataDataContext/TuristService" />
+      <nestedChildShapes>
+        <elementListCompartment Id="14503d6e-10aa-4a9a-a44a-222a44067503" absoluteBounds="1.8900000000000001, 2.085, 1.9700000000000002, 1.9801025390625" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="d15c5a99-2d98-4b8a-8feb-b748b4101e0c" absoluteBounds="4.875, 0.5, 2, 10.6167626953125">
+      <DataClassMoniker Name="/TouristDataDataContext/Turist" />
+      <nestedChildShapes>
+        <elementListCompartment Id="58d5e7ea-fef8-4c49-8c37-d960ce36a8b8" absoluteBounds="4.89, 0.96, 1.9700000000000002, 10.0567626953125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(4.875 : 2.89505126953125); (3.875 : 2.89505126953125)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/TouristDataDataContext/Turist/Turist_TuristService" />
+      <nodes>
+        <classShapeMoniker Id="d15c5a99-2d98-4b8a-8feb-b748b4101e0c" />
+        <classShapeMoniker Id="58b27455-807e-4586-bc90-f00eb7414e1a" />
+      </nodes>
+    </associationConnector>
+  </nestedChildShapes>
+</ordesignerObjectsDiagram>

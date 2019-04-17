@@ -1,0 +1,129 @@
+﻿<common:PopupWindow x:Class="WpfControlLibrary.View.MilesAirlineListView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:view="clr-namespace:WpfControlLibrary.View"
+             xmlns:common="clr-namespace:WpfControlLibrary.Common"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="400">
+
+    <UserControl.Resources>
+
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/WpfControlLibrary;component/Resources/Resources.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/WPF.Bootstrap;component/Themes/Default.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+            <Style x:Key="TabHeaderImage" TargetType="Image">
+                <Setter Property="Width" Value="110"></Setter>
+                <Setter Property="Margin" Value="-10"></Setter>
+            </Style>
+
+            <Style x:Key="TabHeaderImage2" TargetType="Image">
+                <Setter Property="Width" Value="100"></Setter>
+                <Setter Property="Height" Value="60"></Setter>
+                <Setter Property="Margin" Value="-10"></Setter>
+            </Style>
+
+            <Style x:Key="ContentTextBlock" TargetType="TextBlock">
+                <Setter Property="Margin" Value="5"></Setter>
+                <Setter Property="TextWrapping" Value="Wrap"></Setter>
+                <Setter Property="Width" Value="350"></Setter>
+            </Style>
+
+            <Style x:Key="TabItem" TargetType="TabItem">
+                <Setter Property="Height" Value="61"/>
+                <Setter Property="Width" Value="120"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="TabItem">
+                            <Grid>
+                                <Border Name="Border" BorderThickness="1,1,1,0" BorderBrush="{StaticResource ActiveTabBorderBrush}" CornerRadius="4,4,0,0" Margin="2,0">
+                                <ContentPresenter x:Name="ContentSite"
+                                        VerticalAlignment="Center"
+                                        HorizontalAlignment="Center"
+                                        ContentSource="Header"
+                                        Margin="10,2"/>
+                            </Border>
+                                <Border Name="Border2" BorderThickness="0,0,0,1" BorderBrush="{StaticResource ActiveTabBorderBrush}" Margin="2,-1"/>
+                            </Grid>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsSelected" Value="True">
+                                    <Setter TargetName="Border" Property="Background" Value="{StaticResource ActiveTabBackground}"/>
+                                    <Setter TargetName="Border2" Property="BorderBrush" Value="{StaticResource ActiveTabBackground}"/>
+                                </Trigger>
+                                <Trigger Property="IsSelected" Value="False">
+                                    <Setter TargetName="Border" Property="Background" Value="White"/>
+                                    <Setter TargetName="Border2" Property="BorderBrush" Value="{StaticResource ActiveTabBorderBrush}"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            
+            <Style x:Key="TabItemContentBorder" TargetType="Border">
+                <Setter Property="Background" Value="{StaticResource ActiveTabBackground}"></Setter>
+            </Style>
+
+            <DataTemplate x:Key="TabContent">
+                <TextBox Padding="2" IsReadOnly="True" VerticalScrollBarVisibility="Auto" FontSize="11" FontFamily="{StaticResource DefaultFont}" Text="{Binding SkyTeamText}"></TextBox>
+            </DataTemplate>
+
+        </ResourceDictionary>
+    </UserControl.Resources>
+    
+    <Grid Background="White">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+
+        <Control Template="{StaticResource WindowHead}" Tag="Список альянсов авиакомпаний по милям" 
+                     DataContext="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}"/>
+
+        <TabControl BorderThickness="1" BorderBrush="Gray" Margin="0" Padding="0" Grid.Row="1">
+            <TabItem Style="{StaticResource TabItem}">
+                <TabItem.Header>
+                    <!--<TextBlock FontSize="14" FontWeight="DemiBold" Text="Skyteam"></TextBlock>-->
+                    <!--<Image Style="{StaticResource TabHeaderImage}" Source="../img/Skyteam_logo.png" />-->
+                    <Image Style="{StaticResource TabHeaderImage2}" Source="../img/SkyteamTransparent.png"/>
+                </TabItem.Header>
+                <TabItem.Content >
+                    <Border Style="{StaticResource TabItemContentBorder}">
+                        <TextBlock Style="{StaticResource ContentTextBlock}" Text="{Binding SkyTeamText}"></TextBlock>
+                    </Border>
+                </TabItem.Content>
+            </TabItem>
+            <TabItem Style="{StaticResource TabItem}">
+                <TabItem.Header>
+                    <!--<StackPanel Orientation="Horizontal">
+                        <TextBlock FontSize="14" FontWeight="Bold" Text="One"></TextBlock>
+                        <TextBlock FontSize="14" FontWeight="DemiBold" Text="World"></TextBlock>
+                    </StackPanel>-->
+                    <!--<Image Style="{StaticResource TabHeaderImage}" Source="../img/Oneworld_logo.png" />-->
+                    <Image Style="{StaticResource TabHeaderImage2}" Source="../img/OneWorldTransparent.png"/>
+                </TabItem.Header>
+                <TabItem.Content>
+                    <Border Style="{StaticResource TabItemContentBorder}">
+                        <TextBlock Style="{StaticResource ContentTextBlock}" Text="{Binding OneWorldText}"></TextBlock>
+                    </Border>
+                </TabItem.Content>
+            </TabItem>
+            <TabItem Style="{StaticResource TabItem}">
+                 <TabItem.Header>
+                    <!--<TextBlock FontSize="14" FontWeight="DemiBold" Text="StarAlliance"></TextBlock>-->
+                    <!--<Image Style="{StaticResource TabHeaderImage}" Source="../img/StarAlliance_logo.png" />-->
+                    <Image Style="{StaticResource TabHeaderImage2}" Source="../img/StarAllianceTransparent.png"/>
+                </TabItem.Header>
+                <TabItem.Content>
+                    <Border Style="{StaticResource TabItemContentBorder}">
+                        <TextBlock Style="{StaticResource ContentTextBlock}" Text="{Binding StarAllianceText}"></TextBlock>
+                    </Border>
+                </TabItem.Content>
+             </TabItem>
+         </TabControl>   
+    </Grid>
+</common:PopupWindow>

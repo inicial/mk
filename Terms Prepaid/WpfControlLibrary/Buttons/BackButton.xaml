@@ -1,0 +1,27 @@
+﻿<UserControl x:Class="WpfControlLibrary.BackButton"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="35" d:DesignWidth="90">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/WPF.Bootstrap;component/Themes/Default.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <StackPanel HorizontalAlignment="Left" VerticalAlignment="Top">
+        <Button Height="22" Width="90" FontFamily="Arial" FontWeight="Bold" 
+                Style="{StaticResource SuccessButton}" Click="Button_Click">
+            <StackPanel Orientation="Horizontal">
+                <Image Margin="0,-3,0,0" Width="12" Height="12" Source="..\img\back_btn.png" />
+                <TextBlock Margin="13,0,0,0" FontSize="9" FontFamily="Arial" FontWeight="Normal" VerticalAlignment="Center"><Run Text="Назад"/></TextBlock>
+            </StackPanel>
+        </Button>
+    </StackPanel>
+
+</UserControl>

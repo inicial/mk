@@ -1,0 +1,105 @@
+﻿<UserControl x:Class="WpfControlLibrary.View.CorresponednceRequestView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:behaviors="clr-namespace:WpfControlLibrary.Behaviors"
+             xmlns:helpers="clr-namespace:WpfControlLibrary.Helpers"
+             xmlns:converters="clr-namespace:WpfControlLibrary.View.Converters"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             xmlns:fastColoredTextBoxNs="clr-namespace:FastColoredTextBoxNS;assembly=FastColoredTextBox"
+             xmlns:view="clr-namespace:WpfControlLibrary.View"
+             mc:Ignorable="d" 
+             d:DesignHeight="400" d:DesignWidth="600" Loaded="UserControl_Loaded">
+    <UserControl.Resources>
+		<ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/WpfControlLibrary;component/Resources/ButtonResources.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+            <converters:BooleanToVisibilityConverter  x:Key="BooleanToVisibilityConverterInvert" True="Visible" False="Collapsed" />
+
+			<Style x:Key="CloseCorrespStyle" TargetType="FrameworkElement">
+				<Style.Triggers>
+					<DataTrigger Binding="{Binding CloseCorrespVisible}" Value="False">
+						<Setter Property="Visibility" Value="Collapsed"/>
+					</DataTrigger>
+				</Style.Triggers>
+			</Style>
+
+            <ControlTemplate x:Key="ControlPanel">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="120"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Border BorderBrush="Gray" BorderThickness="1" Margin="0,0,5,0" CornerRadius="2">
+                        <RichTextBox>
+                            <FlowDocument AllowDrop="True" Drop="FlowDocument_Drop">
+                                <BlockUIContainer>
+                                    <view:HtmlControlView DataContext="{Binding HtmlControlVM}"/>
+                                </BlockUIContainer>
+                            </FlowDocument>
+                        </RichTextBox>
+                    </Border>
+                    <Button VerticalAlignment="Bottom" x:Name="Button" Height="26" Style="{StaticResource BurlyWoodButton}" FontWeight="SemiBold" Content="Отправить" Grid.Column="1" 
+                        Command="{Binding SendCommand}" Click="Button_OnClick" IsEnabled="{Binding NewMessageEnabled}"/>
+                    <Button Command="{Binding CloseButtonCommand}" Visibility="{Binding CloseButtonVisible, Converter={StaticResource BooleanToVisibilityConverterInvert}}" Grid.Column="4" VerticalAlignment="Top" Margin="5,-5,-5,0" Name="CloseButton" HorizontalAlignment="Right" Style="{StaticResource CloseButton}"/>
+                </Grid>
+                <ControlTemplate.Triggers>
+                    <DataTrigger Binding="{Binding ButtonStyle}" Value="1">
+                        <Setter TargetName="Button" Property="Style" Value="{StaticResource BurlyWoodButton}"></Setter>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding ButtonStyle}" Value="2">
+                        <Setter TargetName="Button" Property="Style" Value="{StaticResource BlueButton}"></Setter>
+                    </DataTrigger>
+                </ControlTemplate.Triggers>
+            </ControlTemplate>
+            
+		</ResourceDictionary>
+    </UserControl.Resources>
+    
+    <Grid Background="{Binding Brush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+        <Grid Margin="5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="120"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Border BorderBrush="Gray" BorderThickness="1" Margin="0,0,5,0" CornerRadius="2">
+                <RichTextBox>
+                    <FlowDocument Name="FlowDoc" AllowDrop="True" Drop="FlowDocument_Drop">
+                        <BlockUIContainer>
+                            <view:HtmlControlView DataContext="{Binding HtmlControlVM}"/>
+                        </BlockUIContainer>
+                    </FlowDocument>
+                </RichTextBox>
+            </Border>
+            <Button Margin="5,0,0,0" VerticalAlignment="Bottom" x:Name="Button" Height="26" Style="{StaticResource BurlyWoodButton}" FontWeight="SemiBold" Content="Отправить" Grid.Column="1" 
+                             Click="Button_OnClick" IsEnabled="{Binding NewMessageEnabled}"/>
+            <Button Command="{Binding CloseButtonCommand}" Visibility="{Binding CloseButtonVisible, Converter={StaticResource BooleanToVisibilityConverterInvert}}" Grid.Column="2" VerticalAlignment="Top" Margin="5,-5,-5,0" Name="CloseButton" HorizontalAlignment="Right" Style="{StaticResource CloseButton}"/>
+        </Grid>
+        <!--<Control Margin="5" Grid.Row="0" Template="{StaticResource ControlPanel}"/>-->
+        <Border Margin="5" Grid.Row="1" Background="White" BorderBrush="Gray" BorderThickness="1" CornerRadius="2">
+            <FlowDocumentScrollViewer helpers:ScrollHelper.AutoScroll="{Binding ScrollToBottom}" Zoom="90" VerticalScrollBarVisibility="Visible" Name="Viewer" IsToolBarVisible="False" Document="{Binding Corresp.Doc, IsAsync=True}">
+                <FlowDocumentScrollViewer.Resources>
+                    <Style TargetType="{x:Type FlowDocument}">
+                        <Setter Property="PagePadding" Value="5"/>
+                    </Style>
+                    <Style TargetType="{x:Type Paragraph}">
+                        <Setter Property="Margin" Value="0"/>
+                    </Style>
+                </FlowDocumentScrollViewer.Resources>
+                <i:Interaction.Behaviors>
+                    <behaviors:FlowDocumentScrollViewerBehavior/>
+                </i:Interaction.Behaviors>
+            </FlowDocumentScrollViewer>
+        </Border>
+    </Grid>
+</UserControl>

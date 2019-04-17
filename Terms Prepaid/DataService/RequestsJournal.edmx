@@ -1,0 +1,195 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl" Namespace="RequestsJournal.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2005">
+        <EntityContainer Name="RequestsJournalTargetContainer" >
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2008/09/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="RequestsJournal" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" >
+        <EntityContainer Name="RequestsJournalContainer" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="RequestMessage2Set" EntityType="RequestsJournal.RequestMessage2" />
+          <EntitySet Name="Request2Set" EntityType="RequestsJournal.Request2" />
+          <AssociationSet Name="RequestRequestMessage" Association="RequestsJournal.RequestRequestMessage">
+            <End Role="Request" EntitySet="Request2Set" />
+            <End Role="RequestMessage" EntitySet="RequestMessage2Set" />
+          </AssociationSet>
+          <EntitySet Name="RequestType2Set" EntityType="RequestsJournal.RequestType2" />
+          <AssociationSet Name="RequestTypeRequest" Association="RequestsJournal.RequestTypeRequest">
+            <End Role="RequestType" EntitySet="RequestType2Set" />
+            <End Role="Request" EntitySet="Request2Set" />
+          </AssociationSet>
+          <EntitySet Name="RequestStatus2Set" EntityType="RequestsJournal.RequestStatus2" />
+          <AssociationSet Name="RequestStatusRequest" Association="RequestsJournal.RequestStatusRequest">
+            <End Role="RequestStatus" EntitySet="RequestStatus2Set" />
+            <End Role="Request" EntitySet="Request2Set" />
+          </AssociationSet>
+          <EntitySet Name="RequestStatusHistory2Set" EntityType="RequestsJournal.RequestStatusHistory2" />
+          <AssociationSet Name="RequestStatusRequestStatusHistory" Association="RequestsJournal.RequestStatusRequestStatusHistory">
+            <End Role="RequestStatus" EntitySet="RequestStatus2Set" />
+            <End Role="RequestStatusHistory" EntitySet="RequestStatusHistory2Set" />
+          </AssociationSet>
+          <AssociationSet Name="RequestRequestStatusHistory" Association="RequestsJournal.RequestRequestStatusHistory">
+            <End Role="Request" EntitySet="Request2Set" />
+            <End Role="RequestStatusHistory" EntitySet="RequestStatusHistory2Set" />
+          </AssociationSet>
+          <EntitySet Name="RequestMessageAttachment2Set" EntityType="RequestsJournal.RequestMessageAttachment2" />
+          <AssociationSet Name="RequestMessageAttachmentRequestMessage" Association="RequestsJournal.RequestMessageAttachmentRequestMessage">
+            <End Role="RequestMessageAttachment" EntitySet="RequestMessageAttachment2Set" />
+            <End Role="RequestMessage" EntitySet="RequestMessage2Set" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="RequestMessage2">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Text" Nullable="false" />
+          <Property Type="Int32" Name="RequestId" Nullable="false" />
+          <NavigationProperty Name="Request" Relationship="RequestsJournal.RequestRequestMessage" FromRole="RequestMessage" ToRole="Request" />
+          <Property Type="DateTime" Name="Date" Nullable="false" />
+          <Property Type="String" Name="SenderAddress" Nullable="false" />
+          <Property Type="String" Name="DestinationAddress" Nullable="false" />
+          <Property Type="Boolean" Name="Seen" Nullable="false" />
+          <Property Type="DateTime" Name="ReadDate" Nullable="true" />
+          <Property Type="String" Name="Theme" Nullable="false" />
+          <Property Type="Boolean" Name="IsIncomming" Nullable="false" />
+          <Property Type="Int32" Name="InReplyToId" Nullable="false" />
+          <Property Type="Boolean" Name="Reply" Nullable="false" />
+          <NavigationProperty Name="RequestMessageAttachment" Relationship="RequestsJournal.RequestMessageAttachmentRequestMessage" FromRole="RequestMessage" ToRole="RequestMessageAttachment" />
+        </EntityType>
+        <EntityType Name="Request2">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="RequestMessage" Relationship="RequestsJournal.RequestRequestMessage" FromRole="Request" ToRole="RequestMessage" />
+          <Property Type="DateTime" Name="Date" Nullable="false" />
+          <Property Type="Int32" Name="RequestTypeId" Nullable="false" />
+          <NavigationProperty Name="RequestType" Relationship="RequestsJournal.RequestTypeRequest" FromRole="Request" ToRole="RequestType" />
+          <Property Type="Int32" Name="RequestStatusId" Nullable="false" />
+          <NavigationProperty Name="RequestStatus" Relationship="RequestsJournal.RequestStatusRequest" FromRole="Request" ToRole="RequestStatus" />
+          <Property Type="Int32" Name="US_KEY" Nullable="true" />
+          <NavigationProperty Name="RequestStatusHistory" Relationship="RequestsJournal.RequestRequestStatusHistory" FromRole="Request" ToRole="RequestStatusHistory" />
+        </EntityType>
+        <Association Name="RequestRequestMessage">
+          <End Type="RequestsJournal.Request2" Role="Request" Multiplicity="1" />
+          <End Type="RequestsJournal.RequestMessage2" Role="RequestMessage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Request">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="RequestMessage">
+              <PropertyRef Name="RequestId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="RequestType2">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Name" Nullable="false" />
+          <NavigationProperty Name="Request" Relationship="RequestsJournal.RequestTypeRequest" FromRole="RequestType" ToRole="Request" />
+        </EntityType>
+        <Association Name="RequestTypeRequest">
+          <End Type="RequestsJournal.RequestType2" Role="RequestType" Multiplicity="1" />
+          <End Type="RequestsJournal.Request2" Role="Request" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RequestType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Request">
+              <PropertyRef Name="RequestTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="RequestStatus2">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Name" Nullable="false" />
+          <NavigationProperty Name="Request" Relationship="RequestsJournal.RequestStatusRequest" FromRole="RequestStatus" ToRole="Request" />
+          <NavigationProperty Name="RequestStatusHistory" Relationship="RequestsJournal.RequestStatusRequestStatusHistory" FromRole="RequestStatus" ToRole="RequestStatusHistory" />
+          <Property Type="DateTime" Name="Date" Nullable="false" annotation:StoreGeneratedPattern="None" />
+        </EntityType>
+        <Association Name="RequestStatusRequest">
+          <End Type="RequestsJournal.RequestStatus2" Role="RequestStatus" Multiplicity="1" />
+          <End Type="RequestsJournal.Request2" Role="Request" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RequestStatus">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Request">
+              <PropertyRef Name="RequestStatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="RequestStatusHistory2">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="RequestId" Nullable="false" />
+          <Property Type="Int32" Name="RequestStatusId" Nullable="false" />
+          <Property Type="DateTime" Name="Date" Nullable="false" />
+          <NavigationProperty Name="RequestStatus" Relationship="RequestsJournal.RequestStatusRequestStatusHistory" FromRole="RequestStatusHistory" ToRole="RequestStatus" />
+          <NavigationProperty Name="Request" Relationship="RequestsJournal.RequestRequestStatusHistory" FromRole="RequestStatusHistory" ToRole="Request" />
+        </EntityType>
+        <Association Name="RequestStatusRequestStatusHistory">
+          <End Type="RequestsJournal.RequestStatus2" Role="RequestStatus" Multiplicity="1" />
+          <End Type="RequestsJournal.RequestStatusHistory2" Role="RequestStatusHistory" Multiplicity="*" />
+        </Association>
+        <Association Name="RequestRequestStatusHistory">
+          <End Type="RequestsJournal.Request2" Role="Request" Multiplicity="1" />
+          <End Type="RequestsJournal.RequestStatusHistory2" Role="RequestStatusHistory" Multiplicity="*" />
+        </Association>
+        <EntityType Name="RequestMessageAttachment2">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="RequestMessageId" Nullable="false" />
+          <NavigationProperty Name="RequestMessage" Relationship="RequestsJournal.RequestMessageAttachmentRequestMessage" FromRole="RequestMessageAttachment" ToRole="RequestMessage" />
+        </EntityType>
+        <Association Name="RequestMessageAttachmentRequestMessage">
+          <End Type="RequestsJournal.RequestMessageAttachment2" Role="RequestMessageAttachment" Multiplicity="1" />
+          <End Type="RequestsJournal.RequestMessage2" Role="RequestMessage" Multiplicity="*" />
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs" Space="C-S">
+        <Alias Key="Model" Value="RequestsJournal" />
+        <Alias Key="Target" Value="RequestsJournal.Store" />
+        <EntityContainerMapping CdmEntityContainer="RequestsJournalContainer" StorageEntityContainer="RequestsJournalTargetContainer">
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

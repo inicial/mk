@@ -1,0 +1,452 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+                    xmlns:System="clr-namespace:System;assembly=mscorlib"
+                    xmlns:util="clr-namespace:WpfControlLibrary.Util">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="ButtonResources.xaml"/>
+        <ResourceDictionary Source="ComboBoxResourses.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
+
+    <SolidColorBrush x:Key="ActiveTabBackground" Color="Beige" />
+    <SolidColorBrush x:Key="ActiveTabBorderBrush" Color="Gray" />
+    <SolidColorBrush x:Key="ActiveServiceBackground" Color="AliceBlue" />
+	<SolidColorBrush x:Key="ActiveServiceBorderBrush" Color="DarkGray" />
+    <SolidColorBrush x:Key="DarkYellowHeaderBrush" Color="BurlyWood"/>
+
+    <ImageBrush x:Key="BlueHeader" ImageSource="../img/BlueHeader5.jpg"></ImageBrush>
+    <SolidColorBrush x:Key="Transparent" Color="Transparent"/>
+
+    <FontFamily x:Key="DefaultFont">Segoe UI Symbol</FontFamily> <!--Calibri-->
+
+	<Style x:Key="ActiveServiceBorder" TargetType="{x:Type Border}">
+		<Setter Property="Background" Value="{StaticResource ActiveServiceBackground}" />
+		<Setter Property="BorderBrush" Value="{StaticResource ActiveServiceBorderBrush}" />
+		<Setter Property="BorderThickness" Value="1 0 1 1" />
+	</Style>
+    
+	<Style TargetType="{x:Type Border}" x:Key="BorderHeader">
+		<Setter Property="Margin" Value="2,0,2,0"/>
+		<Setter Property="Height" Value="20"/>
+		<Setter Property="Background" Value="Gainsboro"/>
+	</Style>
+    
+	<Style TargetType="{x:Type TextBox}" x:Key="TbNoEdit">
+		<Setter Property="VerticalAlignment" Value="Bottom"/>
+		<Setter Property="Background" Value="Transparent"/>
+		<Setter Property="BorderThickness" Value="0"/>
+		<Setter Property="IsReadOnly" Value="True"/>
+		<Setter Property="FontFamily" Value="{StaticResource DefaultFont}"/>
+	</Style>
+
+    <Style x:Key="HideIfEmptyTextBox" TargetType="TextBox" BasedOn="{StaticResource TbNoEdit}">
+        <Style.Triggers>
+            <Trigger Property="Text" Value="">
+                <Setter Property="Visibility" Value="Collapsed"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="TbSimple" TargetType="{x:Type TextBox}">
+		<Setter Property="Background" Value="Transparent"/>
+		<Setter Property="BorderThickness" Value="0"/>
+		<Setter Property="IsReadOnly" Value="True"/>
+	</Style>
+
+	<Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource TbNoEdit}" x:Key="TboxCenter">
+		<Setter Property="VerticalAlignment" Value="Center"/>
+	</Style>
+
+	<Style x:Key="TboxHeader2" TargetType="{x:Type TextBox}" BasedOn="{StaticResource TbSimple}">
+		<Setter Property="FontFamily" Value="Times New Roman"/>
+		<Setter Property="FontWeight" Value="Bold"/>
+	</Style>
+
+	<Style TargetType="{x:Type TextBlock}" x:Key="TblNoEdit">
+		<Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="Background" Value="Transparent"/>
+    </Style>
+
+	<Style TargetType="{x:Type TextBlock}" x:Key="TblCenter">
+		<Setter Property="Margin" Value="5,0,0,0" />
+		<Setter Property="VerticalAlignment" Value="Center"/>
+	</Style>
+    
+    <Style x:Key="TblockHeader2" TargetType="{x:Type TextBlock}">
+		<Setter Property="FontFamily" Value="Times New Roman"/>
+		<Setter Property="FontWeight" Value="Bold"/>
+		<Setter Property="VerticalAlignment" Value="Center"/>
+		<!--<Setter Property="Margin" Value="1,0,0,0"/>-->
+	</Style>
+
+    <Style x:Key="TblockHideIfNull" TargetType="TextBlock" BasedOn="{StaticResource TblockHeader2}">
+        <Style.Triggers>
+            <Trigger Value="" Property="Text" >
+                <Setter Property="Visibility" Value="Collapsed"/>
+            </Trigger>
+            <Trigger Value="{x:Null}" Property="Text" >
+                <Setter Property="Visibility" Value="Collapsed"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="HideIfOneTextBlock" TargetType="TextBlock" BasedOn="{StaticResource TblockHeader2}">
+        <Style.Triggers>
+            <Trigger Property="Text" Value="1">
+                <Setter Property="Visibility" Value="Collapsed"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="ServiceHeaderTextBlock" TargetType="{x:Type TextBlock}">
+		<Setter Property="FontFamily" Value="Arial"/>
+		<Setter Property="FontSize" Value="12"/>
+	</Style>
+
+    <Style x:Key="ListViewDefault" TargetType="{x:Type ListView}">
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Background" Value="#00000000"/>
+        <Setter Property="Margin" Value="0,0,0,0"/>
+    </Style>
+
+    <Style TargetType="{x:Type ListView}" BasedOn="{StaticResource ListViewDefault}"/>
+
+	<Style x:Key="LvItemStyle" TargetType="{x:Type ListViewItem}">
+		<Setter Property="Focusable" Value="false"/>
+		<Setter Property="BorderThickness" Value="0"/>
+		<Setter Property="Background" Value="#00000000"/>
+		<Setter Property="Margin" Value="0,0,0,0"/>
+	</Style>
+
+    <Style x:Key="HeaderStyleBase" TargetType="DataGridColumnHeader">
+        <Setter Property="BorderThickness" Value="0,0,1,1"/>
+        <Setter Property="BorderBrush" Value="Gray"/>
+        <Setter Property="FontFamily" Value="{StaticResource DefaultFont}"></Setter>
+        <Setter Property="ContentTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <TextBlock TextWrapping="Wrap" Text="{Binding}"></TextBlock>
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <ItemsPanelTemplate x:Key="IpTemplate">
+		<WrapPanel  Orientation="Vertical"/>
+	</ItemsPanelTemplate>
+
+    <ItemsPanelTemplate x:Key="IpTemplate2">
+        <WrapPanel Orientation="Vertical" />
+    </ItemsPanelTemplate>
+
+    <ControlTemplate x:Key="ServiceTabHeaderBase">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <!--Background="{StaticResource ActiveServiceBackground}">-->
+            <Border HorizontalAlignment="Left" Height="20" BorderBrush="{StaticResource ActiveServiceBorderBrush}" BorderThickness="1 1 1 0" 
+				Background="{StaticResource DarkYellowHeaderBrush}">
+                <TextBlock FontWeight="Bold" Margin="8,0,8,0" VerticalAlignment="Center" Foreground="Black" Style="{StaticResource ServiceHeaderTextBlock}"
+					Text="{Binding .}"/>
+            </Border>
+            <Border Background="Beige" Grid.Column="1" BorderBrush="{StaticResource ActiveServiceBorderBrush}" BorderThickness="0 0 0 1"/>
+        </Grid>
+    </ControlTemplate>
+
+    <ControlTemplate x:Key="ServiceTabHeader">
+		<Grid>
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="Auto"/>
+				<ColumnDefinition Width="*"/>
+			</Grid.ColumnDefinitions>
+			<!--Background="{StaticResource ActiveServiceBackground}">-->
+			<Border HorizontalAlignment="Left" Height="20" BorderBrush="{StaticResource ActiveServiceBorderBrush}" BorderThickness="1 1 1 0" 
+				Background="{StaticResource DarkYellowHeaderBrush}">
+				<TextBlock FontWeight="Bold" Margin="8,0,8,0" VerticalAlignment="Center" Foreground="Black" Style="{StaticResource ServiceHeaderTextBlock}"
+					Text="{Binding Service.FullName}"/>
+			</Border>
+			<Border Background="Beige" Grid.Column="1" BorderBrush="{StaticResource ActiveServiceBorderBrush}" BorderThickness="0 0 0 1"/>
+		</Grid>
+	</ControlTemplate>
+    
+	<SolidColorBrush x:Key="TabControlNormalBorderBrush" Color="#8C8E94"/>
+   
+    <Style x:Key="TabControlLight" TargetType="{x:Type TabControl}">
+    	<Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+    	<Setter Property="Padding" Value="4,4,4,4"/>
+    	<Setter Property="BorderThickness" Value="1"/>
+    	<Setter Property="BorderBrush" Value="{StaticResource TabControlNormalBorderBrush}"/>
+    	<Setter Property="Background" Value="#F9F9F9"/>
+    	<Setter Property="HorizontalContentAlignment" Value="Center"/>
+    	<Setter Property="VerticalContentAlignment" Value="Center"/>
+    	<Setter Property="Template">
+    		<Setter.Value>
+    			<ControlTemplate TargetType="{x:Type TabControl}">
+    				<Grid ClipToBounds="true" SnapsToDevicePixels="true" KeyboardNavigation.TabNavigation="Local">
+    					<Grid.ColumnDefinitions>
+    						<ColumnDefinition x:Name="ColumnDefinition0"/>
+    						<ColumnDefinition x:Name="ColumnDefinition1" Width="0"/>
+    					</Grid.ColumnDefinitions>
+    					<Grid.RowDefinitions>
+    						<RowDefinition x:Name="RowDefinition0" Height="Auto"/>
+    						<RowDefinition x:Name="RowDefinition1" Height="*"/>
+    					</Grid.RowDefinitions>
+    					<TabPanel x:Name="HeaderPanel" Grid.Column="0" IsItemsHost="true" Margin="2,2,2,0" Grid.Row="0" KeyboardNavigation.TabIndex="1" Panel.ZIndex="1"/>
+    					<Border x:Name="ContentPanel" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Grid.Column="0" KeyboardNavigation.DirectionalNavigation="Contained" Grid.Row="1" KeyboardNavigation.TabIndex="2" KeyboardNavigation.TabNavigation="Local">
+    						<ContentPresenter x:Name="PART_SelectedContentHost" ContentSource="SelectedContent" Margin="{TemplateBinding Padding}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+    					</Border>
+    				</Grid>
+    				<ControlTemplate.Triggers>
+    					<Trigger Property="TabStripPlacement" Value="Bottom">
+    						<Setter Property="Grid.Row" TargetName="HeaderPanel" Value="1"/>
+    						<Setter Property="Grid.Row" TargetName="ContentPanel" Value="0"/>
+    						<Setter Property="Height" TargetName="RowDefinition0" Value="*"/>
+    						<Setter Property="Height" TargetName="RowDefinition1" Value="Auto"/>
+    						<Setter Property="Margin" TargetName="HeaderPanel" Value="2,0,2,2"/>
+    					</Trigger>
+    					<Trigger Property="TabStripPlacement" Value="Left">
+    						<Setter Property="Grid.Row" TargetName="HeaderPanel" Value="0"/>
+    						<Setter Property="Grid.Row" TargetName="ContentPanel" Value="0"/>
+    						<Setter Property="Grid.Column" TargetName="HeaderPanel" Value="0"/>
+    						<Setter Property="Grid.Column" TargetName="ContentPanel" Value="1"/>
+    						<Setter Property="Width" TargetName="ColumnDefinition0" Value="Auto"/>
+    						<Setter Property="Width" TargetName="ColumnDefinition1" Value="*"/>
+    						<Setter Property="Height" TargetName="RowDefinition0" Value="*"/>
+    						<Setter Property="Height" TargetName="RowDefinition1" Value="0"/>
+    						<Setter Property="Margin" TargetName="HeaderPanel" Value="2,2,0,2"/>
+    					</Trigger>
+    					<Trigger Property="TabStripPlacement" Value="Right">
+    						<Setter Property="Grid.Row" TargetName="HeaderPanel" Value="0"/>
+    						<Setter Property="Grid.Row" TargetName="ContentPanel" Value="0"/>
+    						<Setter Property="Grid.Column" TargetName="HeaderPanel" Value="1"/>
+    						<Setter Property="Grid.Column" TargetName="ContentPanel" Value="0"/>
+    						<Setter Property="Width" TargetName="ColumnDefinition0" Value="*"/>
+    						<Setter Property="Width" TargetName="ColumnDefinition1" Value="Auto"/>
+    						<Setter Property="Height" TargetName="RowDefinition0" Value="*"/>
+    						<Setter Property="Height" TargetName="RowDefinition1" Value="0"/>
+    						<Setter Property="Margin" TargetName="HeaderPanel" Value="0,2,2,2"/>
+    					</Trigger>
+    					<Trigger Property="IsEnabled" Value="false">
+    						<Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+    					</Trigger>
+    				</ControlTemplate.Triggers>
+    			</ControlTemplate>
+    		</Setter.Value>
+    	</Setter>
+    </Style>
+
+    <Style TargetType="DataGridCell" x:Key="DataGridCellNoLostFocus">
+        <Style.Triggers>
+            <Trigger Property="IsSelected" Value="True">
+                <Setter Property="Background" Value="LightBlue"/>
+                <Setter Property="Foreground" Value="White"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <ControlTemplate x:Key="TabItemLight" TargetType="{x:Type TabItem}">
+    	<Grid SnapsToDevicePixels="True">
+    		<Border x:Name="Bd" BorderBrush="Gray" BorderThickness="1" Background="#A0DEB887" Padding="20,2,20,2">
+    		    <ContentPresenter x:Name="Content" ContentTemplate="{TemplateBinding HeaderTemplate}" Content="{TemplateBinding Header}" ContentStringFormat="{TemplateBinding HeaderStringFormat}" ContentSource="Header" HorizontalAlignment="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type ItemsControl}}}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{Binding VerticalContentAlignment, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type ItemsControl}}}"/>
+            </Border>
+    	</Grid>
+    	<ControlTemplate.Triggers>
+    		<Trigger SourceName="Bd" Property="IsMouseOver" Value="True">
+                <Setter TargetName="Bd" Property="Background">
+    				<Setter.Value>
+    					<LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
+    						<GradientStop Color="#FFEAF6FD" Offset="0.15"/>
+    						<GradientStop Color="#FFD9F0FC" Offset="0.5"/>
+    						<GradientStop Color="#FFBEE6FD" Offset="0.5"/>
+    						<GradientStop Color="#FFA7D9F5" Offset="1"/>
+    					</LinearGradientBrush>
+    				</Setter.Value>
+    			</Setter>
+    		</Trigger>
+    		<Trigger Property="IsSelected" Value="True">
+    			<Setter Property="Panel.ZIndex" Value="1"/>
+                <Setter TargetName="Content" Property="Opacity" Value="1"/>
+    		</Trigger>
+    		<MultiTrigger>
+    			<MultiTrigger.Conditions>
+    				<Condition Property="IsSelected" Value="False"/>
+    				<Condition Property="IsMouseOver" Value="False"/>
+    			</MultiTrigger.Conditions>
+                <Setter TargetName="Content" Property="Opacity" Value="0.5"/>
+                <Setter TargetName="Bd" Property="Background" Value="#10000000"/>
+            </MultiTrigger>
+    		
+    	</ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <util:CityCountryConverter x:Key="CityCountryConverter"></util:CityCountryConverter>
+    <util:OrdinalConverter x:Key="OrdinalConverter"></util:OrdinalConverter>
+    
+    
+    <DataTemplate x:Key="TouristDataShort">
+        <DataTemplate.Resources>
+            <Style TargetType="TextBox" BasedOn="{StaticResource TbNoEdit}">
+                <Setter Property="VerticalAlignment" Value="Center"/>
+            </Style>
+
+            <Style TargetType="TextBlock" BasedOn="{StaticResource TblockHeader2}"/>
+
+            <!--<Style TargetType="TextBlock" BasedOn="{StaticResource TblNoEdit}"></Style>-->
+        </DataTemplate.Resources>
+        
+        <StackPanel Orientation="Horizontal">
+            <TextBox Text="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListViewItem}, Mode=OneWay, 
+                Converter={StaticResource ResourceKey=OrdinalConverter}, StringFormat={}{0}.}"/>
+            <TextBox Text="{Binding TU_FNAMELAT, Mode=OneWay}"/>
+            <TextBox Text="{Binding TU_NAMELAT, Mode=OneWay}"/>
+        </StackPanel>
+    </DataTemplate>
+
+    <DataTemplate x:Key="TouristData">
+        <DataTemplate.Resources>
+            <Style TargetType="TextBox" BasedOn="{StaticResource TbNoEdit}">
+                <Setter Property="VerticalAlignment" Value="Center"/>
+            </Style>
+
+            <Style TargetType="TextBlock" BasedOn="{StaticResource TblockHeader2}"/>
+
+            <!--<Style TargetType="TextBlock" BasedOn="{StaticResource TblNoEdit}"></Style>-->
+        </DataTemplate.Resources>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="1"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="1*"></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <StackPanel Margin="0,8,0,5" Orientation="Horizontal" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3">
+                <TextBlock Foreground="ForestGreen" Text="Турист "></TextBlock>
+                <TextBlock Foreground="ForestGreen" Style="{StaticResource HideIfOneTextBlock}" Text="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListViewItem}, 
+							        Converter={StaticResource ResourceKey=OrdinalConverter}, StringFormat={}{0}}"/>
+            </StackPanel>
+
+            <Rectangle Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4" Fill="LightGray"/>
+
+            <TextBlock Grid.Row="2" Grid.Column="0" Text="Фамилия"></TextBlock>
+            <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding TU_FNAMELAT, Mode=OneWay}"></TextBox>
+
+            <TextBlock Grid.Row="3" Grid.Column="0" Text="Имя"></TextBlock>
+            <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding TU_NAMELAT, Mode=OneWay}"></TextBox>
+
+            <TextBlock Grid.Row="4" Grid.Column="0" Text="Дата"></TextBlock>
+            <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding TU_BIRTHDAY, Mode=OneWay, StringFormat=dd.MM}"></TextBox>
+            <TextBlock Grid.Row="4" Grid.Column="2" Text="год рождения"></TextBlock>
+            <TextBox Grid.Row="4" Grid.Column="3" Text="{Binding TU_BIRTHDAY, Mode=OneWay, StringFormat=yyyy}"></TextBox>
+
+            <TextBlock Grid.Row="5" Grid.Column="0" Text="Национальность"></TextBlock>
+            <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding TU_CITIZEN, Mode=OneWay, Converter={StaticResource CityCountryConverter}}"></TextBox>
+
+            <TextBlock Grid.Row="6" Grid.Column="0" Text="Загранпаспорт"></TextBlock>
+            <TextBox Grid.Row="6" Grid.Column="1" Text="{Binding TU_PASPORTTYPE, Mode=OneWay}"></TextBox>
+            <TextBlock Grid.Row="6" Grid.Column="2" Text="№"></TextBlock>
+            <TextBox Grid.Row="6" Grid.Column="3" Text="{Binding TU_PASPORTNUM, Mode=OneWay}"></TextBox>
+
+            <TextBlock Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2" Text="Дата выдачи з/паспорта"></TextBlock>
+            <TextBox Grid.Row="7" Grid.Column="3" Text="{Binding TU_PASPORTDATE, Mode=OneWay, StringFormat=dd.MM.yyyy}"></TextBox>
+
+            <TextBlock Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="2" Text="Дата окончания действия паспорта"></TextBlock>
+            <TextBox Grid.Row="8" Grid.Column="3" Text="{Binding TU_PASPORTDATEEND, Mode=OneWay, StringFormat=dd.MM.yyyy}"></TextBox>
+        </Grid>
+    </DataTemplate>
+
+    <ControlTemplate x:Key="WindowHead" TargetType="Control">
+        <Border Background="{StaticResource BlueHeader}">
+            <Grid>
+                <TextBlock Background="Transparent" Margin="5,0,2,0" FontSize="14" FontFamily="{StaticResource DefaultFont}" TextAlignment="Left" Text="{TemplateBinding Tag}" />
+                <Button VerticalAlignment="Top" Margin="0,0,2,3" Name="CloseButton" Command="{Binding CloseButtonCommand}" HorizontalAlignment="Right" Style="{StaticResource CloseButton}"/>
+            </Grid>
+        </Border>
+    </ControlTemplate>
+
+    <DataTemplate x:Key="KeyValue">
+        <Grid x:Name="Grid">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100"></ColumnDefinition>
+                <ColumnDefinition Width="200"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <TextBlock Style="{StaticResource TblockHeader2}" VerticalAlignment="Center" Grid.Column="0" Text="{Binding Name, StringFormat={}{0}:}"/>
+            <TextBox Style="{StaticResource TbNoEdit}" Grid.Column="1" VerticalAlignment="Center" Text="{Binding Value}"/>
+        </Grid>
+    </DataTemplate>
+
+    <DataTemplate x:Key="KeyValue2">
+        <Grid x:Name="Grid">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1.3*"></ColumnDefinition>
+                <ColumnDefinition Width="1.7*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <TextBlock Margin="0" Style="{StaticResource TblockHeader2}" VerticalAlignment="Center" Grid.Column="0" Text="{Binding Name, StringFormat={}{0}:}"/>
+            <TextBox Margin="0" Style="{StaticResource TbNoEdit}" Grid.Column="1" VerticalAlignment="Center" Text="{Binding Value}"/>
+        </Grid>
+    </DataTemplate>
+
+    <DataTemplate x:Key="Value">
+        <TextBox Style="{StaticResource TbNoEdit}" VerticalAlignment="Center" Text="{Binding .}" TextWrapping="Wrap"/>
+    </DataTemplate>
+
+    <DataTemplate x:Key="TouristTemplate">
+        <DataTemplate.Resources>
+            <Style TargetType="TextBox" BasedOn="{StaticResource TbNoEdit}">
+                <Setter Property="VerticalAlignment" Value="Center"></Setter>
+            </Style>
+
+            <Style TargetType="TextBlock" BasedOn="{StaticResource TblockHeader2}"/>
+        </DataTemplate.Resources>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="1"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="1*"></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <StackPanel Margin="0,8,0,5" Orientation="Horizontal" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3">
+                <TextBlock Foreground="ForestGreen" Text="Турист "></TextBlock>
+                <TextBlock Foreground="ForestGreen" Style="{StaticResource HideIfOneTextBlock}" Text="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListViewItem}, 
+							        Converter={StaticResource ResourceKey=OrdinalConverter}, StringFormat={}{0}}"/>
+            </StackPanel>
+
+            <Rectangle Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4" Fill="LightGray"/>
+
+            <TextBlock Grid.Row="2" Grid.Column="0" Text="Фамилия:"></TextBlock>
+            <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding SecondName, Mode=OneWay}"></TextBox>
+
+            <TextBlock Grid.Row="3" Grid.Column="0" Text="Имя:"></TextBlock>
+            <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding FirstName, Mode=OneWay}"></TextBox>
+
+            <TextBlock Grid.Row="4" Grid.Column="0" Text="№ страховки:"></TextBlock>
+            <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding InshurNumber, Mode=OneWay}"></TextBox>
+        </Grid>
+    </DataTemplate>
+
+</ResourceDictionary>
