@@ -27,7 +27,7 @@ namespace WpfControlLibrary.Behaviors
 
         private void OnLoaded(object sender, RoutedEventArgs routedEventArgs)
         {
-            ScrollToBottom();
+            ScrollToTop();
         }
 
         public void ScrollToBottom()
@@ -35,6 +35,11 @@ namespace WpfControlLibrary.Behaviors
             var sv = ScrollHelper.FindScrollViewer(AssociatedObject);
             if(sv != null)sv.ScrollToBottom();
         }
-        
+        public void ScrollToTop()
+        {
+            var sv = ScrollHelper.FindScrollViewer(AssociatedObject);
+            if (sv != null) sv.ScrollToTop();
+        }
+
     }
 }
