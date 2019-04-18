@@ -24,7 +24,7 @@ namespace WpfControlLibrary.Behaviors
         public void ScrollToBottom()
         {
             var sv = ScrollHelper.FindScrollViewer(AssociatedObject);
-            if(sv != null)sv.ScrollToBottom();
+            if(sv != null) sv.ScrollToBottom();
         }
         public void ScrollToTop()
         {
