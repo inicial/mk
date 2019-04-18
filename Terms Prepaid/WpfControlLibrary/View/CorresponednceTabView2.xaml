@@ -11,20 +11,20 @@
              mc:Ignorable="d" 
              d:DesignHeight="400" d:DesignWidth="600">
     <UserControl.Resources>
-		<ResourceDictionary>
+        <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/WpfControlLibrary;component/Resources/ButtonResources.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
             <converters:BooleanToVisibilityConverter  x:Key="BooleanToVisibilityConverterInvert" True="Visible" False="Collapsed" />
 
-			<Style x:Key="CloseCorrespStyle" TargetType="FrameworkElement">
-				<Style.Triggers>
-					<DataTrigger Binding="{Binding CloseCorrespVisible}" Value="False">
-						<Setter Property="Visibility" Value="Collapsed"/>
-					</DataTrigger>
-				</Style.Triggers>
-			</Style>
+            <Style x:Key="CloseCorrespStyle" TargetType="FrameworkElement">
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding CloseCorrespVisible}" Value="False">
+                        <Setter Property="Visibility" Value="Collapsed"/>
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
 
             <ControlTemplate x:Key="ControlPanel">
                 <Grid>
@@ -59,10 +59,9 @@
                     </DataTrigger>
                 </ControlTemplate.Triggers>
             </ControlTemplate>
-            
-		</ResourceDictionary>
+        </ResourceDictionary>
     </UserControl.Resources>
-    
+
     <Grid Background="{Binding Brush}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>

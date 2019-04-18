@@ -970,6 +970,7 @@
     <Resource Include="Resources\img_w_normal.bmp" />
     <Resource Include="Resources\img_w_normal_over.bmp" />
     <Resource Include="Resources\img_w_normal_pressed.bmp" />
+    <SplashScreen Include="Resources\loading.gif" />
     <Content Include="Resources\mailImage.png" />
     <Content Include="Resources\mailIcon.ico" />
     <None Include="Service References\WebGetInfo\Reference.svcmap">
