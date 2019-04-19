@@ -537,12 +537,11 @@ namespace WpfControlLibrary.Model.Messages
 
         public Correspondence(string dgCode, CorrespondenceType type, ICorrespondenceLoader correspondenceLoader = null)
         {
-            DgCode = dgCode;
             var loader = correspondenceLoader ?? Repository.GetInstance<ICorrespondenceLoader>();
             MessageBlocks = loader.GetMessageBlock(dgCode, type);
             Doc = new CorrespondenceTable().GetDocument(MessageBlocks.ToArray(), new CorrespondenceDocHeaders());
             Mod = type == CorrespondenceType.Manager ? RequestMessageMod.MTM : RequestMessageMod.MTC;
-            Repository.GetInstance<ICorrespondenceService>().CheckUnreadMessages(DgCode);
+            Repository.GetInstance<ICorrespondenceService>().CheckUnreadMessages(dgCode);
         }
     }
 

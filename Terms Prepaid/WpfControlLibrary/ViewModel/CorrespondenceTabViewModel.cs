@@ -12,8 +12,8 @@ namespace WpfControlLibrary.ViewModel
         private string _dgCode;
 
         private const int MAX_SYMBOLS = 252;
-        
-       // Constructor
+
+        //Constructor
         public CorrespondenceTabViewModel(string dgCode, CorrespondenceType type, int maxSymbols = MAX_SYMBOLS, ICorrespondenceService service = null)
             : base(service)
         {
@@ -65,7 +65,6 @@ namespace WpfControlLibrary.ViewModel
 
                 if (sb.Length > 0) 
                     sb.Append(" ");
-                
                 sb.Append(word);
             }
 
@@ -79,6 +78,5 @@ namespace WpfControlLibrary.ViewModel
 
             UpdateCorrespodence();
         }
-        
     }
 }

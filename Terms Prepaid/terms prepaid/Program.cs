@@ -66,7 +66,7 @@ namespace terms_prepaid
             }
 
             bool bEntry = false;
-            
+
             LogonScreen screen = new LogonScreen(user, pass, Application.ProductName);
             if (screen.Show() == DialogResult.OK) bEntry = true;
 
