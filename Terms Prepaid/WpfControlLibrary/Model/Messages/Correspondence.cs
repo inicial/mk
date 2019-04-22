@@ -367,14 +367,25 @@ namespace WpfControlLibrary.Model.Messages
 
         protected IEnumerable<Message> Filter(MessageBlock block)
         {
+            var checkMessage = new Message();
             foreach (var msg in block.Messages)
             {
                 if (msg.Autor.Equals("www.mcruises.ru"))
                 {
-                    if (msg.Text.Contains("Комментарий к заказу")) yield return msg;
+                    if (msg.Text.Contains("Комментарий к заказу")) yield return checkMessage;
                 }
                 else
-                    yield return msg;
+                {
+                    if (checkMessage.Date.ToString() == msg.Date.ToString())
+                    {
+                        checkMessage.Text = checkMessage.Text + " " + msg.Text;
+                    }
+                    else
+                    {
+                        checkMessage = msg;
+                        yield return checkMessage;
+                    }
+                }
             }
         }
 
