@@ -343,9 +343,10 @@ namespace WpfControlLibrary.Model.Messages
 
             if (messageBlocks.Length > 0)
             {
-                var block = messageBlocks.First();
+                var block = messageBlocks;
+                var blocks = messageBlocks.First();
                 //block.Messages = new ObservableCollection<Message>(block.Messages.SkipWhile(m => m.Autor.Equals("www.mcruises.ru") && !m.Text.Contains("Комментарий к заказу")));
-                block.Messages = new ObservableCollection<Message>(Filter(block));
+                blocks.Messages = new ObservableCollection<Message>(Filter(block));
             }
 
             foreach (var block in messageBlocks)
@@ -365,25 +366,28 @@ namespace WpfControlLibrary.Model.Messages
             return doc;
         }
 
-        protected IEnumerable<Message> Filter(MessageBlock block)
+        /* Фильтрация вывода сообщений по переписке в заказе */
+        protected IEnumerable<Message> Filter(MessageBlock[] block)
         {
             var checkMessage = new Message();
-            foreach (var msg in block.Messages)
-            {
-                if (msg.Autor.Equals("www.mcruises.ru"))
+            foreach (var blocks in block) {
+                foreach (var msg in blocks.Messages)
                 {
-                    if (msg.Text.Contains("Комментарий к заказу")) yield return checkMessage;
-                }
-                else
-                {
-                    if (checkMessage.Date.ToString() == msg.Date.ToString())
+                    if (msg.Autor.Equals("www.mcruises.ru"))
                     {
-                        checkMessage.Text = checkMessage.Text + " " + msg.Text;
+                        if (msg.Text.Contains("Комментарий к заказу")) yield return checkMessage;
                     }
                     else
                     {
-                        checkMessage = msg;
-                        yield return checkMessage;
+                        if (msg.Date.ToString() == checkMessage.Date.ToString())
+                        {
+                            checkMessage.Text = msg.Text + " " + checkMessage.Text;
+                        }
+                        else
+                        {
+                            checkMessage = msg;
+                            yield return checkMessage;
+                        }
                     }
                 }
             }
