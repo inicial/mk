@@ -42,22 +42,22 @@ namespace terms_prepaid
 
             // Dont Work
             //AppDomain.CurrentDomain.SetupInformation.ShadowCopyFiles = "true";
-                // AppDomain.CurrentDomain.SetupInformation.CachePath =
+            // AppDomain.CurrentDomain.SetupInformation.CachePath =
             //    Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + @"\Cache\";
             //GetDomainInfo();
             //EnableShadowCopying();
             //if(AppDomain.CurrentDomain.IsDefaultAppDomain())
-            
+
             //Application.EnableVisualStyles();
             //Application.SetCompatibleTextRenderingDefault(false);
 
             string startupPath = (args.Length > 0) ? args[0] : "";
             string user = (args.Length > 1) ? args[1] : "";
             string pass = (args.Length > 2) ? args[2] : "";
-//user = "";
-//pass = "";
-//user = "VEPIHINA";
-//pass = "qwerty12345";
+            //user = "";
+            //pass = "";
+            //user = "VEPIHINA";
+            //pass = "qwerty12345";
 
             if (args.Length > 0 && !startupPath.Equals("") && !startupPath.Equals("null"))
             {
@@ -66,29 +66,35 @@ namespace terms_prepaid
             }
 
             bool bEntry = false;
-LogonScreen screen = new LogonScreen(user, pass, Application.ProductName);
-if (screen.Show() == DialogResult.OK) bEntry = true;
-/*
-            frmIntroMain IntroForm = new frmIntroMain(user, pass, Application.ProductName);
-            IntroForm.Show();
-            bool bWait = true;
-            while (bWait)
-            {
-                Application.DoEvents();
-                bWait = false;
-                if (!IntroForm.ExitFlag) bWait = true;
-            }
-            if (IntroForm.Authorized)
-            {
-                bEntry = true;
-            }
-            else
-            {
-                IntroForm.Close();
-                IntroForm.Dispose();
-                IntroForm = null;
-            }
-*/
+
+            LogonScreen screen = new LogonScreen(user, pass, Application.ProductName);
+            if (screen.Show() == DialogResult.OK) bEntry = true;
+
+            //--added this splashscreen for test, because not see when app is loading
+            SplashScreen splashScreen = new SplashScreen("Resources\\loading.gif");
+            splashScreen.Show(true, true);
+            //--
+            /*
+                        frmIntroMain IntroForm = new frmIntroMain(user, pass, Application.ProductName);
+                        IntroForm.Show();
+                        bool bWait = true;
+                        while (bWait)
+                        {
+                            Application.DoEvents();
+                            bWait = false;
+                            if (!IntroForm.ExitFlag) bWait = true;
+                        }
+                        if (IntroForm.Authorized)
+                        {
+                            bEntry = true;
+                        }
+                        else
+                        {
+                            IntroForm.Close();
+                            IntroForm.Dispose();
+                            IntroForm = null;
+                        }
+            */
             if (bEntry)
             {
                 string UsingDGCode = ltp_v2.Framework.MasterValue.DGCodeFromASKData;
@@ -106,7 +112,7 @@ if (screen.Show() == DialogResult.OK) bEntry = true;
 
                 TouristRepo.ConnectionString = WorkWithData.Connection.ConnectionString;
                 //CallRecordRepo.ConnectionString = WorkWithData.Connection.ConnectionString;
-                
+
                 DependencyInjection();
                 DispatcherHelper.Initialize();
 
@@ -116,9 +122,10 @@ if (screen.Show() == DialogResult.OK) bEntry = true;
                     main_form.Show();
                     main_form.Activate();
 
-///                    if (IntroForm != null) IntroForm.Close();
-
+                    //if (IntroForm != null) IntroForm.Close();
+                    
                     Application.Run(main_form);
+                    
                     //Application.Run(GetTestBron());
                 }
                 catch (System.Exception ex)

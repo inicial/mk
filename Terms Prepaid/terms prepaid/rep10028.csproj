@@ -38,7 +38,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
@@ -970,6 +970,7 @@
     <Resource Include="Resources\img_w_normal.bmp" />
     <Resource Include="Resources\img_w_normal_over.bmp" />
     <Resource Include="Resources\img_w_normal_pressed.bmp" />
+    <SplashScreen Include="Resources\loading.gif" />
     <Content Include="Resources\mailImage.png" />
     <Content Include="Resources\mailIcon.ico" />
     <None Include="Service References\WebGetInfo\Reference.svcmap">
@@ -1086,8 +1087,8 @@
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>C:\xcopy "$(SolutionDir)\WPF.Bootstrap\bin\Release\WPF.Bootstrap.dll" "$(TargetDir)" /Y /D
-C:\xcopy "$(SolutionDir)\WpfControlLibrary\bin\Release\Xceed.Wpf.Toolkit.dll" "$(TargetDir)" /Y /D</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
     <PreBuildEvent>

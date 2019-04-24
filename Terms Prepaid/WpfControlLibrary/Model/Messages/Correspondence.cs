@@ -343,9 +343,10 @@ namespace WpfControlLibrary.Model.Messages
 
             if (messageBlocks.Length > 0)
             {
-                var block = messageBlocks.First();
+                var block = messageBlocks;
+                var blocks = messageBlocks.First();
                 //block.Messages = new ObservableCollection<Message>(block.Messages.SkipWhile(m => m.Autor.Equals("www.mcruises.ru") && !m.Text.Contains("Комментарий к заказу")));
-                block.Messages = new ObservableCollection<Message>(Filter(block));
+                blocks.Messages = new ObservableCollection<Message>(Filter(block));
             }
 
             foreach (var block in messageBlocks)
@@ -365,16 +366,30 @@ namespace WpfControlLibrary.Model.Messages
             return doc;
         }
 
-        protected IEnumerable<Message> Filter(MessageBlock block)
+        /* Фильтрация вывода сообщений по переписке в заказе */
+        protected IEnumerable<Message> Filter(MessageBlock[] block)
         {
-            foreach (var msg in block.Messages)
-            {
-                if (msg.Autor.Equals("www.mcruises.ru"))
+            var checkMessage = new Message();
+            foreach (var blocks in block) {
+                foreach (var msg in blocks.Messages)
                 {
-                    if (msg.Text.Contains("Комментарий к заказу")) yield return msg;
+                    if (msg.Autor.Equals("www.mcruises.ru"))
+                    {
+                        if (msg.Text.Contains("Комментарий к заказу")) yield return checkMessage;
+                    }
+                    else
+                    {
+                        if (msg.Date.ToString() == checkMessage.Date.ToString())
+                        {
+                            checkMessage.Text = msg.Text + " " + checkMessage.Text;
+                        }
+                        else
+                        {
+                            checkMessage = msg;
+                            yield return checkMessage;
+                        }
+                    }
                 }
-                else
-                    yield return msg;
             }
         }
 
@@ -537,12 +552,11 @@ namespace WpfControlLibrary.Model.Messages
 
         public Correspondence(string dgCode, CorrespondenceType type, ICorrespondenceLoader correspondenceLoader = null)
         {
-            DgCode = dgCode;
             var loader = correspondenceLoader ?? Repository.GetInstance<ICorrespondenceLoader>();
             MessageBlocks = loader.GetMessageBlock(dgCode, type);
             Doc = new CorrespondenceTable().GetDocument(MessageBlocks.ToArray(), new CorrespondenceDocHeaders());
             Mod = type == CorrespondenceType.Manager ? RequestMessageMod.MTM : RequestMessageMod.MTC;
-            Repository.GetInstance<ICorrespondenceService>().CheckUnreadMessages(DgCode);
+            Repository.GetInstance<ICorrespondenceService>().CheckUnreadMessages(dgCode);
         }
     }
 
